@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@sfd/abstract-core": ["libs/abstract-core/src/index.ts"]
+      "@sfd/abstract-core": ["libs/abstract-core/src/index.ts"],
+      "@sfd/abstract-evm": ["libs/abstract-evm/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
