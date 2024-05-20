@@ -1,0 +1,1 @@
+npx create-nx-workspace@latest sfd-ts-repo-pub --preset=ts --pm=pnpm
