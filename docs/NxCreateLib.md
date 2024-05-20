@@ -19,8 +19,8 @@ pnpm install -g nx
 
 1. **Nx CLI** - Open your terminal and navigate to your monorepo's root directory. Execute the following command:
 ```bash
-pnpx nx generate @nx/js:library --name=playground --unitTestRunner=jest --importPath=@sfd/playground --publishable=true --projectNameAndRootFormat=derived --no-interactive
-npx nx generate @nrwl/js:library connector-bitcoin --publishable --importPath=@sfd/connector-bitcoin --unitTestRunner=jest --projectNameAndRootFormat=derived
+pnpx nx generate @nx/js:library --name=playground --unitTestRunner=jest --importPath=@steadfastdigital/playground --publishable=true --projectNameAndRootFormat=derived --no-interactive
+npx nx generate @nrwl/js:library connector-bitcoin --publishable --importPath=@steadfastdigital/connector-bitcoin --unitTestRunner=jest --projectNameAndRootFormat=derived
 ```
 
 ## Command Explanation
@@ -28,7 +28,7 @@ npx nx generate @nrwl/js:library connector-bitcoin --publishable --importPath=@s
 - `@nx/js:library`: Indicates that we're generating a JavaScript library.
 - `--name=playground`: Specifies the name of the library as "playground".
 - `--unitTestRunner=jest`: Selects Jest as the unit test runner.
-- `--importPath=@sfd/playground`: Defines the custom import path for the library.
+- `--importPath=@steadfastdigital/playground`: Defines the custom import path for the library.
 - `--publishable=true`: Flags the library as publishable.
 - `--projectNameAndRootFormat=derived`: The root directory and project name are derived based on other options.
 - `--no-interactive`: Disables interactive prompts.

@@ -1,4 +1,4 @@
-import { EvmAbstraction } from '@sfd/abstract-evm';
+import { EvmAbstraction } from '@steadfastdigital/abstract-evm';
 
 export class EthereumConnector extends EvmAbstraction {
   constructor() {

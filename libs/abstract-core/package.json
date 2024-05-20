@@ -1,5 +1,5 @@
 {
-  "name": "@sfd/abstract-core",
+  "name": "@steadfastdigital/abstract-core",
   "version": "0.0.1",
   "dependencies": {
     "tslib": "^2.3.0"

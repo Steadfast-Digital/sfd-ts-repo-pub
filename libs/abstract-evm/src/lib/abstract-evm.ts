@@ -1,5 +1,5 @@
-import { CoreNetworkAbstraction, AddressBalance, Transaction } from '@sfd/abstract-core';
-import { networks } from '@sfd/crypto-assets';
+import { CoreNetworkAbstraction, AddressBalance, Transaction } from '@steadfastdigital/abstract-core';
+import { networks } from '@steadfastdigital/crypto-assets';
 
 export abstract class EvmAbstraction extends CoreNetworkAbstraction {
   protected rpcUrl: string;
