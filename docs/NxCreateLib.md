@@ -20,7 +20,7 @@ pnpm install -g nx
 1. **Nx CLI** - Open your terminal and navigate to your monorepo's root directory. Execute the following command:
 ```bash
 pnpx nx generate @nx/js:library --name=playground --unitTestRunner=jest --importPath=@sfd/playground --publishable=true --projectNameAndRootFormat=derived --no-interactive
-npx nx generate @nrwl/js:library abstract-evm --publishable --importPath=@sfd/abstract-evm --unitTestRunner=jest --projectNameAndRootFormat=derived
+npx nx generate @nrwl/js:library crypto-assets --publishable --importPath=@sfd/crypto-assets --unitTestRunner=jest --projectNameAndRootFormat=derived
 ```
 
 ## Command Explanation
