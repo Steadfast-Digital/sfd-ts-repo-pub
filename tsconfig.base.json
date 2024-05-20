@@ -17,6 +17,7 @@
     "paths": {
       "@sfd/abstract-core": ["libs/abstract-core/src/index.ts"],
       "@sfd/abstract-evm": ["libs/abstract-evm/src/index.ts"],
+      "@sfd/connector-bitcoin": ["libs/connector-bitcoin/src/index.ts"],
       "@sfd/connector-ethereum": ["libs/connector-ethereum/src/index.ts"],
       "@sfd/crypto-assets": ["libs/crypto-assets/src/index.ts"]
     }

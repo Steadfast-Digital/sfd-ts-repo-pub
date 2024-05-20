@@ -1,0 +1,32 @@
+{
+  "name": "connector-bitcoin",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/connector-bitcoin/src",
+  "projectType": "library",
+  "release": {
+    "version": {
+      "generatorOptions": {
+        "packageRoot": "dist\\{projectRoot}",
+        "currentVersionResolver": "git-tag"
+      }
+    }
+  },
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/connector-bitcoin",
+        "main": "libs/connector-bitcoin/src/index.ts",
+        "tsConfig": "libs/connector-bitcoin/tsconfig.lib.json",
+        "assets": ["libs/connector-bitcoin/*.md"]
+      }
+    },
+    "nx-release-publish": {
+      "options": {
+        "packageRoot": "dist\\{projectRoot}"
+      }
+    }
+  }
+}
