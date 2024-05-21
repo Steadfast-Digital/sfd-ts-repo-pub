@@ -1,0 +1,36 @@
+name: Publish Packages
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org/'
+
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build affected packages
+        run: pnpm exec nx affected --target build --with-deps
+
+      - name: Publish affected packages
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          AFFECTED_PROJECTS=$(pnpm exec nx print-affected --target=nx-release-publish --select=projects)
+          for project in $AFFECTED_PROJECTS; do
+            pnpm exec nx run $project:nx-release-publish --with-deps
+          done
