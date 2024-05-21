@@ -85,6 +85,30 @@ importers:
         specifier: ^2.3.0
         version: 2.6.2
 
+  libs/abstract-evm:
+    dependencies:
+      tslib:
+        specifier: ^2.3.0
+        version: 2.6.2
+
+  libs/connector-bitcoin:
+    dependencies:
+      tslib:
+        specifier: ^2.3.0
+        version: 2.6.2
+
+  libs/connector-ethereum:
+    dependencies:
+      tslib:
+        specifier: ^2.3.0
+        version: 2.6.2
+
+  libs/crypto-assets:
+    dependencies:
+      tslib:
+        specifier: ^2.3.0
+        version: 2.6.2
+
 packages:
 
   /@ampproject/remapping@2.3.0:
