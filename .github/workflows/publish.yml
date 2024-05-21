@@ -30,8 +30,8 @@ jobs:
           PROJECTS=("abstract-core" "abstract-evm")
           for project in "${PROJECTS[@]}"; do
             echo "Building $project..."
-            pnpm exec nx build $project --with-deps=true
+            npx nx build $project --with-deps=true
             
             echo "Publishing $project..."
-            pnpm exec nx run $project:nx-release-publish --with-deps=true
+            npx nx run $project:nx-release-publish --with-deps=true
           done
