@@ -13,6 +13,7 @@ export interface AddressBalance {
 
 export interface Transaction {
   hash: string;
+  from: string;
   // Define transaction structure
 }
 
