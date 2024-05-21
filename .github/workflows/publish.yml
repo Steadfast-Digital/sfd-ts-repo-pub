@@ -23,14 +23,15 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Build affected packages
-        run: pnpm exec nx affected --target build --with-deps
-
-      - name: Publish affected packages
+      - name: Build and publish packages
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
-          AFFECTED_PROJECTS=$(pnpm exec nx print-affected --target=nx-release-publish --select=projects)
-          for project in $AFFECTED_PROJECTS; do
-            pnpm exec nx run $project:nx-release-publish --with-deps
+          PROJECTS=("abstract-core" "abstract-evm")
+          for project in "${PROJECTS[@]}"; do
+            echo "Building $project..."
+            pnpm exec nx build $project --with-deps=true
+            
+            echo "Publishing $project..."
+            pnpm exec nx run $project:nx-release-publish --with-deps=true
           done
