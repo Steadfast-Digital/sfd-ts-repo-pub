@@ -1,1 +1,3 @@
-export * from './lib/connector-ethereum';
+import { EthereumConnector } from './lib/connector-ethereum';
+export { EthereumConnector };
+export default EthereumConnector;
