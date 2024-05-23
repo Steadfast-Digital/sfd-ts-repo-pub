@@ -1,7 +1,7 @@
-import { blockchainFactory } from './blockchain-factory';
+import { BlockchainFactory } from './blockchain-factory';
 
 describe('blockchainFactory', () => {
   it('should work', () => {
-    expect(blockchainFactory()).toEqual('blockchain-factory');
+    BlockchainFactory.createBlockchain('eth');
   });
 });
