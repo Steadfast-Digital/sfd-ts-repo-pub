@@ -26,7 +26,8 @@
       "@steadfastdigital/connector-ethereum": [
         "libs/connector-ethereum/src/index.ts"
       ],
-      "@steadfastdigital/crypto-assets": ["libs/crypto-assets/src/index.ts"]
+      "@steadfastdigital/crypto-assets": ["libs/crypto-assets/src/index.ts"],
+      "@steadfastdigital/utils": ["libs/utils/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
