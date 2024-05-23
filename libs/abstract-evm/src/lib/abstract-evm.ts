@@ -1,4 +1,4 @@
-import { CoreNetworkAbstraction, AddressBalance, Transaction } from '@steadfastdigital/abstract-core';
+import { CoreNetworkAbstraction, AddressBalance, Transaction, AddressBalances, AssetBalance } from '@steadfastdigital/abstract-core';
 import { networks, nativeAssets, NativeAsset } from '@steadfastdigital/crypto-assets';
 
 export abstract class EvmAbstraction extends CoreNetworkAbstraction {
@@ -40,5 +40,17 @@ export abstract class EvmAbstraction extends CoreNetworkAbstraction {
       asset: nativeAssets.find(asset => asset.networkId === this._networkId) as NativeAsset,
       nonce: 1,
     }];
+  }
+  async getAddressBalances(address: string): Promise<AddressBalances> {
+    console.log('Fetching address balances', address);
+    throw new Error('Method not implemented.');
+  }
+  async getAddressAssetBalance(address: string, assetId: string): Promise<AssetBalance> {
+    console.log('Fetching address asset balance', address, assetId);
+    throw new Error('Method not implemented.');
+  }
+  async getAddressAssetsBalances(address: string, assetIds: string[]): Promise<AssetBalance[]> {
+    console.log('Fetching address assets balances', address, assetIds);
+    throw new Error('Method not implemented.');
   }
 }
