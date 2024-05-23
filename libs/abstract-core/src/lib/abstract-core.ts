@@ -38,7 +38,7 @@ export interface Transaction {
 
 export abstract class CoreNetworkAbstraction {
   // create a constractor that takes in a networkId
-  private _networkId: string;
+  _networkId: string;
   constructor(protected networkId: string) {
     this._networkId = networkId;
   }
