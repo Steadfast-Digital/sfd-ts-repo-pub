@@ -62,6 +62,9 @@ export interface Network {
     slip: number;
     path(purpose?: number, slip?: number, account?: number, change?: number, index?: number): string;
   };
+
+  // internal use
+  connectorLib: string;
 }
 export interface NetworkAssets {
   network: Network;

@@ -37,7 +37,8 @@ export const networks = {
       },
       slip: 60,
       path: (purpose = 44, slip = 60, account = 0, change = 0, index = 0) => `m/${purpose}'/${slip}'/${account}'/${change}/${index}`,
-    }
+    },
+    connectorLib: '@steadfastdigital/connector-ethereum',
   },
   bsc: {
     id: 'bsc',
@@ -75,6 +76,7 @@ export const networks = {
       },
       slip: 60,
       path: (purpose = 44, slip = 60, account = 0, change = 0, index = 0) => `m/${purpose}'/${slip}'/${account}'/${change}/${index}`,
-    }
+    },
+    connectorLib: '@steadfastdigital/connector-ethereum',
   },
 } as Record<string, Network>;
