@@ -1,6 +1,6 @@
 import { Network } from './types';
 
-export const networks = {
+export const networks: Record<string, Network> = {
   eth: {
     id: 'eth',
     name: 'Ethereum',
@@ -79,4 +79,8 @@ export const networks = {
     },
     connectorLib: '@steadfastdigital/connector-bsc',
   },
-} as Record<string, Network>;
+};
+
+export function setCustomNetworks(customNetworks: Record<string, Partial<Network>>) {
+  Object.assign(networks, customNetworks);
+}
