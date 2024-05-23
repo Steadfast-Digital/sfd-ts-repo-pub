@@ -36,7 +36,14 @@ export interface Transaction {
   nonce: number;
 }
 
-export abstract class CoreNetworkAbstraction {
+export interface BlockcahinInterface {
+  getAddressBalance(address: string): Promise<AddressBalance>;
+  getAddressBalances(address: string): Promise<AddressBalances>;
+  getAddressAssetBalance(address: string, assetId: string): Promise<AssetBalance>;
+  getAddressAssetsBalances(address: string, assetIds: string[]): Promise<AssetBalance[]>;
+  getTransactionHistory(address: string): Promise<Transaction[]>;
+}
+export abstract class CoreNetworkAbstraction implements BlockcahinInterface {
   // create a constractor that takes in a networkId
   _networkId: string;
   constructor(protected networkId: string) {
