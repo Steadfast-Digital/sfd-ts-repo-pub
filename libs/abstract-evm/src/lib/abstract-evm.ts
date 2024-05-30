@@ -2,7 +2,7 @@ import Web3 from 'web3';
 import { ethers } from 'ethers';
 import { CoreNetworkAbstraction, AddressBalance, Transaction, AddressBalances, AssetBalance } from '@steadfastdigital/abstract-core';
 import { networks, nativeAssets, NativeAsset } from '@steadfastdigital/crypto-assets';
-
+import { Logger } from '@steadfastdigital/utils';
 export abstract class EvmAbstraction extends CoreNetworkAbstraction {
 
   constructor(networkId: string) {
@@ -11,14 +11,14 @@ export abstract class EvmAbstraction extends CoreNetworkAbstraction {
 
   async getAddressBalance(address: string): Promise<AddressBalance> {
     const network = networks[this._networkId];
-    console.log(`Fetching balance for ${address} on ${JSON.stringify(network, null, 2)}`);
+    Logger.debug(`Fetching balance for ${address} on ${JSON.stringify(network, null, 2)}`);
     const { url: rpcUrl } = network.urls.rpc;
     
     if (!rpcUrl) {
-        throw new Error(`RPC URL for network ${network.name} not found`);
+      throw new Error(`RPC URL for network ${network.name} not found`);
     }
 
-    console.log(`Fetching native balance for ${address} on ${network.name} using ${rpcUrl}`);
+    Logger.debug(`Fetching native balance for ${address} on ${network.name} using ${rpcUrl}`);
 
     // Using web3.js to fetch balance
     const web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl));
@@ -31,8 +31,8 @@ export abstract class EvmAbstraction extends CoreNetworkAbstraction {
     const balanceInEthEthers = ethers.formatEther(balanceInWeiEthers);
 
     // Log both balances for comparison (they should be the same)
-    console.log(`Balance using web3.js: ${balanceInEth}`);
-    console.log(`Balance using ethers.js: ${balanceInEthEthers}`);
+    Logger.debug(`Balance using web3.js: ${balanceInEth}`);
+    Logger.debug(`Balance using ethers.js: ${balanceInEthEthers}`);
 
     // Choose one of the balances to return (they should be equivalent)
     const amount = balanceInEth;
@@ -51,7 +51,7 @@ export abstract class EvmAbstraction extends CoreNetworkAbstraction {
   async getTransactionHistory(address: string): Promise<Transaction[]> {
     // Implementation for fetching transaction history using RPC
     const network = networks[this._networkId];
-    console.log(`Fetching transaction history for ${address} on ${network.name}`);
+    Logger.debug(`Fetching transaction history for ${address} on ${network.name}`);
     return [{
       hash: '0x123',
       from: '0xabc',
@@ -69,15 +69,15 @@ export abstract class EvmAbstraction extends CoreNetworkAbstraction {
     }];
   }
   async getAddressBalances(address: string): Promise<AddressBalances> {
-    console.log('Fetching address balances', address);
+    Logger.debug('Fetching address balances', address);
     throw new Error('Method not implemented.');
   }
   async getAddressAssetBalance(address: string, assetId: string): Promise<AssetBalance> {
-    console.log('Fetching address asset balance', address, assetId);
+    Logger.debug('Fetching address asset balance', address, assetId);
     throw new Error('Method not implemented.');
   }
   async getAddressAssetsBalances(address: string, assetIds: string[]): Promise<AssetBalance[]> {
-    console.log('Fetching address assets balances', address, assetIds);
+    Logger.debug('Fetching address assets balances', address, assetIds);
     throw new Error('Method not implemented.');
   }
 }
