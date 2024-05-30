@@ -5,3 +5,9 @@ export function isValidPackageName(packageName: string): boolean {
 
   return packageRegex.test(packageName);
 }
+
+export function isValidWebSocketUrl(url: string): boolean {
+  const wsRegex = /^wss?:\/\//;
+
+  return wsRegex.test(url);
+}

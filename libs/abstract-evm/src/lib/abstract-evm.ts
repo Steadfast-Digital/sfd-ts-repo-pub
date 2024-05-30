@@ -1,12 +1,13 @@
-import Web3 from 'web3';
 import { ethers } from 'ethers';
 import { CoreNetworkAbstraction, AddressBalance, Transaction, AddressBalances, AssetBalance } from '@steadfastdigital/abstract-core';
 import { networks, nativeAssets, NativeAsset } from '@steadfastdigital/crypto-assets';
-import { Logger } from '@steadfastdigital/utils';
+import { Logger, isValidWebSocketUrl } from '@steadfastdigital/utils';
 export abstract class EvmAbstraction extends CoreNetworkAbstraction {
-
+  _rpcProvider: ethers.JsonRpcProvider | ethers.WebSocketProvider;
   constructor(networkId: string) {
     super(networkId);
+    const rpcUrl = networks[networkId].urls.rpc.url;
+    this._rpcProvider = isValidWebSocketUrl(rpcUrl) ? new ethers.WebSocketProvider(rpcUrl) : new ethers.JsonRpcProvider(rpcUrl);
   }
 
   async getAddressBalance(address: string): Promise<AddressBalance> {
@@ -20,22 +21,15 @@ export abstract class EvmAbstraction extends CoreNetworkAbstraction {
 
     Logger.debug(`Fetching native balance for ${address} on ${network.name} using ${rpcUrl}`);
 
-    // Using web3.js to fetch balance
-    const web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl));
-    const balanceInWei = await web3.eth.getBalance(address);
-    const balanceInEth = web3.utils.fromWei(balanceInWei, 'ether');
-
     // Using ethers.js to fetch balance (alternative method)
-    const provider = new ethers.JsonRpcProvider(rpcUrl);
+    const provider = this._rpcProvider;
     const balanceInWeiEthers = await provider.getBalance(address);
     const balanceInEthEthers = ethers.formatEther(balanceInWeiEthers);
 
-    // Log both balances for comparison (they should be the same)
-    Logger.debug(`Balance using web3.js: ${balanceInEth}`);
     Logger.debug(`Balance using ethers.js: ${balanceInEthEthers}`);
 
     // Choose one of the balances to return (they should be equivalent)
-    const amount = balanceInEth;
+    const amount = balanceInEthEthers;
 
     return {
         address,
