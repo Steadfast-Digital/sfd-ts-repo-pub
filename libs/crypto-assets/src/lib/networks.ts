@@ -81,6 +81,26 @@ export const networks: Record<string, Network> = {
   },
 };
 
+function mergeDeep(target: any, source: any) {
+  if (source && typeof source === 'object') {
+    Object.keys(source).forEach(key => {
+      if (source[key] && typeof source[key] === 'object') {
+        if (!target[key]) target[key] = {}; // Ensure the target key exists
+        mergeDeep(target[key], source[key]); // Recurse into deeper objects
+      } else {
+        target[key] = source[key]; // Directly set the value if it's not an object
+      }
+    });
+  }
+}
+
+
 export function setCustomNetworks(customNetworks: Record<string, Partial<Network>>) {
-  Object.assign(networks, customNetworks);
+  Object.keys(customNetworks).forEach(networkId => {
+    if (networks[networkId]) {
+      mergeDeep(networks[networkId], customNetworks[networkId]);
+    } else {
+      networks[networkId] = customNetworks[networkId] as Network; // Handle new network definitions
+    }
+  });
 }
