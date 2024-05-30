@@ -7,7 +7,7 @@ export const networks: Record<string, Network> = {
     chainId: 1,
     urls: {
       rpc: {
-        url: 'https://mainnet.infura.io/v3/your-api-key',
+        url: 'https://eth-arch-01.savvyblocks.io/rpc', // https://ethereum-rpc.publicnode.com
         type: 'geth'
       },
       consensus: {

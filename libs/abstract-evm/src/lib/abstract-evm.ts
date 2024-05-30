@@ -1,3 +1,5 @@
+import Web3 from 'web3';
+import { ethers } from 'ethers';
 import { CoreNetworkAbstraction, AddressBalance, Transaction, AddressBalances, AssetBalance } from '@steadfastdigital/abstract-core';
 import { networks, nativeAssets, NativeAsset } from '@steadfastdigital/crypto-assets';
 
@@ -8,18 +10,43 @@ export abstract class EvmAbstraction extends CoreNetworkAbstraction {
   }
 
   async getAddressBalance(address: string): Promise<AddressBalance> {
-    // Implementation for fetching native balance using RPC
     const network = networks[this._networkId];
-    console.log(`Fetching native balance for ${address} on ${network.name}`);
+    console.log(`Fetching balance for ${address} on ${JSON.stringify(network, null, 2)}`);
+    const { url: rpcUrl } = network.urls.rpc;
+    
+    if (!rpcUrl) {
+        throw new Error(`RPC URL for network ${network.name} not found`);
+    }
+
+    console.log(`Fetching native balance for ${address} on ${network.name} using ${rpcUrl}`);
+
+    // Using web3.js to fetch balance
+    const web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl));
+    const balanceInWei = await web3.eth.getBalance(address);
+    const balanceInEth = web3.utils.fromWei(balanceInWei, 'ether');
+
+    // Using ethers.js to fetch balance (alternative method)
+    const provider = new ethers.JsonRpcProvider(rpcUrl);
+    const balanceInWeiEthers = await provider.getBalance(address);
+    const balanceInEthEthers = ethers.formatEther(balanceInWeiEthers);
+
+    // Log both balances for comparison (they should be the same)
+    console.log(`Balance using web3.js: ${balanceInEth}`);
+    console.log(`Balance using ethers.js: ${balanceInEthEthers}`);
+
+    // Choose one of the balances to return (they should be equivalent)
+    const amount = balanceInEth;
+
     return {
-      address,
-      native: {
-        asset: nativeAssets.find(asset => asset.networkId === network.id) as NativeAsset,
-        amount: '0',
-      },
-      fees: [],
+        address,
+        native: {
+            asset: nativeAssets.find(asset => asset.networkId === network.id) as NativeAsset,
+            amount: amount,
+        },
+        fees: [],
     };
-  }
+}
+
 
   async getTransactionHistory(address: string): Promise<Transaction[]> {
     // Implementation for fetching transaction history using RPC
