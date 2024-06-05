@@ -74,7 +74,7 @@ export abstract class EvmAbstraction extends CoreNetworkAbstraction {
 
     const network = networks[this._networkId];
     const blockbookApiUrl = network.urls.tokenApi.url;
-    const response = await fetch(`${blockbookApiUrl}/api/v2/address/${address}?details=tokenBalances`);
+    const response = await fetch(`${blockbookApiUrl}/v2/address/${address}?details=tokenBalances`);
     const data = await response.json();
 
     if (!response.ok) {
@@ -110,7 +110,7 @@ export abstract class EvmAbstraction extends CoreNetworkAbstraction {
 
     const network = networks[this._networkId];
     const blockbookApiUrl = network.urls.tokenApi.url;
-    const response = await fetch(`${blockbookApiUrl}/api/v2/address/${address}?details=tokenBalances`);
+    const response = await fetch(`${blockbookApiUrl}/v2/address/${address}?details=tokenBalances`);
     const data = await response.json();
 
     if (!response.ok) {
@@ -142,13 +142,32 @@ export abstract class EvmAbstraction extends CoreNetworkAbstraction {
 
     const network = networks[this._networkId];
     const blockbookApiUrl = network.urls.tokenApi.url;
-    const response = await fetch(`${blockbookApiUrl}/api/v2/address/${address}?details=tokenBalances`);
+    const response = await fetch(`${blockbookApiUrl}/v2/address/${address}?details=tokenBalances`);
     const data = await response.json();
 
     if (!response.ok) {
       throw new Error(`Failed to fetch address assets balances: ${data.error}`);
     }
     Logger.info('Data', data);
+    console.log('Data', JSON.stringify(data, null, 2));
+    if (!data?.tokens?.length) {
+      return [];
+    }
+    if (assetIds.length === 0) {
+      return data.tokens.map((token: any) => ({
+        asset: {
+          id: token.contract,
+          name: token.name,
+          symbol: token.symbol,
+          decimals: token.decimals,
+          contractOrId: token.contract,
+          networkId: this._networkId,
+          assetType: token.type || 'ERC20',
+          // logo: '',
+        },
+        amount: token.balance ? ethers.formatUnits(token.balance, token.decimals) : undefined,
+      }));
+    }
     return assetIds.map(assetId => {
       const token = data.tokens.find((token: any) => token.contract === assetId);
       if (!token) {
@@ -160,10 +179,10 @@ export abstract class EvmAbstraction extends CoreNetworkAbstraction {
             decimals: 0,
             contractOrId: token.contract,
             networkId: this._networkId,
-            assetType: 'ERC20',
+            assetType: token.type || 'ERC20',
             logo: '', // Add logo URL if available
           },
-          amount: ethers.formatUnits(token.balance, token.decimals),
+          amount: token.balance ? ethers.formatUnits(token.balance, token.decimals) : undefined,
         };
       }
       return {
@@ -173,10 +192,10 @@ export abstract class EvmAbstraction extends CoreNetworkAbstraction {
           symbol: token.symbol,
           decimals: token.decimals,
           contractOrId: token.contract,
-          assetType: 'ERC20',
+          assetType: token.type || 'ERC20',
           logo: '', // Add logo URL if available
         },
-        amount: ethers.formatUnits(token.balance, token.decimals),
+        amount: token.balance ? ethers.formatUnits(token.balance, token.decimals) : undefined,
       };
     }) as AssetBalance[];
   }
