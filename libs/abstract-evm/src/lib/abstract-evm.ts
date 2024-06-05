@@ -72,35 +72,14 @@ export abstract class EvmAbstraction extends CoreNetworkAbstraction {
   async getAddressBalances(address: string): Promise<AddressBalances> {
     Logger.debug('Fetching address balances', address);
 
-    const network = networks[this._networkId];
-    const blockbookApiUrl = network.urls.tokenApi.url;
-    const response = await fetch(`${blockbookApiUrl}/v2/address/${address}?details=tokenBalances`);
-    const data = await response.json();
-
-    if (!response.ok) {
-      throw new Error(`Failed to fetch address balances: ${data.error}`);
-    }
-
-    const tokens = data.tokens.map((token: any) => ({
-      asset: {
-        id: token.contract,
-        name: token.name,
-        symbol: token.symbol,
-        decimals: token.decimals,
-        logo: '', // Add logo URL if available
-      },
-      amount: ethers.formatUnits(token.balance, token.decimals),
-    }));
+    const tokens = await this.getAddressAssetsBalances(address, []);
 
     const nativeBalance = await this.getAddressBalance(address);
 
     return {
       address,
       native: nativeBalance.native,
-      tokens: tokens.map((token: any) => ({
-        asset: token.asset,
-        amount: token.amount,
-      })),
+      tokens,
       fees: [],
     };
   }
@@ -148,8 +127,6 @@ export abstract class EvmAbstraction extends CoreNetworkAbstraction {
     if (!response.ok) {
       throw new Error(`Failed to fetch address assets balances: ${data.error}`);
     }
-    Logger.info('Data', data);
-    console.log('Data', JSON.stringify(data, null, 2));
     if (!data?.tokens?.length) {
       return [];
     }

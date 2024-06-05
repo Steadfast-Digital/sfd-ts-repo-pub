@@ -1,4 +1,4 @@
-import { getAddressBalance, getTransactionHistory, getAddressAssetsBalances } from './factory-wraper';
+import { getAddressBalance, getAddressBalances, getTransactionHistory, getAddressAssetsBalances } from './factory-wraper';
 import { setCustomNetworks } from '@steadfastdigital/crypto-assets';
 
 describe('factoryWraper', () => {
@@ -25,6 +25,11 @@ describe('factoryWraper', () => {
 
   it('should get address asset balances', async () => {
     const balance = await getAddressAssetsBalances('eth', '0x938B8B088E419278DaBfAAEDADA7a83ab7D75A7E', []);
+    console.log(balance[0]);
+  }, 10000); // Set timeout to 10 seconds for this test
+
+  it('should get address balances', async () => {
+    const balance = await getAddressBalances('eth', '0x938B8B088E419278DaBfAAEDADA7a83ab7D75A7E');
     console.log(balance);
   }, 10000); // Set timeout to 10 seconds for this test
 });
