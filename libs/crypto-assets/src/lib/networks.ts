@@ -19,13 +19,13 @@ export const networks: Record<string, Network> = {
         type: 'etherscan'
       },
       txApi: {
-        url: 'https://api.etherscan.io/api',
-        type: 'etherscan',
+        url: 'https://eth-arch-01.savvyblocks.io/api',
+        type: 'blockbook',
         apiKey: 'your-api-key'
       },
       tokenApi: {
-        url: 'https://api.etherscan.io/api',
-        type: 'etherscan',
+        url: 'https://eth-arch-01.savvyblocks.io/api',
+        type: 'blockbook',
         apiKey: 'your-api-key'
       }
     },
