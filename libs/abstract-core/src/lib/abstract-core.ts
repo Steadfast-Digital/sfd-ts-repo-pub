@@ -23,7 +23,7 @@ export interface AddressBalances extends AddressBalance {
 export interface Transaction {
   hash: string;
   from: string;
-  to: string;
+  to: string | null;
   value: string;
   fee: {
     asset: NativeAsset;
