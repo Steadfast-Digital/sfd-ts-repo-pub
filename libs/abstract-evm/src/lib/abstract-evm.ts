@@ -2,8 +2,10 @@ import { ethers } from 'ethers';
 import { CoreNetworkAbstraction, AddressBalance, Transaction, AddressBalances, AssetBalance } from '@steadfastdigital/abstract-core';
 import { networks, nativeAssets, NativeAsset } from '@steadfastdigital/crypto-assets';
 import { Logger, isValidWebSocketUrl } from '@steadfastdigital/utils';
+
 export abstract class EvmAbstraction extends CoreNetworkAbstraction {
   _rpcProvider: ethers.JsonRpcProvider | ethers.WebSocketProvider;
+  
   constructor(networkId: string) {
     super(networkId);
     const rpcUrl = networks[networkId].urls.rpc.url;
@@ -21,14 +23,11 @@ export abstract class EvmAbstraction extends CoreNetworkAbstraction {
 
     Logger.debug(`Fetching native balance for ${address} on ${network.name} using ${rpcUrl}`);
 
-    // Using ethers.js to fetch balance (alternative method)
-    const provider = this._rpcProvider;
-    const balanceInWeiEthers = await provider.getBalance(address);
+    const balanceInWeiEthers = await this._rpcProvider.getBalance(address);
     const balanceInEthEthers = ethers.formatEther(balanceInWeiEthers);
 
     Logger.debug(`Balance using ethers.js: ${balanceInEthEthers}`);
 
-    // Choose one of the balances to return (they should be equivalent)
     const amount = balanceInEthEthers;
 
     return {
@@ -39,39 +38,146 @@ export abstract class EvmAbstraction extends CoreNetworkAbstraction {
         },
         fees: [],
     };
-}
-
+  }
 
   async getTransactionHistory(address: string): Promise<Transaction[]> {
-    // Implementation for fetching transaction history using RPC
     const network = networks[this._networkId];
     Logger.debug(`Fetching transaction history for ${address} on ${network.name}`);
-    return [{
-      hash: '0x123',
-      from: '0xabc',
-      to: '0xdef',
-      value: '1000000000000000000',
+
+    const blockbookApiUrl = network.urls.txApi.url;
+    const response = await fetch(`${blockbookApiUrl}/v2/address/${address}?details=txs`);
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch transaction history: ${data.error}`);
+    }
+
+    return data.transactions.map((tx: any) => ({
+      hash: tx.txid,
+      from: tx.vin[0].addresses[0],
+      to: tx.vout[0].addresses ? tx.vout[0].addresses[0] : null,
+      value: tx.vout[0].value,
       fee: {
         asset: nativeAssets.find(asset => asset.networkId === this._networkId) as NativeAsset,
-        amount: '1000000000000000',
+        amount: tx.fees,
       },
-      blockNumber: 123456,
-      timestamp: 1234567890,
-      status: 'confirmed',
+      blockNumber: tx.blockHeight,
+      timestamp: tx.blockTime,
+      status: tx.confirmations > 0 ? 'confirmed' : 'pending',
       asset: nativeAssets.find(asset => asset.networkId === this._networkId) as NativeAsset,
-      nonce: 1,
-    }];
+      nonce: tx.nonce,
+    }));
   }
+
   async getAddressBalances(address: string): Promise<AddressBalances> {
     Logger.debug('Fetching address balances', address);
-    throw new Error('Method not implemented.');
+
+    const network = networks[this._networkId];
+    const blockbookApiUrl = network.urls.tokenApi.url;
+    const response = await fetch(`${blockbookApiUrl}/api/v2/address/${address}?details=tokenBalances`);
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch address balances: ${data.error}`);
+    }
+
+    const tokens = data.tokens.map((token: any) => ({
+      asset: {
+        id: token.contract,
+        name: token.name,
+        symbol: token.symbol,
+        decimals: token.decimals,
+        logo: '', // Add logo URL if available
+      },
+      amount: ethers.formatUnits(token.balance, token.decimals),
+    }));
+
+    const nativeBalance = await this.getAddressBalance(address);
+
+    return {
+      address,
+      native: nativeBalance.native,
+      tokens: tokens.map((token: any) => ({
+        asset: token.asset,
+        amount: token.amount,
+      })),
+      fees: [],
+    };
   }
+
   async getAddressAssetBalance(address: string, assetId: string): Promise<AssetBalance> {
     Logger.debug('Fetching address asset balance', address, assetId);
-    throw new Error('Method not implemented.');
+
+    const network = networks[this._networkId];
+    const blockbookApiUrl = network.urls.tokenApi.url;
+    const response = await fetch(`${blockbookApiUrl}/api/v2/address/${address}?details=tokenBalances`);
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch address asset balance: ${data.error}`);
+    }
+
+    const token = data.tokens.find((token: any) => token.contract === assetId);
+    if (!token) {
+      throw new Error(`Token with assetId ${assetId} not found for address ${address}`);
+    }
+
+    return {
+      asset: {
+        id: token.contract,
+        name: token.name,
+        symbol: token.symbol,
+        decimals: token.decimals,
+        contractOrId: token.contract,
+        networkId: this._networkId,
+        assetType: 'ERC20',
+        // logo: '',
+      },
+      amount: ethers.formatUnits(token.balance, token.decimals),
+    };
   }
+
   async getAddressAssetsBalances(address: string, assetIds: string[]): Promise<AssetBalance[]> {
     Logger.debug('Fetching address assets balances', address, assetIds);
-    throw new Error('Method not implemented.');
+
+    const network = networks[this._networkId];
+    const blockbookApiUrl = network.urls.tokenApi.url;
+    const response = await fetch(`${blockbookApiUrl}/api/v2/address/${address}?details=tokenBalances`);
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch address assets balances: ${data.error}`);
+    }
+    Logger.info('Data', data);
+    return assetIds.map(assetId => {
+      const token = data.tokens.find((token: any) => token.contract === assetId);
+      if (!token) {
+        return {
+          asset: {
+            id: assetId,
+            name: '',
+            symbol: '',
+            decimals: 0,
+            contractOrId: token.contract,
+            networkId: this._networkId,
+            assetType: 'ERC20',
+            logo: '', // Add logo URL if available
+          },
+          amount: ethers.formatUnits(token.balance, token.decimals),
+        };
+      }
+      return {
+        asset: {
+          id: token.contract,
+          name: token.name,
+          symbol: token.symbol,
+          decimals: token.decimals,
+          contractOrId: token.contract,
+          assetType: 'ERC20',
+          logo: '', // Add logo URL if available
+        },
+        amount: ethers.formatUnits(token.balance, token.decimals),
+      };
+    }) as AssetBalance[];
   }
 }
