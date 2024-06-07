@@ -5,6 +5,10 @@
 
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import { BlockchainFactory } from '@steadfastdigital/blockchain-factory';
+import EthConnector from '@steadfastdigital/connector-ethereum';
+
+BlockchainFactory.registerConnector('eth', new EthConnector('eth'));
 
 import { AppModule } from './app/app.module';
 
