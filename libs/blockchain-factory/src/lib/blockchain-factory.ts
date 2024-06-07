@@ -30,4 +30,38 @@ export class BlockchainFactory {
       throw error;
     }
   }
+  static registerConnector(networkId: string, connector: BlockcahinInterface) {
+    const network = networks[networkId];
+    if (!network) {
+      throw new Error(`Invalid network id: ${networkId}`);
+    }
+    this._connectors[networkId] = connector;
+    return this._connectors[networkId];
+  }
+  static getConnection(networkId: string): BlockcahinInterface {
+    if (!this._connectors[networkId]) {
+      throw new Error(`Connector for ${networkId} not found`);
+    }
+    return this._connectors[networkId];
+  }
+  static async getAddressBalance(networkId: string, address: string) {
+    const connector = await this.createBlockchain(networkId);
+    return connector.getAddressBalance(address);
+  }
+  static async getAddressAssetBalance(networkId: string, address: string, assetId: string) {
+    const connector = await this.createBlockchain(networkId);
+    return connector.getAddressAssetBalance(address, assetId);
+  }
+  static async getAddressBalances(networkId: string, address: string) {
+    const connector = await this.createBlockchain(networkId);
+    return connector.getAddressBalances(address);
+  }
+  static async getAddressAssetsBalances(networkId: string, address: string, assetIds: string[]) {
+    const connector = await this.createBlockchain(networkId);
+    return connector.getAddressAssetsBalances(address, assetIds);
+  }
+  static async getTransactionHistory(networkId: string, address: string) {
+    const connector = await this.createBlockchain(networkId);
+    return connector.getTransactionHistory(address);
+  }
 }
