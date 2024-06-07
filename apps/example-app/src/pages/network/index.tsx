@@ -17,7 +17,8 @@ const NetworkTester = () => {
     setResult('Testing...');
 
     try {
-      const response = await fetch(`/api/${endpoint}`, {
+      const baseUrl = 'http://localhost:3001/api';
+      const response = await fetch(`${baseUrl}/${endpoint}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
