@@ -23,6 +23,7 @@
       "@steadfastdigital/connector-bitcoin": [
         "libs/connector-bitcoin/src/index.ts"
       ],
+      "@steadfastdigital/connector-bsc": ["libs/connector-bsc/src/index.ts"],
       "@steadfastdigital/connector-ethereum": [
         "libs/connector-ethereum/src/index.ts"
       ],
