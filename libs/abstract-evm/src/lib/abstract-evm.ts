@@ -3,6 +3,19 @@ import { CoreNetworkAbstraction, AddressBalance, Transaction, AddressBalances, A
 import { networks, nativeAssets, NativeAsset } from '@steadfastdigital/crypto-assets';
 import { Logger, isValidWebSocketUrl } from '@steadfastdigital/utils';
 
+import { BlockbookProvider, EtherscanProvider } from './providers';
+
+function getIEvmProvider(networkId: string) {
+  const { type } = networks[networkId].urls.txApi;
+  switch (type) {
+    case 'etherscan':
+      return new EtherscanProvider(networkId);
+    case 'blockbook':
+      return new BlockbookProvider(networkId);
+    default:
+      throw new Error(`Provider not supported for network ${networkId}`);
+  }
+}
 export abstract class EvmAbstraction extends CoreNetworkAbstraction {
   _rpcProvider: ethers.JsonRpcProvider | ethers.WebSocketProvider;
   
@@ -41,38 +54,12 @@ export abstract class EvmAbstraction extends CoreNetworkAbstraction {
   }
 
   async getTransactionHistory(address: string): Promise<Transaction[]> {
-    const network = networks[this._networkId];
-    Logger.debug(`Fetching transaction history for ${address} on ${network.name}`);
-
-    const blockbookApiUrl = network.urls.txApi.url;
-    const response = await fetch(`${blockbookApiUrl}/v2/address/${address}?details=txs`);
-    const data = await response.json();
-
-    if (!response.ok) {
-      throw new Error(`Failed to fetch transaction history: ${data.error}`);
-    }
-
-    return data.transactions.map((tx: any) => ({
-      hash: tx.txid,
-      from: tx.vin[0].addresses[0],
-      to: tx.vout[0].addresses ? tx.vout[0].addresses[0] : null,
-      value: tx.vout[0].value,
-      fee: {
-        asset: nativeAssets.find(asset => asset.networkId === this._networkId) as NativeAsset,
-        amount: tx.fees,
-      },
-      blockNumber: tx.blockHeight,
-      timestamp: tx.blockTime,
-      status: tx.confirmations > 0 ? 'confirmed' : 'pending',
-      asset: nativeAssets.find(asset => asset.networkId === this._networkId) as NativeAsset,
-      nonce: tx.nonce,
-    }));
+    return getIEvmProvider(this._networkId).getTransactionHistory(address);
   }
 
   async getAddressBalances(address: string): Promise<AddressBalances> {
     Logger.debug('Fetching address balances', address);
-
-    const tokens = await this.getAddressAssetsBalances(address, []);
+    const tokens = await getIEvmProvider(this._networkId).getAddressAssetsBalances(address, []);
 
     const nativeBalance = await this.getAddressBalance(address);
 
@@ -85,95 +72,10 @@ export abstract class EvmAbstraction extends CoreNetworkAbstraction {
   }
 
   async getAddressAssetBalance(address: string, assetId: string): Promise<AssetBalance> {
-    Logger.debug('Fetching address asset balance', address, assetId);
-
-    const network = networks[this._networkId];
-    const blockbookApiUrl = network.urls.tokenApi.url;
-    const response = await fetch(`${blockbookApiUrl}/v2/address/${address}?details=tokenBalances`);
-    const data = await response.json();
-
-    if (!response.ok) {
-      throw new Error(`Failed to fetch address asset balance: ${data.error}`);
-    }
-
-    const token = data.tokens.find((token: any) => token.contract === assetId);
-    if (!token) {
-      throw new Error(`Token with assetId ${assetId} not found for address ${address}`);
-    }
-
-    return {
-      asset: {
-        id: token.contract,
-        name: token.name,
-        symbol: token.symbol,
-        decimals: token.decimals,
-        contractOrId: token.contract,
-        networkId: this._networkId,
-        assetType: 'ERC20',
-        // logo: '',
-      },
-      amount: ethers.formatUnits(token.balance, token.decimals),
-    };
+    return getIEvmProvider(this._networkId).getAddressAssetBalance(address, assetId);
   }
 
   async getAddressAssetsBalances(address: string, assetIds: string[]): Promise<AssetBalance[]> {
-    Logger.debug('Fetching address assets balances', address, assetIds);
-
-    const network = networks[this._networkId];
-    const blockbookApiUrl = network.urls.tokenApi.url;
-    const response = await fetch(`${blockbookApiUrl}/v2/address/${address}?details=tokenBalances`);
-    const data = await response.json();
-
-    if (!response.ok) {
-      throw new Error(`Failed to fetch address assets balances: ${data.error}`);
-    }
-    if (!data?.tokens?.length) {
-      return [];
-    }
-    if (assetIds.length === 0) {
-      return data.tokens.map((token: any) => ({
-        asset: {
-          id: token.contract,
-          name: token.name,
-          symbol: token.symbol,
-          decimals: token.decimals,
-          contractOrId: token.contract,
-          networkId: this._networkId,
-          assetType: token.type || 'ERC20',
-          // logo: '',
-        },
-        amount: token.balance ? ethers.formatUnits(token.balance, token.decimals) : undefined,
-      }));
-    }
-    return assetIds.map(assetId => {
-      const token = data.tokens.find((token: any) => token.contract === assetId);
-      if (!token) {
-        return {
-          asset: {
-            id: assetId,
-            name: '',
-            symbol: '',
-            decimals: 0,
-            contractOrId: token.contract,
-            networkId: this._networkId,
-            assetType: token.type || 'ERC20',
-            logo: '', // Add logo URL if available
-          },
-          amount: token.balance ? ethers.formatUnits(token.balance, token.decimals) : undefined,
-        };
-      }
-      return {
-        asset: {
-          id: token.contract,
-          name: token.name,
-          symbol: token.symbol,
-          decimals: token.decimals,
-          contractOrId: token.contract,
-          assetType: token.type || 'ERC20',
-          logo: '', // Add logo URL if available
-        },
-        amount: token.balance ? ethers.formatUnits(token.balance, token.decimals) : undefined,
-      };
-    }) as AssetBalance[];
+    return getIEvmProvider(this._networkId).getAddressAssetsBalances(address, assetIds);
   }
 }
