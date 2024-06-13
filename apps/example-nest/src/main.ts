@@ -1,0 +1,49 @@
+/**
+ * This is not a production server yet!
+ * This is only a minimal backend to get started.
+ */
+
+import { Logger } from '@nestjs/common';
+import { NestFactory } from '@nestjs/core';
+import { BlockchainFactory } from '@steadfastdigital/blockchain-factory';
+import EthConnector from '@steadfastdigital/connector-ethereum';
+import BscConnector from '@steadfastdigital/connector-bsc';
+import { setCustomNetworks } from '@steadfastdigital/crypto-assets';
+import { config } from 'dotenv';
+
+config();
+const bscTxApiKey = process.env['BSC_TX_API_KEY'];
+if (bscTxApiKey) {
+  const customConfig = {
+    bsc: {
+      urls: {
+        txApi: {
+          apiKey: bscTxApiKey,
+        },
+        tokenApi: {
+          apiKey: bscTxApiKey,
+        },
+      },
+    },
+  };
+  setCustomNetworks(customConfig);
+}
+
+BlockchainFactory.registerConnector('eth', new EthConnector('eth'));
+BlockchainFactory.registerConnector('bsc', new BscConnector('bsc'));
+
+import { AppModule } from './app/app.module';
+
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
+  const globalPrefix = 'api';
+  app.setGlobalPrefix(globalPrefix);
+  app.enableCors();
+  const port = process.env.PORT || 3001;
+  await app.listen(port);
+  Logger.log(
+    `🚀 Application is running on: http://localhost:${port}/${globalPrefix}`
+  );
+}
+
+bootstrap();

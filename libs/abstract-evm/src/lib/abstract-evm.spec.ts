@@ -1,7 +1,12 @@
-import { abstractEvm } from './abstract-evm';
-
+import { EvmAbstraction } from './abstract-evm';
+class EvmAbstractionExample extends EvmAbstraction {
+  constructor(networkId: string) {
+    super(networkId);
+  }
+}
 describe('abstractEvm', () => {
   it('should work', () => {
-    expect(abstractEvm()).toEqual('abstract-evm');
+    const evm = new EvmAbstractionExample('eth');
+    expect(evm).toBeTruthy();
   });
 });
