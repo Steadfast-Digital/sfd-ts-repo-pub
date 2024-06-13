@@ -7,8 +7,10 @@ import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { BlockchainFactory } from '@steadfastdigital/blockchain-factory';
 import EthConnector from '@steadfastdigital/connector-ethereum';
+import BscConnector from '@steadfastdigital/connector-bsc';
 
 BlockchainFactory.registerConnector('eth', new EthConnector('eth'));
+BlockchainFactory.registerConnector('bsc', new BscConnector('bsc'));
 
 import { AppModule } from './app/app.module';
 

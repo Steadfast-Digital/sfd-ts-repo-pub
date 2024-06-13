@@ -4,7 +4,7 @@ import { Button, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, 
 
 const NetworkTester = () => {
   const [network, setNetwork] = useState('eth');
-  const [address, setAddress] = useState('0x938B8B088E419278DaBfAAEDADA7a83ab7D75A7E');
+  const [address, setAddress] = useState('0x513c87314578d089ce1f0d9dade81fd637adbb21');
   const [result, setResult] = useState('');
 
   const handleNetworkChange = (value: string) => {
