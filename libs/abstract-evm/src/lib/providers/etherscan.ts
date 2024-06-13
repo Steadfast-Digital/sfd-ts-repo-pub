@@ -15,7 +15,8 @@ export class EtherscanProvider implements IEvmProvider {
     const network = networks[this._networkId];
     Logger.debug(`Fetching transaction history for ${address} on ${network.name}`);
     const etherscanApiUrlBase = network.urls.txApi.url;
-    const etherscanApiUrl = `${etherscanApiUrlBase}?module=account&action=txlist&address=${address}&sort=asc`;
+    const apikey = network.urls.txApi.apiKey;
+    const etherscanApiUrl = `${etherscanApiUrlBase}?module=account&action=txlist&address=${address}&sort=asc&apikey=${apikey}`;
     const response = await fetch(etherscanApiUrl);
     const data = await response.json();
 
@@ -43,8 +44,9 @@ export class EtherscanProvider implements IEvmProvider {
   async getAddressAssetBalance(address: string, assetId: string): Promise<AssetBalance> {
     // Etherscan API for token balance
     const etherscanApiUrlBase = networks[this._networkId].urls.txApi.url;
+    const apikey = networks[this._networkId].urls.txApi.apiKey;
     const asset = tokenAssets.find(asset => asset.networkId === this._networkId && asset.id === assetId);
-    const etherscanApiUrl = `${etherscanApiUrlBase}?module=account&action=tokenbalance&contractaddress=${asset?.contractOrId}&address=${address}&tag=latest`;
+    const etherscanApiUrl = `${etherscanApiUrlBase}?module=account&action=tokenbalance&contractaddress=${asset?.contractOrId}&address=${address}&tag=latest&apikey=${apikey}`;
     const response = await fetch(etherscanApiUrl);
     const data = await response.json();
     Logger.info(JSON.stringify(data, null, 2));

@@ -65,7 +65,7 @@ describe('EvmAbstraction Integration Tests', () => {
     const result = await bscEvmAbstraction.getAddressAssetsBalances(testAddress, assetIds);
     console.log('BSC Address Assets Balances:', result);
     expect(result.length).toBeGreaterThan(0);
-    expect(result[0].asset).toHaveProperty('id', 'bsc');
+    expect(result[0].asset).toHaveProperty('id', 'usdc');
     expect(result[0]).toHaveProperty('amount');
   });
 });
