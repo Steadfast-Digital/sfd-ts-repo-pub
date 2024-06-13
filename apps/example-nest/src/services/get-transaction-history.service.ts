@@ -4,6 +4,10 @@ import { getTransactionHistory } from '@steadfastdigital/blockchain-factory';
 @Injectable()
 export class GetTransactionHistoryService {
   async execute(network: string, address: string) {
-    return await getTransactionHistory(network, address);
+    try {
+      return await getTransactionHistory(network, address);
+    } catch (error) {
+      return { error: `${error.name} - ${error.message}` };
+    }
   }
 }

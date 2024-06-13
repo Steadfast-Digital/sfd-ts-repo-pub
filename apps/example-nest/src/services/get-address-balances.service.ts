@@ -4,6 +4,10 @@ import { getAddressBalances } from '@steadfastdigital/blockchain-factory';
 @Injectable()
 export class GetAddressBalancesService {
   async execute(network: string, address: string) {
-    return await getAddressBalances(network, address);
+    try {
+      return await getAddressBalances(network, address);
+    } catch (error) {
+      return { error: `${error.name} - ${error.message}` };
+    }
   }
 }

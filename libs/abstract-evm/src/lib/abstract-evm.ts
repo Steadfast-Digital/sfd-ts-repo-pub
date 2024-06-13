@@ -16,6 +16,14 @@ function getIEvmProvider(networkId: string) {
       throw new Error(`Provider not supported for network ${networkId}`);
   }
 }
+
+class EvmAbstractionError extends Error {
+  constructor(public override message: string, public details?: any) {
+    super(message);
+    this.name = 'EvmAbstractionError';
+  }
+}
+
 export abstract class EvmAbstraction extends CoreNetworkAbstraction {
   _rpcProvider: ethers.JsonRpcProvider | ethers.WebSocketProvider;
   
@@ -27,30 +35,46 @@ export abstract class EvmAbstraction extends CoreNetworkAbstraction {
 
   async getAddressBalance(address: string): Promise<AddressBalance> {
     const network = networks[this._networkId];
-    Logger.debug(`Fetching balance for ${address} on ${JSON.stringify(network, null, 2)}`);
-    const { url: rpcUrl } = network.urls.rpc;
-    
-    if (!rpcUrl) {
-      throw new Error(`RPC URL for network ${network.name} not found`);
-    }
+    Logger.debug(`Fetching balance for ${address} on ${network.name}`);
 
-    Logger.debug(`Fetching native balance for ${address} on ${network.name} using ${rpcUrl}`);
+    try {
+      const { url: rpcUrl } = network.urls.rpc;
+      
+      if (!rpcUrl) {
+        throw new EvmAbstractionError(`RPC URL for network ${network.name} not found`);
+      }
 
-    const balanceInWeiEthers = await this._rpcProvider.getBalance(address);
-    const balanceInEthEthers = ethers.formatEther(balanceInWeiEthers);
+      Logger.debug(`Fetching native balance for ${address} on ${network.name} using ${rpcUrl}`);
 
-    Logger.debug(`Balance using ethers.js: ${balanceInEthEthers}`);
+      const balanceInWeiEthers = await this._rpcProvider.getBalance(address);
+      const balanceInEthEthers = ethers.formatEther(balanceInWeiEthers);
 
-    const amount = balanceInEthEthers;
+      Logger.debug(`Balance using ethers.js: ${balanceInEthEthers}`);
 
-    return {
+      const amount = balanceInEthEthers;
+
+      return {
         address,
         native: {
-            asset: nativeAssets.find(asset => asset.networkId === network.id) as NativeAsset,
-            amount: amount,
+          asset: nativeAssets.find(asset => asset.networkId === network.id) as NativeAsset,
+          amount: amount,
         },
         fees: [],
-    };
+      };
+    } catch (error: any) {
+      let errorMessage = 'An unexpected error occurred while fetching the address balance.';
+      let details = {};
+      if (error.code === 'SERVER_ERROR') {
+        errorMessage = 'Server error occurred while fetching the balance.';
+      } else if (error.message.includes('timeout')) {
+        errorMessage = 'Request timed out while fetching the balance.';
+      } else {
+        details = { message: error.message, stack: error.stack };
+      }
+
+      Logger.error(errorMessage, details);
+      throw new EvmAbstractionError(errorMessage, details);
+    }
   }
 
   async getTransactionHistory(address: string): Promise<Transaction[]> {
