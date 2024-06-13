@@ -33,14 +33,14 @@ describe('EvmAbstraction Integration Tests', () => {
   });
 
   it('should fetch ETH address asset balance', async () => {
-    const assetId = 'eth'; // Replace with a valid assetId if needed
+    const assetId = 'usdc'; // Replace with a valid assetId if needed
     const result = await ethEvmAbstraction.getAddressAssetBalance(testAddress, assetId);
     console.log('ETH Address Asset Balance:', result);
     expect(result).toHaveProperty('amount');
   });
 
   it('should fetch ETH address assets balances', async () => {
-    const assetIds = ['eth']; // Replace with valid assetIds if needed
+    const assetIds = ['usdc']; // Replace with valid assetIds if needed
     const result = await ethEvmAbstraction.getAddressAssetsBalances(testAddress, assetIds);
     console.log('ETH Address Assets Balances:', result);
     expect(result.length).toBeGreaterThan(0);

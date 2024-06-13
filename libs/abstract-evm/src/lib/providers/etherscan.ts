@@ -1,7 +1,7 @@
 import { ethers } from 'ethers';
 import { IEvmProvider } from '../types';
 import {  Transaction, AssetBalance } from '@steadfastdigital/abstract-core';
-import { networks, nativeAssets, NativeAsset } from '@steadfastdigital/crypto-assets';
+import { networks, nativeAssets, NativeAsset, tokenAssets } from '@steadfastdigital/crypto-assets';
 import { Logger } from '@steadfastdigital/utils';
 
 export class EtherscanProvider implements IEvmProvider {
@@ -43,10 +43,11 @@ export class EtherscanProvider implements IEvmProvider {
   async getAddressAssetBalance(address: string, assetId: string): Promise<AssetBalance> {
     // Etherscan API for token balance
     const etherscanApiUrlBase = networks[this._networkId].urls.txApi.url;
-    const etherscanApiUrl = `${etherscanApiUrlBase}?module=account&action=tokenbalance&contractaddress=${assetId}&address=${address}&tag=latest`;
+    const asset = tokenAssets.find(asset => asset.networkId === this._networkId && asset.id === assetId);
+    const etherscanApiUrl = `${etherscanApiUrlBase}?module=account&action=tokenbalance&contractaddress=${asset?.contractOrId}&address=${address}&tag=latest`;
     const response = await fetch(etherscanApiUrl);
     const data = await response.json();
-
+    Logger.info(JSON.stringify(data, null, 2));
     if (data.status !== "1") {
       throw new Error(`Failed to fetch address asset balance: ${data.message}`);
     }

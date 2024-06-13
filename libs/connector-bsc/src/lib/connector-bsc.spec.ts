@@ -32,7 +32,7 @@ describe('EvmAbstraction Integration Tests', () => {
   });
 
   it('should fetch BSC address asset balance', async () => {
-    const assetId = 'bsc'; // Replace with a valid assetId if needed
+    const assetId = 'usdc'; // Replace with a valid assetId if needed
     const result = await bscEvmAbstraction.getAddressAssetBalance(testAddress, assetId);
     console.log('BSC Address Asset Balance:', result);
     expect(result.asset).toHaveProperty('id', assetId);
@@ -40,7 +40,7 @@ describe('EvmAbstraction Integration Tests', () => {
   });
 
   it('should fetch BSC address assets balances', async () => {
-    const assetIds = ['bsc']; // Replace with valid assetIds if needed
+    const assetIds = ['usdc']; // Replace with valid assetIds if needed
     const result = await bscEvmAbstraction.getAddressAssetsBalances(testAddress, assetIds);
     console.log('BSC Address Assets Balances:', result);
     expect(result.length).toBeGreaterThan(0);
