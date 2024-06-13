@@ -8,6 +8,26 @@ import { NestFactory } from '@nestjs/core';
 import { BlockchainFactory } from '@steadfastdigital/blockchain-factory';
 import EthConnector from '@steadfastdigital/connector-ethereum';
 import BscConnector from '@steadfastdigital/connector-bsc';
+import { setCustomNetworks } from '@steadfastdigital/crypto-assets';
+import { config } from 'dotenv';
+
+config();
+const bscTxApiKey = process.env['BSC_TX_API_KEY'];
+if (bscTxApiKey) {
+  const customConfig = {
+    bsc: {
+      urls: {
+        txApi: {
+          apiKey: bscTxApiKey,
+        },
+        tokenApi: {
+          apiKey: bscTxApiKey,
+        },
+      },
+    },
+  };
+  setCustomNetworks(customConfig);
+}
 
 BlockchainFactory.registerConnector('eth', new EthConnector('eth'));
 BlockchainFactory.registerConnector('bsc', new BscConnector('bsc'));
