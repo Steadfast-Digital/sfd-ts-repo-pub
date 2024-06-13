@@ -1,4 +1,4 @@
-import { Network } from './types';
+import { Network, DeepPartial } from './types';
 
 export const networks: Record<string, Network> = {
   eth: {
@@ -95,7 +95,7 @@ function mergeDeep(target: any, source: any) {
 }
 
 
-export function setCustomNetworks(customNetworks: Record<string, Partial<Network>>) {
+export function setCustomNetworks(customNetworks: Record<string, DeepPartial<Network>>) {
   Object.keys(customNetworks).forEach(networkId => {
     if (networks[networkId]) {
       mergeDeep(networks[networkId], customNetworks[networkId]);

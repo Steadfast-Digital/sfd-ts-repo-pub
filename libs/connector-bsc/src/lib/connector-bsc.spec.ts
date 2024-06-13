@@ -1,4 +1,9 @@
+import { config } from 'dotenv';
+import { setCustomNetworks } from '@steadfastdigital/crypto-assets';
 import { BscConnector } from './connector-bsc';
+
+// Load environment variables from .env file
+config();
 
 describe('EvmAbstraction Integration Tests', () => {
   const testAddress = '0x742d35Cc6634C0532925a3b844Bc454e4438f44e'; // Replace with a valid address
@@ -6,6 +11,22 @@ describe('EvmAbstraction Integration Tests', () => {
   let bscEvmAbstraction: BscConnector;
 
   beforeAll(() => {
+    const txApiKey = process.env['BSC_TX_API_KEY'];
+    if (txApiKey) {
+      const customConfig = {
+        bsc: {
+          urls: {
+            txApi: {
+              apiKey: txApiKey,
+            },
+            tokenApi: {
+              apiKey: txApiKey,
+            },
+          },
+        },
+      };
+      setCustomNetworks(customConfig);
+    }
     bscEvmAbstraction = new BscConnector('bsc');
   });
 
