@@ -1,11 +1,38 @@
 import '../../app/global.css';
-import { useState, ChangeEvent } from 'react';
+import { useState, useEffect, ChangeEvent } from 'react';
 import { Button, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Input, Textarea, Label, Card, CardContent, CardHeader, CardTitle } from '../../components/ui';
+import { io, Socket } from 'socket.io-client';
 
 const NetworkTester = () => {
   const [network, setNetwork] = useState('eth');
   const [address, setAddress] = useState('0x513c87314578d089ce1f0d9dade81fd637adbb21');
   const [result, setResult] = useState('');
+  const [socket, setSocket] = useState<Socket | null>(null);
+
+  useEffect(() => {
+    const socketInstance = io('http://localhost:3001');
+    setSocket(socketInstance);
+
+    socketInstance.on('connect', () => {
+      console.log('Connected to WebSocket server');
+    });
+
+    socketInstance.on('balanceUpdate', (balance: any) => {
+      setResult(JSON.stringify(balance, null, 2));
+    });
+
+    socketInstance.on('error', (error: any) => {
+      setResult(`Error: ${error}`);
+    });
+
+    socketInstance.on('disconnect', () => {
+      console.log('Disconnected from WebSocket server');
+    });
+
+    return () => {
+      socketInstance.disconnect();
+    };
+  }, []);
 
   const handleNetworkChange = (value: string) => {
     setNetwork(value);
@@ -37,6 +64,13 @@ const NetworkTester = () => {
       }
     } catch (error: any) {
       setResult(`Error: ${error.message}`);
+    }
+  };
+
+  const handleSubscribeToBalance = () => {
+    setResult('Subscribing to balance updates...');
+    if (socket) {
+      socket.emit('subscribeToBalance', { network, address });
     }
   };
 
@@ -74,6 +108,7 @@ const NetworkTester = () => {
             <Button onClick={() => handleTestFunction('getTransactionHistory')}>Test getTransactionHistory</Button>
             <Button onClick={() => handleTestFunction('getAddressAssetsBalances')}>Test getAddressAssetsBalances</Button>
             <Button onClick={() => handleTestFunction('getAddressBalances')}>Test getAddressBalances</Button>
+            <Button onClick={handleSubscribeToBalance}>Subscribe to Balance Updates</Button>
           </div>
           <div className="mt-4">
             <Label>Result:</Label>

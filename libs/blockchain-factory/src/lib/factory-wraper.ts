@@ -24,3 +24,8 @@ export async function getTransactionHistory(networkId: string, address: string) 
   const blockchain = await BlockchainFactory.createBlockchain(networkId);
   return blockchain.getTransactionHistory(address);
 }
+
+export function subscribeToBalance(networkId: string, address: string) {
+  const blockchain = BlockchainFactory.getConnection(networkId);
+  return blockchain.subscribeToBalance(address);
+}

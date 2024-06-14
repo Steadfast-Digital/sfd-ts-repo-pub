@@ -64,4 +64,8 @@ export class BlockchainFactory {
     const connector = await this.createBlockchain(networkId);
     return connector.getTransactionHistory(address);
   }
+  static subscribeToBalance(networkId: string, address: string) {
+    const connector = this.getConnection(networkId);
+    return connector.subscribeToBalance(address);
+  }
 }

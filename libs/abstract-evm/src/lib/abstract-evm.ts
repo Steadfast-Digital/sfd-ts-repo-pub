@@ -2,8 +2,8 @@ import { ethers } from 'ethers';
 import { CoreNetworkAbstraction, AddressBalance, Transaction, AddressBalances, AssetBalance } from '@steadfastdigital/abstract-core';
 import { networks, nativeAssets, NativeAsset } from '@steadfastdigital/crypto-assets';
 import { Logger, isValidWebSocketUrl } from '@steadfastdigital/utils';
-
 import { BlockbookProvider, EtherscanProvider } from './providers';
+import { Observable } from 'rxjs';
 
 function getIEvmProvider(networkId: string) {
   const { type } = networks[networkId].urls.txApi;
@@ -26,7 +26,7 @@ class EvmAbstractionError extends Error {
 
 export abstract class EvmAbstraction extends CoreNetworkAbstraction {
   _rpcProvider: ethers.JsonRpcProvider | ethers.WebSocketProvider;
-  
+
   constructor(networkId: string) {
     super(networkId);
     const rpcUrl = networks[networkId].urls.rpc.url;
@@ -39,7 +39,7 @@ export abstract class EvmAbstraction extends CoreNetworkAbstraction {
 
     try {
       const { url: rpcUrl } = network.urls.rpc;
-      
+
       if (!rpcUrl) {
         throw new EvmAbstractionError(`RPC URL for network ${network.name} not found`);
       }
@@ -101,5 +101,64 @@ export abstract class EvmAbstraction extends CoreNetworkAbstraction {
 
   async getAddressAssetsBalances(address: string, assetIds: string[]): Promise<AssetBalance[]> {
     return getIEvmProvider(this._networkId).getAddressAssetsBalances(address, assetIds);
+  }
+
+  /**
+   * 
+   * @param address 
+   * @returns 
+   * @example const subscription = evmAbstraction.subscribeToBalance(address).subscribe({
+        next: (balance) => console.log('Balance updated:', balance),
+        error: (err) => console.error('Error:', err),
+      });
+   */
+  subscribeToBalance(address: string): Observable<AddressBalance> {
+    const network = networks[this._networkId];
+    const { url: rpcUrl } = network.urls.rpc;
+
+    if (!isValidWebSocketUrl(rpcUrl)) {
+      throw new EvmAbstractionError(`RPC URL for network ${network.name} is not a valid WebSocket URL`);
+    }
+
+    const wsProvider = new ethers.WebSocketProvider(rpcUrl);
+    Logger.debug(`Subscribing to balance updates for ${address} on ${network.name} using ${rpcUrl}`);
+    return new Observable<AddressBalance>(subscriber => {
+      const fetchBalance = async () => {
+        try {
+          const balanceInWeiEthers = await wsProvider.getBalance(address);
+          const balanceInEthEthers = ethers.formatEther(balanceInWeiEthers);
+          const amount = balanceInEthEthers;
+
+          const balance: AddressBalance = {
+            address,
+            native: {
+              asset: nativeAssets.find(asset => asset.networkId === network.id) as NativeAsset,
+              amount: amount,
+            },
+            fees: [],
+          };
+          Logger.debug(`Balance updated: ${amount}`);
+          subscriber.next(balance);
+        } catch (error: any) {
+          subscriber.error(new EvmAbstractionError('Error fetching balance', error));
+        }
+      };
+
+      // Fetch initial balance
+      fetchBalance();
+
+      // Subscribe to pending transactions involving the address
+      const filter = {
+        address: address,
+        topics: [],
+      };
+
+      const subscription = wsProvider.on(filter, fetchBalance);
+
+      // Unsubscribe on observable completion
+      return () => {
+        wsProvider.off(filter, fetchBalance);
+      };
+    });
   }
 }

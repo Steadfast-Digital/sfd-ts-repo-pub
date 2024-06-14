@@ -5,4 +5,5 @@ export {
   getAddressAssetBalance,
   getAddressAssetsBalances,
   getTransactionHistory,
+  subscribeToBalance
 } from './lib/factory-wraper';

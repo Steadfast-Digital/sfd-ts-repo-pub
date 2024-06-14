@@ -12,6 +12,9 @@ import { GetAddressBalanceService } from '../services/get-address-balance.servic
 import { GetTransactionHistoryService } from '../services/get-transaction-history.service';
 import { GetAddressAssetsBalancesService } from '../services/get-address-assets-balances.service';
 import { GetAddressBalancesService } from '../services/get-address-balances.service';
+import { SubscribeToBalanceService } from '../services/subscribe-to-balance.service';
+
+import { SubscribeToBalanceGateway } from '../gateways/subscribe-to-balance.gateway';
 
 @Module({
   imports: [],
@@ -28,6 +31,8 @@ import { GetAddressBalancesService } from '../services/get-address-balances.serv
     GetTransactionHistoryService,
     GetAddressAssetsBalancesService,
     GetAddressBalancesService,
+    SubscribeToBalanceService,
+    SubscribeToBalanceGateway,
   ],
 })
 export class AppModule {}

@@ -10,7 +10,10 @@
           "error",
           {
             "enforceBuildableLibDependency": true,
-            "allow": [],
+            "allow": [
+              "@steadfastdigital/*",
+              "@nestjs/*"
+            ],
             "depConstraints": [
               {
                 "sourceTag": "*",

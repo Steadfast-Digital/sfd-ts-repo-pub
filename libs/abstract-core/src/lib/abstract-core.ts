@@ -1,4 +1,5 @@
 import { NativeAsset, TokenAsset } from '@steadfastdigital/crypto-assets';
+import { Observable } from 'rxjs';
 
 export type NativeAssetBalance = {
   asset: NativeAsset;
@@ -42,6 +43,7 @@ export interface BlockcahinInterface {
   getAddressAssetBalance(address: string, assetId: string): Promise<AssetBalance>;
   getAddressAssetsBalances(address: string, assetIds: string[]): Promise<AssetBalance[]>;
   getTransactionHistory(address: string): Promise<Transaction[]>;
+  subscribeToBalance(address: string): Observable<AddressBalance>;
 }
 export abstract class CoreNetworkAbstraction implements BlockcahinInterface {
   // create a constractor that takes in a networkId
@@ -54,4 +56,5 @@ export abstract class CoreNetworkAbstraction implements BlockcahinInterface {
   abstract getAddressAssetBalance(address: string, assetId: string): Promise<AssetBalance>;
   abstract getAddressAssetsBalances(address: string, assetIds: string[]): Promise<AssetBalance[]>;
   abstract getTransactionHistory(address: string): Promise<Transaction[]>;
+  abstract subscribeToBalance(address: string): Observable<AddressBalance>;
 }
