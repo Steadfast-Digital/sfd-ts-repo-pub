@@ -65,7 +65,7 @@ export class BlockbookProvider implements IEvmProvider {
     }
   }
 
-  async getAddressAssetBalance(address: string, assetId: string): Promise<AssetBalance> {
+  async getAssetBalance(address: string, assetId: string): Promise<AssetBalance> {
     const network = networks[this._networkId];
     const blockbookApiUrl = network.urls.tokenApi.url;
 
@@ -112,7 +112,7 @@ export class BlockbookProvider implements IEvmProvider {
     }
   }
 
-  async getAddressAssetsBalances(address: string, assetIds: string[]): Promise<AssetBalance[]> {
+  async getAssetsBalances(address: string, assetIds: string[]): Promise<AssetBalance[]> {
     const network = networks[this._networkId];
     const blockbookApiUrl = network.urls.tokenApi.url;
 

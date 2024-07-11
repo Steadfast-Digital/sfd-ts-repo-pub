@@ -66,7 +66,7 @@ export class EtherscanProvider implements IEvmProvider {
     }
   }
 
-  async getAddressAssetBalance(address: string, assetId: string): Promise<AssetBalance> {
+  async getAssetBalance(address: string, assetId: string): Promise<AssetBalance> {
     const network = networks[this._networkId];
     const etherscanApiUrlBase = network.urls.txApi.url;
     const apikey = network.urls.txApi.apiKey;
@@ -115,10 +115,10 @@ export class EtherscanProvider implements IEvmProvider {
     }
   }
 
-  async getAddressAssetsBalances(address: string, assetIds: string[]): Promise<AssetBalance[]> {
+  async getAssetsBalances(address: string, assetIds: string[]): Promise<AssetBalance[]> {
     try {
       const balances = await Promise.all(
-        assetIds.map(assetId => this.getAddressAssetBalance(address, assetId))
+        assetIds.map(assetId => this.getAssetBalance(address, assetId))
       );
       return balances;
     } catch (error: any) {

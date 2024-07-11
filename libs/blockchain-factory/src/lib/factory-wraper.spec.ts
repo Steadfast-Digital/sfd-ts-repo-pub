@@ -10,11 +10,11 @@ describe('factoryWraper', () => {
       },
     }
     setCustomNetworks(customconfig);
-    const balance = await getAddressBalance('eth', '0x69c7D0b5F8C9726c9DB57445e87ab41f509Ca271');
+    const balance = await getBalance('eth', '0x69c7D0b5F8C9726c9DB57445e87ab41f509Ca271');
     console.log(balance);
   });
   // it('should through package not installed', async () => {
-  //   const balance = await getAddressBalance('bsc', '0xabc');
+  //   const balance = await getBalance('bsc', '0xabc');
   //   console.log(balance);
   // });
 
@@ -24,12 +24,12 @@ describe('factoryWraper', () => {
   }, 10000); // Set timeout to 10 seconds for this test
 
   it('should get address asset balances', async () => {
-    const balance = await getAddressAssetsBalances('eth', '0x938B8B088E419278DaBfAAEDADA7a83ab7D75A7E', []);
+    const balance = await getAssetsBalances('eth', '0x938B8B088E419278DaBfAAEDADA7a83ab7D75A7E', []);
     console.log(balance[0]);
   }, 10000); // Set timeout to 10 seconds for this test
 
   it('should get address balances', async () => {
-    const balance = await getAddressBalances('eth', '0x938B8B088E419278DaBfAAEDADA7a83ab7D75A7E');
+    const balance = await getAllBalances('eth', '0x938B8B088E419278DaBfAAEDADA7a83ab7D75A7E');
     console.log(balance);
   }, 10000); // Set timeout to 10 seconds for this test
 });

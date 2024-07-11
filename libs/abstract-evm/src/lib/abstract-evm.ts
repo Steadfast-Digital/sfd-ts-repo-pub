@@ -4,6 +4,7 @@ import { networks, nativeAssets, NativeAsset } from '@steadfastdigital/crypto-as
 import { Logger, isValidWebSocketUrl } from '@steadfastdigital/utils';
 import { BlockbookProvider, EtherscanProvider } from './providers';
 import { Observable } from 'rxjs';
+import { log } from 'console';
 
 function getIEvmProvider(networkId: string) {
   const { type } = networks[networkId].urls.txApi;
@@ -33,7 +34,7 @@ export abstract class EvmAbstraction extends CoreNetworkAbstraction {
     this._rpcProvider = isValidWebSocketUrl(rpcUrl) ? new ethers.WebSocketProvider(rpcUrl) : new ethers.JsonRpcProvider(rpcUrl);
   }
 
-  async getAddressBalance(address: string): Promise<AddressBalance> {
+  async getBalance(address: string): Promise<AddressBalance> {
     const network = networks[this._networkId];
     Logger.debug(`Fetching balance for ${address} on ${network.name}`);
 
@@ -81,11 +82,11 @@ export abstract class EvmAbstraction extends CoreNetworkAbstraction {
     return getIEvmProvider(this._networkId).getTransactionHistory(address);
   }
 
-  async getAddressBalances(address: string): Promise<AddressBalances> {
+  async getAllBalances(address: string): Promise<AddressBalances> {
     Logger.debug('Fetching address balances', address);
-    const tokens = await getIEvmProvider(this._networkId).getAddressAssetsBalances(address, []);
+    const tokens = await getIEvmProvider(this._networkId).getAssetsBalances(address, []);
 
-    const nativeBalance = await this.getAddressBalance(address);
+    const nativeBalance = await this.getBalance(address);
 
     return {
       address,
@@ -95,12 +96,12 @@ export abstract class EvmAbstraction extends CoreNetworkAbstraction {
     };
   }
 
-  async getAddressAssetBalance(address: string, assetId: string): Promise<AssetBalance> {
-    return getIEvmProvider(this._networkId).getAddressAssetBalance(address, assetId);
+  async getAssetBalance(address: string, assetId: string): Promise<AssetBalance> {
+    return getIEvmProvider(this._networkId).getAssetBalance(address, assetId);
   }
 
-  async getAddressAssetsBalances(address: string, assetIds: string[]): Promise<AssetBalance[]> {
-    return getIEvmProvider(this._networkId).getAddressAssetsBalances(address, assetIds);
+  async getAssetsBalances(address: string, assetIds: string[]): Promise<AssetBalance[]> {
+    return getIEvmProvider(this._networkId).getAssetsBalances(address, assetIds);
   }
 
   /**
@@ -152,11 +153,13 @@ export abstract class EvmAbstraction extends CoreNetworkAbstraction {
         address: address,
         topics: [],
       };
-
+      Logger.debug('Subscribing to balance updates' + JSON.stringify(filter, null, 2));
       const subscription = wsProvider.on(filter, fetchBalance);
+      Logger.debug('Subscribed to balance updates' + JSON.stringify(subscription, null, 2));
 
       // Unsubscribe on observable completion
       return () => {
+        Logger.debug('Unsubscribing from balance updates');
         wsProvider.off(filter, fetchBalance);
       };
     });

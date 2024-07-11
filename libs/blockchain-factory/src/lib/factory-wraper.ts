@@ -1,23 +1,23 @@
 import { BlockchainFactory } from "./blockchain-factory";
 
-export async function getAddressBalance(networkId: string, address: string) {
+export async function getBalance(networkId: string, address: string) {
   const blockchain = await BlockchainFactory.createBlockchain(networkId);
-  return blockchain.getAddressBalance(address);
+  return blockchain.getBalance(address);
 }
 
-export async function getAddressBalances(networkId: string, address: string) {
+export async function getAllBalances(networkId: string, address: string) {
   const blockchain = await BlockchainFactory.createBlockchain(networkId);
-  return blockchain.getAddressBalances(address);
+  return blockchain.getAllBalances(address);
 }
 
-export async function getAddressAssetBalance(networkId: string, address: string, assetId: string) {
+export async function getAssetBalance(networkId: string, address: string, assetId: string) {
   const blockchain = await BlockchainFactory.createBlockchain(networkId);
-  return blockchain.getAddressAssetBalance(address, assetId);
+  return blockchain.getAssetBalance(address, assetId);
 }
 
-export async function getAddressAssetsBalances(networkId: string, address: string, assetIds: string[]) {
+export async function getAssetsBalances(networkId: string, address: string, assetIds: string[]) {
   const blockchain = await BlockchainFactory.createBlockchain(networkId);
-  return blockchain.getAddressAssetsBalances(address, assetIds);
+  return blockchain.getAssetsBalances(address, assetIds);
 }
 
 export async function getTransactionHistory(networkId: string, address: string) {

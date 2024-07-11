@@ -6,7 +6,7 @@ export class GetAddressAssetsBalancesController {
   constructor(private readonly getAddressAssetsBalancesService: GetAddressAssetsBalancesService) {}
 
   @Post('getAddressAssetsBalances')
-  async getAddressAssetsBalances(@Body() body: { network: string; address: string }) {
+  async getAssetsBalances(@Body() body: { network: string; address: string }) {
     try {
       const balances = await this.getAddressAssetsBalancesService.execute(body.network, body.address);
       return { balances };

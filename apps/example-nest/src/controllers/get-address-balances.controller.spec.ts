@@ -29,7 +29,7 @@ describe('GetAddressBalancesController', () => {
 
   it('should return address balances', async () => {
     const body = { network: 'eth', address: '0xaddress' };
-    const result = await controller.getAddressBalances(body);
+    const result = await controller.getAllBalances(body);
     expect(result).toEqual({ balances: { balance: 1000 } });
     expect(service.execute).toHaveBeenCalledWith('eth', '0xaddress');
   });

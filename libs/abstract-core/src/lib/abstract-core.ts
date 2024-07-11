@@ -37,13 +37,23 @@ export interface Transaction {
   nonce: number;
 }
 
+export interface UpdateFeed {
+  address: string;
+  balance: AddressBalance;
+  transactions: Transaction[];
+}
+
 export interface BlockcahinInterface {
-  getAddressBalance(address: string): Promise<AddressBalance>;
-  getAddressBalances(address: string): Promise<AddressBalances>;
-  getAddressAssetBalance(address: string, assetId: string): Promise<AssetBalance>;
-  getAddressAssetsBalances(address: string, assetIds: string[]): Promise<AssetBalance[]>;
-  getTransactionHistory(address: string): Promise<Transaction[]>;
+  getBalance(address: string): Promise<AddressBalance>;
+  getAllBalances(address: string): Promise<AddressBalances>;
+  getAssetBalance(address: string, assetId: string): Promise<AssetBalance>;
+  getAssetsBalances(address: string, assetIds: string[]): Promise<AssetBalance[]>;
+  getAllAssetsBalances(address: string): Promise<AssetBalance[]>;
+  getTransaction(hash: string): Promise<Transaction>;
+  getRecentTransactions(address: string, limit?: number): Promise<Transaction[]>;
+  getTransactionHistory(address: string, limit?: number, sblock?: number, eblock?: number): Promise<Transaction[]>;
   subscribeToBalance(address: string): Observable<AddressBalance>;
+  subscribeToTransactions(address: string): Observable<Transaction[]>;
 }
 export abstract class CoreNetworkAbstraction implements BlockcahinInterface {
   // create a constractor that takes in a networkId
@@ -51,10 +61,14 @@ export abstract class CoreNetworkAbstraction implements BlockcahinInterface {
   constructor(protected networkId: string) {
     this._networkId = networkId;
   }
-  abstract getAddressBalance(address: string): Promise<AddressBalance>;
-  abstract getAddressBalances(address: string): Promise<AddressBalances>;
-  abstract getAddressAssetBalance(address: string, assetId: string): Promise<AssetBalance>;
-  abstract getAddressAssetsBalances(address: string, assetIds: string[]): Promise<AssetBalance[]>;
-  abstract getTransactionHistory(address: string): Promise<Transaction[]>;
+  abstract getBalance(address: string): Promise<AddressBalance>;
+  abstract getAllBalances(address: string): Promise<AddressBalances>;
+  abstract getAssetBalance(address: string, assetId: string): Promise<AssetBalance>;
+  abstract getAssetsBalances(address: string, assetIds: string[]): Promise<AssetBalance[]>;
+  abstract getAllAssetsBalances(address: string): Promise<AssetBalance[]>;
+  abstract getTransaction(hash: string): Promise<Transaction>;
+  abstract getRecentTransactions(address: string, limit?: number): Promise<Transaction[]>;
+  abstract getTransactionHistory(address: string, limit?: number, sblock?: number, eblock?: number): Promise<Transaction[]>;
   abstract subscribeToBalance(address: string): Observable<AddressBalance>;
+  abstract subscribeToTransactions(address: string): Observable<Transaction[]>;
 }

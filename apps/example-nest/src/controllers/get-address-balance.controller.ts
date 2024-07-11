@@ -6,7 +6,7 @@ export class GetAddressBalanceController {
   constructor(private readonly getAddressBalanceService: GetAddressBalanceService) {}
 
   @Post('getAddressBalance')
-  async getAddressBalance(@Body() body: { network: string; address: string }) {
+  async getBalance(@Body() body: { network: string; address: string }) {
     try {
       const balance = await this.getAddressBalanceService.execute(body.network, body.address);
       return balance; // Return the balance { balance: 0.0 } as an example

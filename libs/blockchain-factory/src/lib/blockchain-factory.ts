@@ -44,21 +44,21 @@ export class BlockchainFactory {
     }
     return this._connectors[networkId];
   }
-  static async getAddressBalance(networkId: string, address: string) {
+  static async getBalance(networkId: string, address: string) {
     const connector = await this.createBlockchain(networkId);
-    return connector.getAddressBalance(address);
+    return connector.getBalance(address);
   }
-  static async getAddressAssetBalance(networkId: string, address: string, assetId: string) {
+  static async getAssetBalance(networkId: string, address: string, assetId: string) {
     const connector = await this.createBlockchain(networkId);
-    return connector.getAddressAssetBalance(address, assetId);
+    return connector.getAssetBalance(address, assetId);
   }
-  static async getAddressBalances(networkId: string, address: string) {
+  static async getAllBalances(networkId: string, address: string) {
     const connector = await this.createBlockchain(networkId);
-    return connector.getAddressBalances(address);
+    return connector.getAllBalances(address);
   }
-  static async getAddressAssetsBalances(networkId: string, address: string, assetIds: string[]) {
+  static async getAssetsBalances(networkId: string, address: string, assetIds: string[]) {
     const connector = await this.createBlockchain(networkId);
-    return connector.getAddressAssetsBalances(address, assetIds);
+    return connector.getAssetsBalances(address, assetIds);
   }
   static async getTransactionHistory(networkId: string, address: string) {
     const connector = await this.createBlockchain(networkId);

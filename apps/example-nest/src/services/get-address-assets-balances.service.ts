@@ -5,7 +5,7 @@ import { getAddressAssetsBalances } from '@steadfastdigital/blockchain-factory';
 export class GetAddressAssetsBalancesService {
   async execute(network: string, address: string) {
     try {
-      return await getAddressAssetsBalances(network, address, []);
+      return await getAssetsBalances(network, address, []);
     } catch (error) {
       return { error: `${error.name} - ${error.message}` };
     }
