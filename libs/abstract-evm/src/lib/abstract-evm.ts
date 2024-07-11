@@ -57,6 +57,7 @@ export abstract class EvmAbstraction extends CoreNetworkAbstraction {
         fees: [],
       };
     } catch (error: unknown) {
+      Logger.error('Error fetching balance', error);
       if (!(error instanceof EvmAbstractionError)) throw new EvmAbstractionError('An unexpected error occurred while fetching the address balance.', { error });
       const errorMessage = 'An unexpected error occurred while fetching the address balance.';
       const details = { message: error.message, stack: error.stack };
