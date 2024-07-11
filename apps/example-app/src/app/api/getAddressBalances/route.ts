@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getAddressBalances } from '@steadfastdigital/blockchain-factory';
+import { getBalances } from '@steadfastdigital/blockchain-factory';
 
 export async function POST(request: Request) {
   const { network, address } = await request.json();

@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { getAddressBalances } from '@steadfastdigital/blockchain-factory';
+import { getBalance } from '@steadfastdigital/blockchain-factory';
 
 @Injectable()
-export class GetAddressBalancesService {
+export class GetBalanceService {
   async execute(network: string, address: string) {
     try {
-      return await getAllBalances(network, address);
+      return await getBalance(network, address);
     } catch (error) {
       return { error: `${error.name} - ${error.message}` };
     }

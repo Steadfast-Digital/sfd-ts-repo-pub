@@ -1,4 +1,4 @@
-import { getAddressBalance, getAddressBalances, getTransactionHistory, getAddressAssetsBalances } from './factory-wraper';
+import { getBalance, getAllBalances, getTransactionHistory, getAssetsBalances } from './factory-wraper';
 import { setCustomNetworks } from '@steadfastdigital/crypto-assets';
 
 describe('factoryWraper', () => {

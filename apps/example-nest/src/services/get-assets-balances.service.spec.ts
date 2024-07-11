@@ -1,20 +1,20 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { GetAddressAssetsBalancesService } from './get-address-assets-balances.service';
-import { getAddressAssetsBalances } from '@steadfastdigital/blockchain-factory';
+import { GetAssetsBalancesService } from './get-assets-balances.service';
+import { getAssetsBalances } from '@steadfastdigital/blockchain-factory';
 
 jest.mock('@steadfastdigital/blockchain-factory', () => ({
-  getAddressAssetsBalances: jest.fn(),
+  getAssetsBalances: jest.fn(),
 }));
 
-describe('GetAddressAssetsBalancesService', () => {
-  let service: GetAddressAssetsBalancesService;
+describe('GetAssetsBalancesService', () => {
+  let service: GetAssetsBalancesService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [GetAddressAssetsBalancesService],
+      providers: [GetAssetsBalancesService],
     }).compile();
 
-    service = module.get<GetAddressAssetsBalancesService>(GetAddressAssetsBalancesService);
+    service = module.get<GetAssetsBalancesService>(GetAssetsBalancesService);
   });
 
   it('should be defined', () => {
@@ -23,7 +23,7 @@ describe('GetAddressAssetsBalancesService', () => {
 
   it('should return address asset balances', async () => {
     const mockBalances = [{ asset: 'asset1' }, { asset: 'asset2' }];
-    (getAddressAssetsBalances as jest.Mock).mockResolvedValue(mockBalances);
+    (getAssetsBalances as jest.Mock).mockResolvedValue(mockBalances);
 
     const result = await service.execute('eth', '0xaddress');
     expect(result).toEqual(mockBalances);

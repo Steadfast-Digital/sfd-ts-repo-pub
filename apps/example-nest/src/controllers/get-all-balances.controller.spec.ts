@@ -1,17 +1,17 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { GetAddressBalancesController } from './get-address-balances.controller';
-import { GetAddressBalancesService } from '../services/get-address-balances.service';
+import { GetBalancesController } from './get-all-balances.controller';
+import { GetBalancesService } from '../services/get-all-balances.service';
 
-describe('GetAddressBalancesController', () => {
-  let controller: GetAddressBalancesController;
-  let service: GetAddressBalancesService;
+describe('GetBalancesController', () => {
+  let controller: GetBalancesController;
+  let service: GetBalancesService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [GetAddressBalancesController],
+      controllers: [GetBalancesController],
       providers: [
         {
-          provide: GetAddressBalancesService,
+          provide: GetBalancesService,
           useValue: {
             execute: jest.fn().mockResolvedValue({ balance: 1000 }),
           },
@@ -19,8 +19,8 @@ describe('GetAddressBalancesController', () => {
       ],
     }).compile();
 
-    controller = module.get<GetAddressBalancesController>(GetAddressBalancesController);
-    service = module.get<GetAddressBalancesService>(GetAddressBalancesService);
+    controller = module.get<GetBalancesController>(GetBalancesController);
+    service = module.get<GetBalancesService>(GetBalancesService);
   });
 
   it('should be defined', () => {

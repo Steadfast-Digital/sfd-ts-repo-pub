@@ -1,17 +1,17 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { GetAddressAssetsBalancesController } from './get-address-assets-balances.controller';
-import { GetAddressAssetsBalancesService } from '../services/get-address-assets-balances.service';
+import { GetAssetsBalancesController } from './get-assets-balances.controller';
+import { GetAssetsBalancesService } from '../services/get-assets-balances.service';
 
-describe('GetAddressAssetsBalancesController', () => {
-  let controller: GetAddressAssetsBalancesController;
-  let service: GetAddressAssetsBalancesService;
+describe('GetAssetsBalancesController', () => {
+  let controller: GetAssetsBalancesController;
+  let service: GetAssetsBalancesService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [GetAddressAssetsBalancesController],
+      controllers: [GetAssetsBalancesController],
       providers: [
         {
-          provide: GetAddressAssetsBalancesService,
+          provide: GetAssetsBalancesService,
           useValue: {
             execute: jest.fn().mockResolvedValue([{ asset: 'asset1' }, { asset: 'asset2' }]),
           },
@@ -19,8 +19,8 @@ describe('GetAddressAssetsBalancesController', () => {
       ],
     }).compile();
 
-    controller = module.get<GetAddressAssetsBalancesController>(GetAddressAssetsBalancesController);
-    service = module.get<GetAddressAssetsBalancesService>(GetAddressAssetsBalancesService);
+    controller = module.get<GetAssetsBalancesController>(GetAssetsBalancesController);
+    service = module.get<GetAssetsBalancesService>(GetAssetsBalancesService);
   });
 
   it('should be defined', () => {
