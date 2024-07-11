@@ -3,13 +3,7 @@ import { IEvmProvider } from '../types';
 import { Transaction, AssetBalance } from '@steadfastdigital/abstract-core';
 import { networks, nativeAssets, NativeAsset } from '@steadfastdigital/crypto-assets';
 import { Logger } from '@steadfastdigital/utils';
-
-class EvmProviderError extends Error {
-  constructor(public override message: string, public details?: any) {
-    super(message);
-    this.name = 'EvmProviderError';
-  }
-}
+import { EvmProviderError } from '../errors';
 
 export class BlockbookProvider implements IEvmProvider {
   private _networkId: string;
@@ -112,7 +106,7 @@ export class BlockbookProvider implements IEvmProvider {
     }
   }
 
-  async getAssetsBalances(address: string, assetIds: string[]): Promise<AssetBalance[]> {
+  async getAssetsBalances(address: string): Promise<AssetBalance[]> {
     const network = networks[this._networkId];
     const blockbookApiUrl = network.urls.tokenApi.url;
 

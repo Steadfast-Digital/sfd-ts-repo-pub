@@ -1,10 +1,11 @@
 import { ethers } from 'ethers';
-import { CoreNetworkAbstraction, AddressBalance, Transaction, AddressBalances, AssetBalance } from '@steadfastdigital/abstract-core';
+import { CoreNetworkAbstraction, AddressBalance, Transaction, AddressBalances, AssetBalance, UpdateFeed } from '@steadfastdigital/abstract-core';
 import { networks, nativeAssets, NativeAsset } from '@steadfastdigital/crypto-assets';
 import { Logger, isValidWebSocketUrl } from '@steadfastdigital/utils';
 import { BlockbookProvider, EtherscanProvider } from './providers';
 import { Observable } from 'rxjs';
-import { log } from 'console';
+import { EvmAbstractionError } from './errors';
+import { fetchTokenBalance } from './rpc/asset-balance';
 
 function getIEvmProvider(networkId: string) {
   const { type } = networks[networkId].urls.txApi;
@@ -15,13 +16,6 @@ function getIEvmProvider(networkId: string) {
       return new BlockbookProvider(networkId);
     default:
       throw new Error(`Provider not supported for network ${networkId}`);
-  }
-}
-
-class EvmAbstractionError extends Error {
-  constructor(public override message: string, public details?: any) {
-    super(message);
-    this.name = 'EvmAbstractionError';
   }
 }
 
@@ -62,29 +56,27 @@ export abstract class EvmAbstraction extends CoreNetworkAbstraction {
         },
         fees: [],
       };
-    } catch (error: any) {
-      let errorMessage = 'An unexpected error occurred while fetching the address balance.';
-      let details = {};
-      if (error.code === 'SERVER_ERROR') {
-        errorMessage = 'Server error occurred while fetching the balance.';
-      } else if (error.message.includes('timeout')) {
-        errorMessage = 'Request timed out while fetching the balance.';
-      } else {
-        details = { message: error.message, stack: error.stack };
-      }
-
+    } catch (error: unknown) {
+      if (!(error instanceof EvmAbstractionError)) throw new EvmAbstractionError('An unexpected error occurred while fetching the address balance.', { error });
+      const errorMessage = 'An unexpected error occurred while fetching the address balance.';
+      const details = { message: error.message, stack: error.stack };
       Logger.error(errorMessage, details);
       throw new EvmAbstractionError(errorMessage, details);
     }
   }
-
-  async getTransactionHistory(address: string): Promise<Transaction[]> {
+  async getTransaction(hash: string): Promise<Transaction> {
+    throw new Error('Method not implemented.');
+  }
+  async getRecentTransactions(address: string, limit?: number): Promise<Transaction[]> {
+    return getIEvmProvider(this._networkId).getTransactionHistory(address);
+  }
+  async getTransactionHistory(address: string, limit?: number): Promise<Transaction[]> {
     return getIEvmProvider(this._networkId).getTransactionHistory(address);
   }
 
   async getAllBalances(address: string): Promise<AddressBalances> {
     Logger.debug('Fetching address balances', address);
-    const tokens = await getIEvmProvider(this._networkId).getAssetsBalances(address, []);
+    const tokens = await getIEvmProvider(this._networkId).getAssetsBalances(address);
 
     const nativeBalance = await this.getBalance(address);
 
@@ -97,11 +89,51 @@ export abstract class EvmAbstraction extends CoreNetworkAbstraction {
   }
 
   async getAssetBalance(address: string, assetId: string): Promise<AssetBalance> {
-    return getIEvmProvider(this._networkId).getAssetBalance(address, assetId);
+    const network = networks[this._networkId];
+    Logger.debug(`Fetching balance for ${address} and asset ${assetId} on ${network.name}`);
+
+    try {
+      const { url: rpcUrl } = network.urls.rpc;
+
+      if (!rpcUrl) {
+        throw new EvmAbstractionError(`RPC URL for network ${network.name} not found`);
+      }
+
+      const token = await fetchTokenBalance(this._rpcProvider, address, assetId);
+
+      return {
+        asset: {
+          id: assetId,
+          name: token.name,
+          symbol: token.symbol,
+          decimals: token.decimals,
+          contractOrId: assetId,
+          networkId: this._networkId,
+          assetType: 'ERC20',
+        },
+        amount: ethers.formatUnits(token.balance, token.decimals),
+      };
+    } catch (error: unknown) {
+      if (!(error instanceof EvmAbstractionError)) throw new EvmAbstractionError('An unexpected error occurred while fetching the address balance.', { error });
+      const errorMessage = 'An unexpected error occurred while fetching the address balance.';
+      const details = { message: error.message, stack: error.stack };
+
+      Logger.error(errorMessage, details);
+      throw new EvmAbstractionError(errorMessage, details);
+    }
   }
 
   async getAssetsBalances(address: string, assetIds: string[]): Promise<AssetBalance[]> {
-    return getIEvmProvider(this._networkId).getAssetsBalances(address, assetIds);
+    const balances: AssetBalance[] = [];
+    for (const assetId of assetIds) {
+      const balance = await this.getAssetBalance(address, assetId);
+      balances.push(balance);
+    }
+    return balances;
+  }
+
+  async getAllAssetsBalances(address: string): Promise<AssetBalance[]> {
+    return getIEvmProvider(this._networkId).getAssetsBalances(address);
   }
 
   /**
@@ -140,7 +172,7 @@ export abstract class EvmAbstraction extends CoreNetworkAbstraction {
           };
           Logger.debug(`Balance updated: ${amount}`);
           subscriber.next(balance);
-        } catch (error: any) {
+        } catch (error: unknown) {
           subscriber.error(new EvmAbstractionError('Error fetching balance', error));
         }
       };
@@ -163,5 +195,11 @@ export abstract class EvmAbstraction extends CoreNetworkAbstraction {
         wsProvider.off(filter, fetchBalance);
       };
     });
+  }
+  subscribeToTransactions(address: string): Observable<Transaction[]> {
+    throw new Error('Method not implemented.');
+  }
+  subscribeToUpdates(address: string): Observable<UpdateFeed> {
+    throw new Error('Method not implemented.');
   }
 }

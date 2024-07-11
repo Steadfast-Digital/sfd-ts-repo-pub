@@ -3,13 +3,7 @@ import { IEvmProvider } from '../types';
 import { Transaction, AssetBalance } from '@steadfastdigital/abstract-core';
 import { networks, nativeAssets, NativeAsset, tokenAssets } from '@steadfastdigital/crypto-assets';
 import { Logger } from '@steadfastdigital/utils';
-
-class EvmProviderError extends Error {
-  constructor(public override message: string, public details?: any) {
-    super(message);
-    this.name = 'EvmProviderError';
-  }
-}
+import { EvmProviderError } from '../errors';
 
 export class EtherscanProvider implements IEvmProvider {
   private _networkId: string;
@@ -48,7 +42,8 @@ export class EtherscanProvider implements IEvmProvider {
         asset: nativeAssets.find(asset => asset.networkId === this._networkId) as NativeAsset,
         nonce: tx.nonce,
       }));
-    } catch (error: any) {
+    } catch (error: unknown) {
+      if (!(error instanceof Error)) throw new EvmProviderError('An unexpected error occurred while fetching the transaction history.', { error });
       let errorMessage = 'An error occurred while fetching the transaction history.';
       let details = {};
 
@@ -97,7 +92,8 @@ export class EtherscanProvider implements IEvmProvider {
         },
         amount: ethers.formatUnits(token, decimals),
       };
-    } catch (error: any) {
+    } catch (error: unknown) {
+      if (!(error instanceof Error)) throw new EvmProviderError('An unexpected error occurred while fetching the asset balance.', { error });
       let errorMessage = 'An error occurred while fetching the asset balance.';
       let details = {};
 
@@ -115,15 +111,17 @@ export class EtherscanProvider implements IEvmProvider {
     }
   }
 
-  async getAssetsBalances(address: string, assetIds: string[]): Promise<AssetBalance[]> {
+  async getAssetsBalances(address: string): Promise<AssetBalance[]> {
     try {
+      const assetIds = tokenAssets.filter(asset => asset.networkId === this._networkId).map(asset => asset.id);
       const balances = await Promise.all(
         assetIds.map(assetId => this.getAssetBalance(address, assetId))
       );
       return balances;
-    } catch (error: any) {
+    } catch (error: unknown) {
+      if (!(error instanceof EvmProviderError)) throw new EvmProviderError('An unexpected error occurred while fetching the address balances.', { error });
       let errorMessage = 'An error occurred while fetching the asset balances.';
-      const details = { address, assetIds, message: error.message, stack: error.stack };
+      const details = { address, message: error.message, stack: error.stack };
 
       if (error instanceof EvmProviderError) {
         errorMessage = error.message;

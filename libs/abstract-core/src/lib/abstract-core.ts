@@ -54,6 +54,7 @@ export interface BlockcahinInterface {
   getTransactionHistory(address: string, limit?: number, sblock?: number, eblock?: number): Promise<Transaction[]>;
   subscribeToBalance(address: string): Observable<AddressBalance>;
   subscribeToTransactions(address: string): Observable<Transaction[]>;
+  subscribeToUpdates(address: string): Observable<UpdateFeed>;
 }
 export abstract class CoreNetworkAbstraction implements BlockcahinInterface {
   // create a constractor that takes in a networkId
@@ -71,4 +72,5 @@ export abstract class CoreNetworkAbstraction implements BlockcahinInterface {
   abstract getTransactionHistory(address: string, limit?: number, sblock?: number, eblock?: number): Promise<Transaction[]>;
   abstract subscribeToBalance(address: string): Observable<AddressBalance>;
   abstract subscribeToTransactions(address: string): Observable<Transaction[]>;
+  abstract subscribeToUpdates(address: string): Observable<UpdateFeed>;
 }
