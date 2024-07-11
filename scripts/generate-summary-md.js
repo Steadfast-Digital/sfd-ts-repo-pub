@@ -93,11 +93,11 @@ coreAbstractionFunctions.forEach(func => {
 
 // Generate markdown content for package implementations
 let packageImplementationTable = `### Function Implementation in Different Packages\n\n`;
-packageImplementationTable += `| Function                    | ` + packageImplementations.map(impl => `\`${impl.packageName}\``).join(' | ') + ` |\n`;
+packageImplementationTable += `| Function | ` + packageImplementations.map(impl => `\`${impl.packageName}\``).join(' | ') + ` |\n`;
 packageImplementationTable += `|-----------------|` + packageImplementations.map(() => '-----------------').join('|') + `|\n`;
 
 coreAbstractionFunctions.forEach(func => {
-  packageImplementationTable += `| \`${func.functionName}\`                | ` + packageImplementations.map(impl => impl.functions.includes(func.functionName) ? '✅' : '❌').join(' | ') + ` |\n`;
+  packageImplementationTable += `| \`${func.functionName}\` | ` + packageImplementations.map(impl => impl.functions.includes(func.functionName) ? '✅' : '❌').join(' | ') + ` |\n`;
 })
 
 // Combine both tables
