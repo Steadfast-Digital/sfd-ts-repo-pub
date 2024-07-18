@@ -1,9 +1,9 @@
-import { BlockcahinInterface } from '@steadfastdigital/abstract-core';
+import { BlockchainInterface } from '@steadfastdigital/abstract-core';
 import { networks } from '@steadfastdigital/crypto-assets';
 import { isValidPackageName } from '@steadfastdigital/utils';
 export class BlockchainFactory {
-  private static _connectors: Record<string, BlockcahinInterface> = {};
-  static async createBlockchain(networkId: string): Promise<BlockcahinInterface> {
+  private static _connectors: Record<string, BlockchainInterface> = {};
+  static async createBlockchain(networkId: string): Promise<BlockchainInterface> {
     try {
       const network = networks[networkId];
       if (!network) {
@@ -30,7 +30,7 @@ export class BlockchainFactory {
       throw error;
     }
   }
-  static registerConnector(networkId: string, connector: BlockcahinInterface) {
+  static registerConnector(networkId: string, connector: BlockchainInterface) {
     const network = networks[networkId];
     if (!network) {
       throw new Error(`Invalid network id: ${networkId}`);
@@ -38,7 +38,7 @@ export class BlockchainFactory {
     this._connectors[networkId] = connector;
     return this._connectors[networkId];
   }
-  static getConnection(networkId: string): BlockcahinInterface {
+  static getConnection(networkId: string): BlockchainInterface {
     if (!this._connectors[networkId]) {
       throw new Error(`Connector for ${networkId} not found`);
     }

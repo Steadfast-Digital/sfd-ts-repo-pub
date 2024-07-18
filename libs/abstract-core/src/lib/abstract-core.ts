@@ -89,10 +89,10 @@ export interface UpdateFeed {
 }
 
 /**
- * @interface BlockcahinInterface
+ * @interface BlockchainInterface
  * @description Interface for blockchain interactions.
  */
-export interface BlockcahinInterface {
+export interface BlockchainInterface {
   /**
    * Fetch the balance for an address.
    * @param {string} address - The address to fetch the balance for.
@@ -180,10 +180,10 @@ export interface BlockcahinInterface {
 /**
  * @abstract
  * @class CoreNetworkAbstraction
- * @implements {BlockcahinInterface}
+ * @implements {BlockchainInterface}
  * @description Abstract class for core network interactions.
  */
-export abstract class CoreNetworkAbstraction implements BlockcahinInterface {
+export abstract class CoreNetworkAbstraction implements BlockchainInterface {
   /** @protected */
   _networkId: string;
 
