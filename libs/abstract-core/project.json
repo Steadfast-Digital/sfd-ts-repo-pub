@@ -27,6 +27,16 @@
       "options": {
         "packageRoot": "dist\\{projectRoot}"
       }
+    },
+    "docs": {
+      "executor": "nx:run-commands",
+        "options": {
+        "commands": [
+          {
+            "command": "npx typedoc --tsconfig libs/abstract-core/tsconfig.lib.json --out wiki/abstract-core libs/abstract-core/src/index.ts"
+          }
+        ]
+      }
     }
   }
 }

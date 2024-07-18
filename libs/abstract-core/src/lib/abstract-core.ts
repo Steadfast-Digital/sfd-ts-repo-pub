@@ -89,8 +89,8 @@ export interface UpdateFeed {
 }
 
 /**
+ * Interface for blockchain interactions.
  * @interface BlockchainInterface
- * @description Interface for blockchain interactions.
  */
 export interface BlockchainInterface {
   /**
@@ -178,10 +178,8 @@ export interface BlockchainInterface {
 }
 
 /**
- * @abstract
+ * Abstract class for core network interactions.
  * @class CoreNetworkAbstraction
- * @implements {BlockchainInterface}
- * @description Abstract class for core network interactions.
  */
 export abstract class CoreNetworkAbstraction implements BlockchainInterface {
   /** @protected */
