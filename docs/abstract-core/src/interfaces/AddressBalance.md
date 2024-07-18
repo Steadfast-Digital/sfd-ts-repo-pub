@@ -20,7 +20,7 @@ The address for which the balance is fetched.
 
 #### Defined in
 
-[libs/abstract-core/src/lib/abstract-core.ts:23](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/7c03207a60081ee1420569768bbbd8451528de43/libs/abstract-core/src/lib/abstract-core.ts#L23)
+[libs/abstract-core/src/lib/abstract-core.ts:23](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-core/src/lib/abstract-core.ts#L23)
 
 ***
 
@@ -32,7 +32,7 @@ The balance of fees in native assets.
 
 #### Defined in
 
-[libs/abstract-core/src/lib/abstract-core.ts:25](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/7c03207a60081ee1420569768bbbd8451528de43/libs/abstract-core/src/lib/abstract-core.ts#L25)
+[libs/abstract-core/src/lib/abstract-core.ts:25](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-core/src/lib/abstract-core.ts#L25)
 
 ***
 
@@ -44,4 +44,4 @@ The balance of the native asset.
 
 #### Defined in
 
-[libs/abstract-core/src/lib/abstract-core.ts:24](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/7c03207a60081ee1420569768bbbd8451528de43/libs/abstract-core/src/lib/abstract-core.ts#L24)
+[libs/abstract-core/src/lib/abstract-core.ts:24](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-core/src/lib/abstract-core.ts#L24)

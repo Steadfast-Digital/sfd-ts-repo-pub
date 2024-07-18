@@ -34,7 +34,7 @@ Abstract class for EVM abstraction.
 
 #### Defined in
 
-[libs/connector-bsc/src/lib/connector-bsc.ts:4](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/7c03207a60081ee1420569768bbbd8451528de43/libs/connector-bsc/src/lib/connector-bsc.ts#L4)
+[libs/connector-bsc/src/lib/connector-bsc.ts:4](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/connector-bsc/src/lib/connector-bsc.ts#L4)
 
 ## Properties
 
@@ -48,7 +48,7 @@ Abstract class for EVM abstraction.
 
 #### Defined in
 
-[libs/abstract-evm/src/lib/abstract-evm.ts:35](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/7c03207a60081ee1420569768bbbd8451528de43/libs/abstract-evm/src/lib/abstract-evm.ts#L35)
+[libs/abstract-evm/src/lib/abstract-evm.ts:35](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-evm/src/lib/abstract-evm.ts#L35)
 
 ## Methods
 
@@ -76,7 +76,7 @@ The balances of all assets.
 
 #### Defined in
 
-[libs/abstract-evm/src/lib/abstract-evm.ts:202](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/7c03207a60081ee1420569768bbbd8451528de43/libs/abstract-evm/src/lib/abstract-evm.ts#L202)
+[libs/abstract-evm/src/lib/abstract-evm.ts:202](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-evm/src/lib/abstract-evm.ts#L202)
 
 ***
 
@@ -104,7 +104,7 @@ The balances of the address.
 
 #### Defined in
 
-[libs/abstract-evm/src/lib/abstract-evm.ts:126](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/7c03207a60081ee1420569768bbbd8451528de43/libs/abstract-evm/src/lib/abstract-evm.ts#L126)
+[libs/abstract-evm/src/lib/abstract-evm.ts:126](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-evm/src/lib/abstract-evm.ts#L126)
 
 ***
 
@@ -140,7 +140,7 @@ If there is an error fetching the balance.
 
 #### Defined in
 
-[libs/abstract-evm/src/lib/abstract-evm.ts:147](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/7c03207a60081ee1420569768bbbd8451528de43/libs/abstract-evm/src/lib/abstract-evm.ts#L147)
+[libs/abstract-evm/src/lib/abstract-evm.ts:147](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-evm/src/lib/abstract-evm.ts#L147)
 
 ***
 
@@ -172,7 +172,7 @@ The balances of the specified assets.
 
 #### Defined in
 
-[libs/abstract-evm/src/lib/abstract-evm.ts:188](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/7c03207a60081ee1420569768bbbd8451528de43/libs/abstract-evm/src/lib/abstract-evm.ts#L188)
+[libs/abstract-evm/src/lib/abstract-evm.ts:188](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-evm/src/lib/abstract-evm.ts#L188)
 
 ***
 
@@ -204,7 +204,7 @@ If there is an error fetching the balance.
 
 #### Defined in
 
-[libs/abstract-evm/src/lib/abstract-evm.ts:53](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/7c03207a60081ee1420569768bbbd8451528de43/libs/abstract-evm/src/lib/abstract-evm.ts#L53)
+[libs/abstract-evm/src/lib/abstract-evm.ts:53](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-evm/src/lib/abstract-evm.ts#L53)
 
 ***
 
@@ -236,7 +236,7 @@ The list of recent transactions.
 
 #### Defined in
 
-[libs/abstract-evm/src/lib/abstract-evm.ts:107](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/7c03207a60081ee1420569768bbbd8451528de43/libs/abstract-evm/src/lib/abstract-evm.ts#L107)
+[libs/abstract-evm/src/lib/abstract-evm.ts:107](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-evm/src/lib/abstract-evm.ts#L107)
 
 ***
 
@@ -268,7 +268,7 @@ If the method is not implemented.
 
 #### Defined in
 
-[libs/abstract-evm/src/lib/abstract-evm.ts:97](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/7c03207a60081ee1420569768bbbd8451528de43/libs/abstract-evm/src/lib/abstract-evm.ts#L97)
+[libs/abstract-evm/src/lib/abstract-evm.ts:97](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-evm/src/lib/abstract-evm.ts#L97)
 
 ***
 
@@ -300,7 +300,7 @@ The list of transactions.
 
 #### Defined in
 
-[libs/abstract-evm/src/lib/abstract-evm.ts:117](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/7c03207a60081ee1420569768bbbd8451528de43/libs/abstract-evm/src/lib/abstract-evm.ts#L117)
+[libs/abstract-evm/src/lib/abstract-evm.ts:117](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-evm/src/lib/abstract-evm.ts#L117)
 
 ***
 
@@ -341,7 +341,7 @@ If the RPC URL is not a valid WebSocket URL.
 
 #### Defined in
 
-[libs/abstract-evm/src/lib/abstract-evm.ts:216](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/7c03207a60081ee1420569768bbbd8451528de43/libs/abstract-evm/src/lib/abstract-evm.ts#L216)
+[libs/abstract-evm/src/lib/abstract-evm.ts:216](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-evm/src/lib/abstract-evm.ts#L216)
 
 ***
 
@@ -373,7 +373,7 @@ If the method is not implemented.
 
 #### Defined in
 
-[libs/abstract-evm/src/lib/abstract-evm.ts:274](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/7c03207a60081ee1420569768bbbd8451528de43/libs/abstract-evm/src/lib/abstract-evm.ts#L274)
+[libs/abstract-evm/src/lib/abstract-evm.ts:274](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-evm/src/lib/abstract-evm.ts#L274)
 
 ***
 
@@ -405,4 +405,4 @@ If the method is not implemented.
 
 #### Defined in
 
-[libs/abstract-evm/src/lib/abstract-evm.ts:284](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/7c03207a60081ee1420569768bbbd8451528de43/libs/abstract-evm/src/lib/abstract-evm.ts#L284)
+[libs/abstract-evm/src/lib/abstract-evm.ts:284](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-evm/src/lib/abstract-evm.ts#L284)

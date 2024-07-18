@@ -37,7 +37,7 @@ The network ID.
 
 #### Defined in
 
-[libs/abstract-core/src/lib/abstract-core.ts:192](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/7c03207a60081ee1420569768bbbd8451528de43/libs/abstract-core/src/lib/abstract-core.ts#L192)
+[libs/abstract-core/src/lib/abstract-core.ts:192](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-core/src/lib/abstract-core.ts#L192)
 
 ## Methods
 
@@ -65,7 +65,7 @@ The balances of all assets.
 
 #### Defined in
 
-[libs/abstract-core/src/lib/abstract-core.ts:200](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/7c03207a60081ee1420569768bbbd8451528de43/libs/abstract-core/src/lib/abstract-core.ts#L200)
+[libs/abstract-core/src/lib/abstract-core.ts:200](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-core/src/lib/abstract-core.ts#L200)
 
 ***
 
@@ -93,7 +93,7 @@ The balances of the address.
 
 #### Defined in
 
-[libs/abstract-core/src/lib/abstract-core.ts:197](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/7c03207a60081ee1420569768bbbd8451528de43/libs/abstract-core/src/lib/abstract-core.ts#L197)
+[libs/abstract-core/src/lib/abstract-core.ts:197](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-core/src/lib/abstract-core.ts#L197)
 
 ***
 
@@ -125,7 +125,7 @@ The balance of the specified asset.
 
 #### Defined in
 
-[libs/abstract-core/src/lib/abstract-core.ts:198](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/7c03207a60081ee1420569768bbbd8451528de43/libs/abstract-core/src/lib/abstract-core.ts#L198)
+[libs/abstract-core/src/lib/abstract-core.ts:198](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-core/src/lib/abstract-core.ts#L198)
 
 ***
 
@@ -157,7 +157,7 @@ The balances of the specified assets.
 
 #### Defined in
 
-[libs/abstract-core/src/lib/abstract-core.ts:199](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/7c03207a60081ee1420569768bbbd8451528de43/libs/abstract-core/src/lib/abstract-core.ts#L199)
+[libs/abstract-core/src/lib/abstract-core.ts:199](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-core/src/lib/abstract-core.ts#L199)
 
 ***
 
@@ -185,7 +185,7 @@ The balance of the address.
 
 #### Defined in
 
-[libs/abstract-core/src/lib/abstract-core.ts:196](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/7c03207a60081ee1420569768bbbd8451528de43/libs/abstract-core/src/lib/abstract-core.ts#L196)
+[libs/abstract-core/src/lib/abstract-core.ts:196](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-core/src/lib/abstract-core.ts#L196)
 
 ***
 
@@ -217,7 +217,7 @@ The list of recent transactions.
 
 #### Defined in
 
-[libs/abstract-core/src/lib/abstract-core.ts:202](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/7c03207a60081ee1420569768bbbd8451528de43/libs/abstract-core/src/lib/abstract-core.ts#L202)
+[libs/abstract-core/src/lib/abstract-core.ts:202](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-core/src/lib/abstract-core.ts#L202)
 
 ***
 
@@ -245,7 +245,7 @@ The transaction details.
 
 #### Defined in
 
-[libs/abstract-core/src/lib/abstract-core.ts:201](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/7c03207a60081ee1420569768bbbd8451528de43/libs/abstract-core/src/lib/abstract-core.ts#L201)
+[libs/abstract-core/src/lib/abstract-core.ts:201](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-core/src/lib/abstract-core.ts#L201)
 
 ***
 
@@ -285,7 +285,7 @@ The list of transactions.
 
 #### Defined in
 
-[libs/abstract-core/src/lib/abstract-core.ts:203](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/7c03207a60081ee1420569768bbbd8451528de43/libs/abstract-core/src/lib/abstract-core.ts#L203)
+[libs/abstract-core/src/lib/abstract-core.ts:203](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-core/src/lib/abstract-core.ts#L203)
 
 ***
 
@@ -313,7 +313,7 @@ An observable for balance updates.
 
 #### Defined in
 
-[libs/abstract-core/src/lib/abstract-core.ts:204](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/7c03207a60081ee1420569768bbbd8451528de43/libs/abstract-core/src/lib/abstract-core.ts#L204)
+[libs/abstract-core/src/lib/abstract-core.ts:204](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-core/src/lib/abstract-core.ts#L204)
 
 ***
 
@@ -341,7 +341,7 @@ An observable for transaction updates.
 
 #### Defined in
 
-[libs/abstract-core/src/lib/abstract-core.ts:205](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/7c03207a60081ee1420569768bbbd8451528de43/libs/abstract-core/src/lib/abstract-core.ts#L205)
+[libs/abstract-core/src/lib/abstract-core.ts:205](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-core/src/lib/abstract-core.ts#L205)
 
 ***
 
@@ -369,4 +369,4 @@ An observable for balance and transaction updates.
 
 #### Defined in
 
-[libs/abstract-core/src/lib/abstract-core.ts:206](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/7c03207a60081ee1420569768bbbd8451528de43/libs/abstract-core/src/lib/abstract-core.ts#L206)
+[libs/abstract-core/src/lib/abstract-core.ts:206](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-core/src/lib/abstract-core.ts#L206)

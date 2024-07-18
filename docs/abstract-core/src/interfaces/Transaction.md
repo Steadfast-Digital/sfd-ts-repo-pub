@@ -16,7 +16,7 @@ The asset involved in the transaction.
 
 #### Defined in
 
-[libs/abstract-core/src/lib/abstract-core.ts:75](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/7c03207a60081ee1420569768bbbd8451528de43/libs/abstract-core/src/lib/abstract-core.ts#L75)
+[libs/abstract-core/src/lib/abstract-core.ts:75](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-core/src/lib/abstract-core.ts#L75)
 
 ***
 
@@ -28,7 +28,7 @@ The block number in which the transaction was included.
 
 #### Defined in
 
-[libs/abstract-core/src/lib/abstract-core.ts:72](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/7c03207a60081ee1420569768bbbd8451528de43/libs/abstract-core/src/lib/abstract-core.ts#L72)
+[libs/abstract-core/src/lib/abstract-core.ts:72](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-core/src/lib/abstract-core.ts#L72)
 
 ***
 
@@ -48,7 +48,7 @@ The transaction fee.
 
 #### Defined in
 
-[libs/abstract-core/src/lib/abstract-core.ts:68](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/7c03207a60081ee1420569768bbbd8451528de43/libs/abstract-core/src/lib/abstract-core.ts#L68)
+[libs/abstract-core/src/lib/abstract-core.ts:68](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-core/src/lib/abstract-core.ts#L68)
 
 ***
 
@@ -60,7 +60,7 @@ The address from which the transaction was sent.
 
 #### Defined in
 
-[libs/abstract-core/src/lib/abstract-core.ts:65](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/7c03207a60081ee1420569768bbbd8451528de43/libs/abstract-core/src/lib/abstract-core.ts#L65)
+[libs/abstract-core/src/lib/abstract-core.ts:65](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-core/src/lib/abstract-core.ts#L65)
 
 ***
 
@@ -72,7 +72,7 @@ The hash of the transaction.
 
 #### Defined in
 
-[libs/abstract-core/src/lib/abstract-core.ts:64](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/7c03207a60081ee1420569768bbbd8451528de43/libs/abstract-core/src/lib/abstract-core.ts#L64)
+[libs/abstract-core/src/lib/abstract-core.ts:64](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-core/src/lib/abstract-core.ts#L64)
 
 ***
 
@@ -84,7 +84,7 @@ The nonce of the transaction.
 
 #### Defined in
 
-[libs/abstract-core/src/lib/abstract-core.ts:76](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/7c03207a60081ee1420569768bbbd8451528de43/libs/abstract-core/src/lib/abstract-core.ts#L76)
+[libs/abstract-core/src/lib/abstract-core.ts:76](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-core/src/lib/abstract-core.ts#L76)
 
 ***
 
@@ -96,7 +96,7 @@ The status of the transaction.
 
 #### Defined in
 
-[libs/abstract-core/src/lib/abstract-core.ts:74](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/7c03207a60081ee1420569768bbbd8451528de43/libs/abstract-core/src/lib/abstract-core.ts#L74)
+[libs/abstract-core/src/lib/abstract-core.ts:74](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-core/src/lib/abstract-core.ts#L74)
 
 ***
 
@@ -108,7 +108,7 @@ The timestamp of the transaction.
 
 #### Defined in
 
-[libs/abstract-core/src/lib/abstract-core.ts:73](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/7c03207a60081ee1420569768bbbd8451528de43/libs/abstract-core/src/lib/abstract-core.ts#L73)
+[libs/abstract-core/src/lib/abstract-core.ts:73](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-core/src/lib/abstract-core.ts#L73)
 
 ***
 
@@ -120,7 +120,7 @@ The address to which the transaction was sent (can be null).
 
 #### Defined in
 
-[libs/abstract-core/src/lib/abstract-core.ts:66](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/7c03207a60081ee1420569768bbbd8451528de43/libs/abstract-core/src/lib/abstract-core.ts#L66)
+[libs/abstract-core/src/lib/abstract-core.ts:66](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-core/src/lib/abstract-core.ts#L66)
 
 ***
 
@@ -132,4 +132,4 @@ The value of the transaction.
 
 #### Defined in
 
-[libs/abstract-core/src/lib/abstract-core.ts:67](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/7c03207a60081ee1420569768bbbd8451528de43/libs/abstract-core/src/lib/abstract-core.ts#L67)
+[libs/abstract-core/src/lib/abstract-core.ts:67](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-core/src/lib/abstract-core.ts#L67)

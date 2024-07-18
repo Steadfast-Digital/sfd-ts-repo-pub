@@ -10,4 +10,4 @@
 
 ## Defined in
 
-[libs/crypto-assets/src/lib/native-assets.ts:4](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/7c03207a60081ee1420569768bbbd8451528de43/libs/crypto-assets/src/lib/native-assets.ts#L4)
+[libs/crypto-assets/src/lib/native-assets.ts:4](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/crypto-assets/src/lib/native-assets.ts#L4)

@@ -14,7 +14,7 @@
 
 #### Defined in
 
-[libs/crypto-assets/src/lib/types.ts:77](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/7c03207a60081ee1420569768bbbd8451528de43/libs/crypto-assets/src/lib/types.ts#L77)
+[libs/crypto-assets/src/lib/types.ts:77](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/crypto-assets/src/lib/types.ts#L77)
 
 ***
 
@@ -24,7 +24,7 @@
 
 #### Defined in
 
-[libs/crypto-assets/src/lib/types.ts:76](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/7c03207a60081ee1420569768bbbd8451528de43/libs/crypto-assets/src/lib/types.ts#L76)
+[libs/crypto-assets/src/lib/types.ts:76](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/crypto-assets/src/lib/types.ts#L76)
 
 ***
 
@@ -34,7 +34,7 @@
 
 #### Defined in
 
-[libs/crypto-assets/src/lib/types.ts:75](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/7c03207a60081ee1420569768bbbd8451528de43/libs/crypto-assets/src/lib/types.ts#L75)
+[libs/crypto-assets/src/lib/types.ts:75](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/crypto-assets/src/lib/types.ts#L75)
 
 ***
 
@@ -44,4 +44,4 @@
 
 #### Defined in
 
-[libs/crypto-assets/src/lib/types.ts:74](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/7c03207a60081ee1420569768bbbd8451528de43/libs/crypto-assets/src/lib/types.ts#L74)
+[libs/crypto-assets/src/lib/types.ts:74](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/crypto-assets/src/lib/types.ts#L74)

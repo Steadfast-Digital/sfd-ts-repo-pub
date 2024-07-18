@@ -16,7 +16,7 @@ The address being updated.
 
 #### Defined in
 
-[libs/abstract-core/src/lib/abstract-core.ts:86](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/7c03207a60081ee1420569768bbbd8451528de43/libs/abstract-core/src/lib/abstract-core.ts#L86)
+[libs/abstract-core/src/lib/abstract-core.ts:86](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-core/src/lib/abstract-core.ts#L86)
 
 ***
 
@@ -28,7 +28,7 @@ The balance information of the address.
 
 #### Defined in
 
-[libs/abstract-core/src/lib/abstract-core.ts:87](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/7c03207a60081ee1420569768bbbd8451528de43/libs/abstract-core/src/lib/abstract-core.ts#L87)
+[libs/abstract-core/src/lib/abstract-core.ts:87](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-core/src/lib/abstract-core.ts#L87)
 
 ***
 
@@ -40,4 +40,4 @@ The list of transactions for the address.
 
 #### Defined in
 
-[libs/abstract-core/src/lib/abstract-core.ts:88](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/7c03207a60081ee1420569768bbbd8451528de43/libs/abstract-core/src/lib/abstract-core.ts#L88)
+[libs/abstract-core/src/lib/abstract-core.ts:88](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-core/src/lib/abstract-core.ts#L88)
