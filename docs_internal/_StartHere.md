@@ -29,10 +29,10 @@ pnpm i
 
 
 3. **Build Documentation**:
-Build documentation wiki:
+Build documentation:
 
 ```bash
-npx nx run-many -t docs
+npx nx typedoc
 ```
 
 ## Additional Information
