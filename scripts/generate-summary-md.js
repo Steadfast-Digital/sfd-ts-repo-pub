@@ -104,6 +104,6 @@ coreAbstractionFunctions.forEach(func => {
 const markdownContent = `${coreAbstractionTable}\n${packageImplementationTable}`;
 
 // Write the content to a .md file
-fs.writeFileSync(path.join(__dirname, "..", "docs", "Summary.md"), markdownContent);
+fs.writeFileSync(path.join(__dirname, "..", "docs_internal", "Summary.md"), markdownContent);
 
 console.log('Markdown file has been generated.');

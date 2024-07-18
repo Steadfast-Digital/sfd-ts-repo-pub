@@ -27,16 +27,6 @@
       "options": {
         "packageRoot": "dist\\{projectRoot}"
       }
-    },
-    "docs": {
-      "executor": "nx:run-commands",
-        "options": {
-        "commands": [
-          {
-            "command": "npx typedoc --tsconfig libs/connector-bsc/tsconfig.lib.json --out wiki/connector-bsc libs/connector-bsc/src/index.ts"
-          }
-        ]
-      }
     }
   }
 }

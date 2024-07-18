@@ -27,16 +27,6 @@
       "options": {
         "packageRoot": "dist\\{projectRoot}"
       }
-    },
-    "docs": {
-      "executor": "nx:run-commands",
-        "options": {
-        "commands": [
-          {
-            "command": "npx typedoc --tsconfig libs/blockchain-factory/tsconfig.lib.json --out wiki/blockchain-factory libs/blockchain-factory/src/index.ts"
-          }
-        ]
-      }
     }
   }
 }
