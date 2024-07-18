@@ -1,9 +1,9 @@
-import { BlockcahinInterface } from '@steadfastdigital/abstract-core';
+import { BlockchainInterface } from '@steadfastdigital/abstract-core';
 import { networks } from '@steadfastdigital/crypto-assets';
 import { isValidPackageName } from '@steadfastdigital/utils';
 export class BlockchainFactory {
-  private static _connectors: Record<string, BlockcahinInterface> = {};
-  static async createBlockchain(networkId: string): Promise<BlockcahinInterface> {
+  private static _connectors: Record<string, BlockchainInterface> = {};
+  static async createBlockchain(networkId: string): Promise<BlockchainInterface> {
     try {
       const network = networks[networkId];
       if (!network) {
@@ -30,7 +30,7 @@ export class BlockchainFactory {
       throw error;
     }
   }
-  static registerConnector(networkId: string, connector: BlockcahinInterface) {
+  static registerConnector(networkId: string, connector: BlockchainInterface) {
     const network = networks[networkId];
     if (!network) {
       throw new Error(`Invalid network id: ${networkId}`);
@@ -38,30 +38,34 @@ export class BlockchainFactory {
     this._connectors[networkId] = connector;
     return this._connectors[networkId];
   }
-  static getConnection(networkId: string): BlockcahinInterface {
+  static getConnection(networkId: string): BlockchainInterface {
     if (!this._connectors[networkId]) {
       throw new Error(`Connector for ${networkId} not found`);
     }
     return this._connectors[networkId];
   }
-  static async getAddressBalance(networkId: string, address: string) {
+  static async getBalance(networkId: string, address: string) {
     const connector = await this.createBlockchain(networkId);
-    return connector.getAddressBalance(address);
+    return connector.getBalance(address);
   }
-  static async getAddressAssetBalance(networkId: string, address: string, assetId: string) {
+  static async getAssetBalance(networkId: string, address: string, assetId: string) {
     const connector = await this.createBlockchain(networkId);
-    return connector.getAddressAssetBalance(address, assetId);
+    return connector.getAssetBalance(address, assetId);
   }
-  static async getAddressBalances(networkId: string, address: string) {
+  static async getAllBalances(networkId: string, address: string) {
     const connector = await this.createBlockchain(networkId);
-    return connector.getAddressBalances(address);
+    return connector.getAllBalances(address);
   }
-  static async getAddressAssetsBalances(networkId: string, address: string, assetIds: string[]) {
+  static async getAssetsBalances(networkId: string, address: string, assetIds: string[]) {
     const connector = await this.createBlockchain(networkId);
-    return connector.getAddressAssetsBalances(address, assetIds);
+    return connector.getAssetsBalances(address, assetIds);
   }
   static async getTransactionHistory(networkId: string, address: string) {
     const connector = await this.createBlockchain(networkId);
     return connector.getTransactionHistory(address);
+  }
+  static subscribeToBalance(networkId: string, address: string) {
+    const connector = this.getConnection(networkId);
+    return connector.subscribeToBalance(address);
   }
 }

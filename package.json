@@ -8,6 +8,8 @@
     "@nestjs/common": "^10.0.2",
     "@nestjs/core": "^10.0.2",
     "@nestjs/platform-express": "^10.0.2",
+    "@nestjs/platform-socket.io": "^10.3.9",
+    "@nestjs/websockets": "^10.3.9",
     "axios": "^1.6.0",
     "bufferutil": "^4.0.8",
     "dotenv": "^16.4.5",
@@ -16,6 +18,8 @@
     "react-dom": "18.3.1",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.0",
+    "socket.io": "^4.7.5",
+    "socket.io-client": "^4.7.5",
     "tslib": "^2.3.0",
     "utf-8-validate": "^6.0.4"
   },
@@ -56,7 +60,10 @@
     "nx": "19.0.4",
     "prettier": "^2.6.2",
     "ts-jest": "^29.1.0",
+    "ts-morph": "^23.0.0",
     "ts-node": "10.9.1",
+    "typedoc": "^0.26.4",
+    "typedoc-plugin-markdown": "^4.2.1",
     "typescript": "~5.4.2",
     "verdaccio": "^5.0.4",
     "webpack-cli": "^5.1.4"

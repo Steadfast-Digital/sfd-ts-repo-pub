@@ -11,7 +11,7 @@ describe('EvmAbstraction Integration Tests', () => {
   });
 
   it('should fetch ETH address balance', async () => {
-    const result = await ethEvmAbstraction.getAddressBalance(testAddress);
+    const result = await ethEvmAbstraction.getBalance(testAddress);
     console.log('ETH Address Balance:', result);
     expect(result).toHaveProperty('address', testAddress);
     expect(result.native).toHaveProperty('amount');
@@ -25,7 +25,7 @@ describe('EvmAbstraction Integration Tests', () => {
   });
 
   it('should fetch ETH address balances', async () => {
-    const result = await ethEvmAbstraction.getAddressBalances(testAddress);
+    const result = await ethEvmAbstraction.getAllBalances(testAddress);
     console.log('ETH Address Balances:', result);
     expect(result).toHaveProperty('address', testAddress);
     expect(result.native).toHaveProperty('amount');
@@ -34,14 +34,14 @@ describe('EvmAbstraction Integration Tests', () => {
 
   it('should fetch ETH address asset balance', async () => {
     const assetId = 'usdc'; // Replace with a valid assetId if needed
-    const result = await ethEvmAbstraction.getAddressAssetBalance(testAddress, assetId);
+    const result = await ethEvmAbstraction.getAssetBalance(testAddress, assetId);
     console.log('ETH Address Asset Balance:', result);
     expect(result).toHaveProperty('amount');
   });
 
   it('should fetch ETH address assets balances', async () => {
     const assetIds = ['usdc']; // Replace with valid assetIds if needed
-    const result = await ethEvmAbstraction.getAddressAssetsBalances(testAddress, assetIds);
+    const result = await ethEvmAbstraction.getAssetsBalances(testAddress, assetIds);
     console.log('ETH Address Assets Balances:', result);
     expect(result.length).toBeGreaterThan(0);
     expect(result[0]).toHaveProperty('amount');

@@ -1,0 +1,37 @@
+{
+  "entryPoints": [
+    "libs/**/src/index.ts",
+  ],
+  "out": "docs",
+  "exclude": ["node_modules", "dist", "**/__tests__/**/*", "**/*.spec.ts", "apps/**/*"],
+  "plugin": ["typedoc-plugin-markdown"],
+  "excludeExternals": true,
+  "excludePrivate": true,
+  "excludeProtected": true,
+  "includeVersion": true,
+  "compilerOptions": {
+    "target": "ES2015",
+    "module": "commonjs",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
+    "paths": {
+      "@steadfastdigital/abstract-core": ["libs/abstract-core/src/index.ts"],
+      "@steadfastdigital/abstract-evm": ["libs/abstract-evm/src/index.ts"],
+      "@steadfastdigital/blockchain-factory": [
+        "libs/blockchain-factory/src/index.ts"
+      ],
+      "@steadfastdigital/connector-bitcoin": [
+        "libs/connector-bitcoin/src/index.ts"
+      ],
+      "@steadfastdigital/connector-bsc": ["libs/connector-bsc/src/index.ts"],
+      "@steadfastdigital/connector-ethereum": [
+        "libs/connector-ethereum/src/index.ts"
+      ],
+      "@steadfastdigital/crypto-assets": ["libs/crypto-assets/src/index.ts"],
+      "@steadfastdigital/utils": ["libs/utils/src/index.ts"]
+    }
+  }
+}

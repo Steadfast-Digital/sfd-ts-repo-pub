@@ -1,8 +1,9 @@
 export * from './lib/blockchain-factory';
 export {
-  getAddressBalance,
-  getAddressBalances,
-  getAddressAssetBalance,
-  getAddressAssetsBalances,
+  getBalance,
+  getAllBalances,
+  getAssetBalance,
+  getAssetsBalances,
   getTransactionHistory,
+  subscribeToBalance
 } from './lib/factory-wraper';

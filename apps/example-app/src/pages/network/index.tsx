@@ -1,11 +1,38 @@
 import '../../app/global.css';
-import { useState, ChangeEvent } from 'react';
+import { useState, useEffect, ChangeEvent } from 'react';
 import { Button, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Input, Textarea, Label, Card, CardContent, CardHeader, CardTitle } from '../../components/ui';
+import { io, Socket } from 'socket.io-client';
 
 const NetworkTester = () => {
   const [network, setNetwork] = useState('eth');
   const [address, setAddress] = useState('0x513c87314578d089ce1f0d9dade81fd637adbb21');
   const [result, setResult] = useState('');
+  const [socket, setSocket] = useState<Socket | null>(null);
+
+  useEffect(() => {
+    const socketInstance = io('http://localhost:3001');
+    setSocket(socketInstance);
+
+    socketInstance.on('connect', () => {
+      console.log('Connected to WebSocket server');
+    });
+
+    socketInstance.on('balanceUpdate', (balance: any) => {
+      setResult(JSON.stringify(balance, null, 2));
+    });
+
+    socketInstance.on('error', (error: any) => {
+      setResult(`Error: ${error}`);
+    });
+
+    socketInstance.on('disconnect', () => {
+      console.log('Disconnected from WebSocket server');
+    });
+
+    return () => {
+      socketInstance.disconnect();
+    };
+  }, []);
 
   const handleNetworkChange = (value: string) => {
     setNetwork(value);
@@ -40,6 +67,13 @@ const NetworkTester = () => {
     }
   };
 
+  const handleSubscribeToBalance = () => {
+    setResult('Subscribing to balance updates...');
+    if (socket) {
+      socket.emit('subscribeToBalance', { network, address });
+    }
+  };
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <Card className="w-full max-w-lg shadow-lg">
@@ -70,10 +104,11 @@ const NetworkTester = () => {
             />
           </div>
           <div className="flex flex-col space-y-2">
-            <Button onClick={() => handleTestFunction('getAddressBalance')}>Test getAddressBalance</Button>
+            <Button onClick={() => handleTestFunction(getBalance')}>Test getBalance</Button>
             <Button onClick={() => handleTestFunction('getTransactionHistory')}>Test getTransactionHistory</Button>
-            <Button onClick={() => handleTestFunction('getAddressAssetsBalances')}>Test getAddressAssetsBalances</Button>
-            <Button onClick={() => handleTestFunction('getAddressBalances')}>Test getAddressBalances</Button>
+            <Button onClick={() => handleTestFunction(getAssetsBalances')}>Test getAssetsBalances</Button>
+            <Button onClick={() => handleTestFunction(getBalances')}>Test getAllBalances</Button>
+            <Button onClick={handleSubscribeToBalance}>Subscribe to Balance Updates</Button>
           </div>
           <div className="mt-4">
             <Label>Result:</Label>

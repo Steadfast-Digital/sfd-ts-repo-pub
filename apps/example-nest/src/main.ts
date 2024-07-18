@@ -10,6 +10,7 @@ import EthConnector from '@steadfastdigital/connector-ethereum';
 import BscConnector from '@steadfastdigital/connector-bsc';
 import { setCustomNetworks } from '@steadfastdigital/crypto-assets';
 import { config } from 'dotenv';
+import { WsAdapter } from './ws-adapter';
 
 config();
 const bscTxApiKey = process.env['BSC_TX_API_KEY'];
@@ -38,12 +39,18 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
-  app.enableCors();
+  app.enableCors({
+    origin: 'http://localhost:3000', // Update to match the origin of your React app
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
+  });
+
+  app.useWebSocketAdapter(new WsAdapter(app)); // Use the custom WebSocket adapter
+
   const port = process.env.PORT || 3001;
   await app.listen(port);
-  Logger.log(
-    `🚀 Application is running on: http://localhost:${port}/${globalPrefix}`
-  );
+  Logger.log(`🚀 Application is running on: http://localhost:${port}/${globalPrefix}`);
 }
 
 bootstrap();

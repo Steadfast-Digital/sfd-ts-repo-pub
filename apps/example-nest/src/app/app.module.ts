@@ -3,31 +3,36 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
-import { GetAddressBalanceController } from '../controllers/get-address-balance.controller';
+import { GetBalanceController } from '../controllers/get-balance.controller';
 import { GetTransactionHistoryController } from '../controllers/get-transaction-history.controller';
-import { GetAddressAssetsBalancesController } from '../controllers/get-address-assets-balances.controller';
-import { GetAddressBalancesController } from '../controllers/get-address-balances.controller';
+import { GetAssetsBalancesController } from '../controllers/get-assets-balances.controller';
+import { GetBalancesController } from '../controllers/get-all-balances.controller';
 
-import { GetAddressBalanceService } from '../services/get-address-balance.service';
+import { GetBalanceService } from '../services/get-balance.service';
 import { GetTransactionHistoryService } from '../services/get-transaction-history.service';
-import { GetAddressAssetsBalancesService } from '../services/get-address-assets-balances.service';
-import { GetAddressBalancesService } from '../services/get-address-balances.service';
+import { GetAssetsBalancesService } from '../services/get-assets-balances.service';
+import { GetBalancesService } from '../services/get-all-balances.service';
+import { SubscribeToBalanceService } from '../services/subscribe-to-balance.service';
+
+import { SubscribeToBalanceGateway } from '../gateways/subscribe-to-balance.gateway';
 
 @Module({
   imports: [],
   controllers: [
     AppController,
-    GetAddressBalanceController,
+    GetBalanceController,
     GetTransactionHistoryController,
-    GetAddressAssetsBalancesController,
-    GetAddressBalancesController,
+    GetAssetsBalancesController,
+    GetBalancesController,
   ],
   providers: [
     AppService,
-    GetAddressBalanceService,
+    GetBalanceService,
     GetTransactionHistoryService,
-    GetAddressAssetsBalancesService,
-    GetAddressBalancesService,
+    GetAssetsBalancesService,
+    GetBalancesService,
+    SubscribeToBalanceService,
+    SubscribeToBalanceGateway,
   ],
 })
 export class AppModule {}
