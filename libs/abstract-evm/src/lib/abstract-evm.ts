@@ -27,6 +27,7 @@ function getIEvmProvider(networkId: string) {
 
 /**
  * Abstract class for EVM abstraction.
+ * @class
  * @extends {CoreNetworkAbstraction}
  * @abstract
  */
