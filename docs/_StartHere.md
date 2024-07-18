@@ -14,18 +14,26 @@ nvm use 20
 ## Installation Steps
 
 1. **Install pnpm**:
-   Since `pnpm@9` is not yet supported in Nx, install the compatible version:
+Since `pnpm@9` is not yet supported in Nx, install the compatible version:
 
-   ```bash
-   npm i -g pnpm@8.15.2
-   ```
+```bash
+npm i -g pnpm@8.15.2
+```
 
 2. **Install Dependencies**:
-   With the correct version of `pnpm` installed, proceed to install the project dependencies:
+With the correct version of `pnpm` installed, proceed to install the project dependencies:
 
-   ```bash
-   pnpm i
-   ```
+```bash
+pnpm i
+```
+
+
+3. **Build Documentation**:
+Build documentation wiki:
+
+```bash
+npx nx run-many -t docs
+```
 
 ## Additional Information
 
