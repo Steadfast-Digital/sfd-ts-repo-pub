@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { ethers } from 'ethers';
 import { IEvmProvider } from '../types';
 import { Transaction, AssetBalance } from '@steadfastdigital/abstract-core';
@@ -19,10 +20,10 @@ export class BlockbookProvider implements IEvmProvider {
     const blockbookApiUrl = network.urls.txApi.url;
 
     try {
-      const response = await fetch(`${blockbookApiUrl}/v2/address/${address}?details=txs`);
-      const data = await response.json();
+      const response = await axios.get(`${blockbookApiUrl}/v2/address/${address}?details=txs`);
+      const data = await response.data;
 
-      if (!response.ok) {
+      if (response.status !== 200) {
         throw new EvmProviderError(`Failed to fetch transaction history: ${data.error}`);
       }
 
@@ -64,10 +65,10 @@ export class BlockbookProvider implements IEvmProvider {
     const blockbookApiUrl = network.urls.tokenApi.url;
 
     try {
-      const response = await fetch(`${blockbookApiUrl}/v2/address/${address}?details=tokenBalances`);
-      const data = await response.json();
+      const response = await axios.get(`${blockbookApiUrl}/v2/address/${address}?details=tokenBalances`);
+      const data =  response.data;
 
-      if (!response.ok) {
+      if (response.status !== 200) {
         throw new EvmProviderError(`Failed to fetch address asset balance: ${data.error}`);
       }
 
@@ -111,10 +112,10 @@ export class BlockbookProvider implements IEvmProvider {
     const blockbookApiUrl = network.urls.tokenApi.url;
 
     try {
-      const response = await fetch(`${blockbookApiUrl}/v2/address/${address}?details=tokenBalances`);
-      const data = await response.json();
+      const response = await axios.get(`${blockbookApiUrl}/v2/address/${address}?details=tokenBalances`);
+      const data = response.data;
 
-      if (!response.ok) {
+      if (response.status !== 200) {
         throw new EvmProviderError(`Failed to fetch address assets balances: ${data.error}`);
       }
 

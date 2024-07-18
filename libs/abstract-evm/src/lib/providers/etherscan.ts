@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { ethers } from 'ethers';
 import { IEvmProvider } from '../types';
 import { Transaction, AssetBalance } from '@steadfastdigital/abstract-core';
@@ -20,8 +21,8 @@ export class EtherscanProvider implements IEvmProvider {
     const etherscanApiUrl = `${etherscanApiUrlBase}?module=account&action=txlist&address=${address}&sort=asc&apikey=${apikey}`;
 
     try {
-      const response = await fetch(etherscanApiUrl);
-      const data = await response.json();
+      const response = await axios.get(etherscanApiUrl);
+      const data = response.data;
 
       if (data.status !== "1") {
         throw new EvmProviderError(`Failed to fetch transaction history: ${data.message}`);
@@ -69,8 +70,8 @@ export class EtherscanProvider implements IEvmProvider {
     const etherscanApiUrl = `${etherscanApiUrlBase}?module=account&action=tokenbalance&contractaddress=${asset?.contractOrId}&address=${address}&tag=latest&apikey=${apikey}`;
 
     try {
-      const response = await fetch(etherscanApiUrl);
-      const data = await response.json();
+      const response = await axios.get(etherscanApiUrl);
+      const data = await response.data;
       Logger.info(JSON.stringify(data, null, 2));
 
       if (data.status !== "1") {
