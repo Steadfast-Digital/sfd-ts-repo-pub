@@ -104,10 +104,10 @@ const NetworkTester = () => {
             />
           </div>
           <div className="flex flex-col space-y-2">
-            <Button onClick={() => handleTestFunction(getBalance')}>Test getBalance</Button>
+            <Button onClick={() => handleTestFunction('getBalance')}>Test getBalance</Button>
             <Button onClick={() => handleTestFunction('getTransactionHistory')}>Test getTransactionHistory</Button>
-            <Button onClick={() => handleTestFunction(getAssetsBalances')}>Test getAssetsBalances</Button>
-            <Button onClick={() => handleTestFunction(getBalances')}>Test getAllBalances</Button>
+            <Button onClick={() => handleTestFunction('getAssetsBalances')}>Test getAssetsBalances</Button>
+            <Button onClick={() => handleTestFunction('getBalances')}>Test getAllBalances</Button>
             <Button onClick={handleSubscribeToBalance}>Subscribe to Balance Updates</Button>
           </div>
           <div className="mt-4">
