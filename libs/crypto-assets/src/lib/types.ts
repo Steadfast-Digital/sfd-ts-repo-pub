@@ -23,37 +23,20 @@ export type TokenAsset = {
 
 export type Asset = NativeAsset | TokenAsset;
 
+export type NetworkRpcType = 'node' | 'api' | 'explorer' | 'txApi' | 'wss-node' | 'wss-api' | 'wss-explorer';
+
+export type NetworkRpc = {
+  url: string;
+  type: NetworkRpcType;
+  apiKey?: string;
+  apiKeyEnvName?: string;
+  customType?: string;
+}
 export interface Network {
   id: string;
   name: string;
   chainId: number;
-  urls: {
-    rpc: {
-      url: string;
-      type: string; // 'geth' | 'parity' | 'besu' | 'quorum' | 'nethermind' | 'other'
-      apiKey?: string | undefined;
-    }
-    consensus: {
-      url: string;
-      type: string; // 'geth' | 'parity' | 'besu' | 'quorum' | 'nethermind' | 'other'
-      apiKey?: string | undefined;
-    }
-    explorer: {
-      url: string;
-      type: string; // 'etherscan' | 'blockscout' | 'ethplorer' | 'other'
-      apiKey?: string | undefined;
-    }
-    txApi: {
-      url: string;
-      type: string; // 'etherscan' | 'blockscout' | 'ethplorer' | 'other'
-      apiKey?: string | undefined;
-    }
-    tokenApi: {
-      url: string;
-      type: string; // 'etherscan' | 'blockscout' | 'ethplorer' | 'other'
-      apiKey?: string | undefined;
-    }
-  }
+  urls: NetworkRpc[];
   family: string; // 'evm' | 'utxo' | 'other';
   type: string; // 'mainnet' | 'testnet' | 'other';
   bip44: {

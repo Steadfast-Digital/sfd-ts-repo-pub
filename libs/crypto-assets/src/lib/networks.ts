@@ -5,30 +5,26 @@ export const networks: Record<string, Network> = {
     id: 'eth',
     name: 'Ethereum',
     chainId: 1,
-    urls: {
-      rpc: {
-        url: 'wss://eth-arch-01.savvyblocks.io/rpc', // https://ethereum-rpc.publicnode.com
-        type: 'geth'
+    urls: [
+      {
+        url: 'wss://eth-arch-01.savvyblocks.io/rpc',
+        type: 'wss-node',
+        customType: 'blockbook',
+        apiKey: '',
+        apiKeyEnvName: 'SFD_ETH_RPC_API_KEY',
       },
-      consensus: {
-        url: 'https://mainnet.infura.io/v3/your-api-key',
-        type: 'geth'
+      {
+        url: 'https://eth-arch-01.savvyblocks.io/api',
+        type: 'api',
+        customType: 'blockbook',
+        apiKey: '',
+        apiKeyEnvName: 'SFD_ETH_API_KEY',
       },
-      explorer: {
+      {
         url: 'https://etherscan.io',
-        type: 'etherscan'
+        type: 'explorer',
       },
-      txApi: {
-        url: 'https://eth-arch-01.savvyblocks.io/api',
-        type: 'blockbook',
-        apiKey: 'your-api-key'
-      },
-      tokenApi: {
-        url: 'https://eth-arch-01.savvyblocks.io/api',
-        type: 'blockbook',
-        apiKey: 'your-api-key'
-      }
-    },
+    ],
     family: 'evm',
     type: 'mainnet',
     bip44: {
@@ -44,30 +40,23 @@ export const networks: Record<string, Network> = {
     id: 'bsc',
     name: 'Binance Smart Chain',
     chainId: 56,
-    urls: {
-      rpc: {
+    urls: [
+      {
         url: 'https://bsc-dataseed.binance.org',
-        type: 'geth'
+        type: 'node',
       },
-      consensus: {
-        url: 'https://bsc-dataseed.binance.org',
-        type: 'geth'
+      {
+        url: 'https://api.bscscan.com/api',
+        type: 'api',
+        customType: 'etherscan',
+        apiKey: 'your-api-key',
+        apiKeyEnvName: 'SFD_BSC_API_KEY',
       },
-      explorer: {
+      {
         url: 'https://bscscan.com',
-        type: 'etherscan'
+        type: 'explorer',
       },
-      txApi: {
-        url: 'https://api.bscscan.com/api',
-        type: 'etherscan',
-        apiKey: 'your-api-key'
-      },
-      tokenApi: {
-        url: 'https://api.bscscan.com/api',
-        type: 'etherscan',
-        apiKey: 'your-api-key'
-      }
-    },
+    ],
     family: 'evm',
     type: 'mainnet',
     bip44: {
@@ -103,4 +92,18 @@ export function setCustomNetworks(customNetworks: Record<string, DeepPartial<Net
       networks[networkId] = customNetworks[networkId] as Network; // Handle new network definitions
     }
   });
+}
+
+export function readApiKeys() {
+  Object.keys(networks).forEach(networkId => {
+    networks[networkId].urls.forEach(url => {
+      if (url.apiKeyEnvName) {
+        url.apiKey = process.env[url.apiKeyEnvName] || url.apiKey;
+      }
+    });
+  });
+}
+
+export function initNetworks() {
+  readApiKeys();
 }
