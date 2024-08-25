@@ -2,25 +2,28 @@ import axios from 'axios';
 import { ethers } from 'ethers';
 import { IEvmProvider } from '../types';
 import { Transaction, AssetBalance } from '@steadfastdigital/abstract-core';
-import { networks, nativeAssets, NativeAsset } from '@steadfastdigital/crypto-assets';
+import { networks, nativeAssets, NativeAsset, getRpc } from '@steadfastdigital/crypto-assets';
 import { Logger } from '@steadfastdigital/utils';
 import { EvmProviderError } from '../errors';
 
 export class BlockbookProvider implements IEvmProvider {
   private _networkId: string;
+  private _api: string;
+  private _apiKey: string;
 
   constructor(networkId: string) {
     this._networkId = networkId;
+    const rpc = getRpc(networkId, 'api');
+    this._api = rpc.url;
+    this._apiKey = rpc.apiKey ?? '';
   }
 
   async getTransactionHistory(address: string): Promise<Transaction[]> {
     const network = networks[this._networkId];
     Logger.debug(`Fetching transaction history for ${address} on ${network.name}`);
 
-    const blockbookApiUrl = network.urls.txApi.url;
-
     try {
-      const response = await axios.get(`${blockbookApiUrl}/v2/address/${address}?details=txs`);
+      const response = await axios.get(`${this._api}/v2/address/${address}?details=txs`);
       const data = await response.data;
 
       if (response.status !== 200) {
@@ -50,7 +53,7 @@ export class BlockbookProvider implements IEvmProvider {
         errorMessage = error.message;
       } else if (error.message.includes('Failed to fetch')) {
         errorMessage = 'Failed to connect to the Blockbook API.';
-        details = { url: blockbookApiUrl };
+        details = { url: this._api };
       } else {
         details = { message: error.message, stack: error.stack };
       }
@@ -61,11 +64,8 @@ export class BlockbookProvider implements IEvmProvider {
   }
 
   async getAssetBalance(address: string, assetId: string): Promise<AssetBalance> {
-    const network = networks[this._networkId];
-    const blockbookApiUrl = network.urls.tokenApi.url;
-
     try {
-      const response = await axios.get(`${blockbookApiUrl}/v2/address/${address}?details=tokenBalances`);
+      const response = await axios.get(`${this._api}/v2/address/${address}?details=tokenBalances`);
       const data =  response.data;
 
       if (response.status !== 200) {
@@ -97,7 +97,7 @@ export class BlockbookProvider implements IEvmProvider {
         errorMessage = error.message;
       } else if (error.message.includes('Failed to fetch')) {
         errorMessage = 'Failed to connect to the Blockbook API.';
-        details = { url: blockbookApiUrl };
+        details = { url: this._api };
       } else {
         details = { message: error.message, stack: error.stack };
       }
@@ -108,11 +108,9 @@ export class BlockbookProvider implements IEvmProvider {
   }
 
   async getAssetsBalances(address: string): Promise<AssetBalance[]> {
-    const network = networks[this._networkId];
-    const blockbookApiUrl = network.urls.tokenApi.url;
 
     try {
-      const response = await axios.get(`${blockbookApiUrl}/v2/address/${address}?details=tokenBalances`);
+      const response = await axios.get(`${this._api}/v2/address/${address}?details=tokenBalances`);
       const data = response.data;
 
       if (response.status !== 200) {
@@ -139,7 +137,7 @@ export class BlockbookProvider implements IEvmProvider {
         errorMessage = error.message;
       } else if (error.message.includes('Failed to fetch')) {
         errorMessage = 'Failed to connect to the Blockbook API.';
-        details = { url: blockbookApiUrl };
+        details = { url: this._api };
       } else {
         details = { message: error.message, stack: error.stack };
       }
