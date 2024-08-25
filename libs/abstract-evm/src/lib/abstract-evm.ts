@@ -1,6 +1,6 @@
 import { ethers } from 'ethers';
 import { CoreNetworkAbstraction, AddressBalance, Transaction, AddressBalances, AssetBalance, UpdateFeed } from '@steadfastdigital/abstract-core';
-import { networks, nativeAssets, NativeAsset } from '@steadfastdigital/crypto-assets';
+import { networks, nativeAssets, NativeAsset, getRpc, getRpcMaybe } from '@steadfastdigital/crypto-assets';
 import { Logger, isValidWebSocketUrl } from '@steadfastdigital/utils';
 import { BlockbookProvider, EtherscanProvider } from './providers';
 import { Observable } from 'rxjs';
@@ -14,8 +14,11 @@ import { fetchTokenBalance } from './rpc/asset-balance';
  * @throws {Error} If the provider is not supported for the network.
  */
 function getIEvmProvider(networkId: string) {
-  const { type } = networks[networkId].urls.txApi;
-  switch (type) {
+  const api = networks[networkId].urls.find(url => url.type === 'api');
+  if (!api) {
+    throw new Error(`API URL not found for network ${networkId}`);
+  }
+  switch (api.customType) {
     case 'etherscan':
       return new EtherscanProvider(networkId);
     case 'blockbook':
@@ -34,14 +37,20 @@ function getIEvmProvider(networkId: string) {
 export abstract class EvmAbstraction extends CoreNetworkAbstraction {
   _rpcProvider: ethers.JsonRpcProvider | ethers.WebSocketProvider;
 
+  id: string;
+  name: string;
+  rpcUrl: string;
+
   /**
    * Creates an instance of EvmAbstraction.
    * @param {string} networkId - The network ID.
    */
   constructor(networkId: string) {
     super(networkId);
-    const rpcUrl = networks[networkId].urls.rpc.url;
-    this._rpcProvider = isValidWebSocketUrl(rpcUrl) ? new ethers.WebSocketProvider(rpcUrl) : new ethers.JsonRpcProvider(rpcUrl);
+    this.rpcUrl = getRpcMaybe(networkId, 'wss-node')?.url || getRpc(networkId, 'node').url;
+    this.id = networkId;
+    this.name = networks[networkId].name;
+    this._rpcProvider = isValidWebSocketUrl(this.rpcUrl) ? new ethers.WebSocketProvider(this.rpcUrl) : new ethers.JsonRpcProvider(this.rpcUrl);
   }
 
   /**
@@ -55,14 +64,6 @@ export abstract class EvmAbstraction extends CoreNetworkAbstraction {
     Logger.debug(`Fetching balance for ${address} on ${network.name}`);
 
     try {
-      const { url: rpcUrl } = network.urls.rpc;
-
-      if (!rpcUrl) {
-        throw new EvmAbstractionError(`RPC URL for network ${network.name} not found`);
-      }
-
-      Logger.debug(`Fetching native balance for ${address} on ${network.name} using ${rpcUrl}`);
-
       const balanceInWeiEthers = await this._rpcProvider.getBalance(address);
       const balanceInEthEthers = ethers.formatEther(balanceInWeiEthers);
 
@@ -149,12 +150,6 @@ export abstract class EvmAbstraction extends CoreNetworkAbstraction {
     Logger.debug(`Fetching balance for ${address} and asset ${assetId} on ${network.name}`);
 
     try {
-      const { url: rpcUrl } = network.urls.rpc;
-
-      if (!rpcUrl) {
-        throw new EvmAbstractionError(`RPC URL for network ${network.name} not found`);
-      }
-
       const token = await fetchTokenBalance(this._rpcProvider, address, assetId);
 
       return {
@@ -214,15 +209,13 @@ export abstract class EvmAbstraction extends CoreNetworkAbstraction {
    * @throws {EvmAbstractionError} If the RPC URL is not a valid WebSocket URL.
    */
   subscribeToBalance(address: string): Observable<AddressBalance> {
-    const network = networks[this._networkId];
-    const { url: rpcUrl } = network.urls.rpc;
-
-    if (!isValidWebSocketUrl(rpcUrl)) {
-      throw new EvmAbstractionError(`RPC URL for network ${network.name} is not a valid WebSocket URL`);
+    const rpcUrl = getRpcMaybe(this._networkId, 'wss-node')?.url;
+    if (!rpcUrl || !isValidWebSocketUrl(rpcUrl)) {
+      throw new EvmAbstractionError(`RPC URL for network ${this.name} is not a valid WebSocket URL`);
     }
 
     const wsProvider = new ethers.WebSocketProvider(rpcUrl);
-    Logger.debug(`Subscribing to balance updates for ${address} on ${network.name} using ${rpcUrl}`);
+    Logger.debug(`Subscribing to balance updates for ${address} on ${this.name} using ${rpcUrl}`);
     return new Observable<AddressBalance>(subscriber => {
       const fetchBalance = async () => {
         try {
@@ -233,7 +226,7 @@ export abstract class EvmAbstraction extends CoreNetworkAbstraction {
           const balance: AddressBalance = {
             address,
             native: {
-              asset: nativeAssets.find(asset => asset.networkId === network.id) as NativeAsset,
+              asset: nativeAssets.find(asset => asset.networkId === this.id) as NativeAsset,
               amount: amount,
             },
             fees: [],
