@@ -1,4 +1,4 @@
-import { Network, DeepPartial } from './types';
+import { Network, DeepPartial, NetworkRpc } from './types';
 
 export const networks: Record<string, Network> = {
   eth: {
@@ -104,15 +104,29 @@ export function readApiKeys() {
   });
 }
 
-export function getRpc(networkId: string, type: string, customType?: string) {
+export function getRpc(networkId: string, type: string, customType?: string): NetworkRpc {
   const network = networks[networkId];
   if (!network) {
     throw new Error(`Network ${networkId} not found`);
   }
+  let rpc;
   if (customType) {
-    return network.urls.find(url => url.type === type && url.customType === customType);
+    rpc = network.urls.find(url => url.type === type && url.customType === customType);
+  } else {
+    rpc = network.urls.find(url => url.type === type);
   }
-  return network.urls.find(url => url.type === type);
+  if (!rpc) {
+    throw new Error(`RPC ${type} not found for network ${networkId}`);
+  }
+  return rpc;
+}
+
+export function getRpcMaybe(networkId: string, type: string, customType?: string): NetworkRpc | undefined {
+  try {
+    return getRpc(networkId, type, customType);
+  } catch (error) {
+    return undefined;
+  }
 }
 
 export function initNetworks() {

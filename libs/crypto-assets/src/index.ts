@@ -14,6 +14,7 @@ export {
   readApiKeys,
   initNetworks,
   getRpc,
+  getRpcMaybe,
 } from './lib/networks';
 export {
   tokenAssets,
