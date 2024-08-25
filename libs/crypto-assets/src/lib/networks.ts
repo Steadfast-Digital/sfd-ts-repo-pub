@@ -104,6 +104,17 @@ export function readApiKeys() {
   });
 }
 
+export function getRpc(networkId: string, type: string, customType?: string) {
+  const network = networks[networkId];
+  if (!network) {
+    throw new Error(`Network ${networkId} not found`);
+  }
+  if (customType) {
+    return network.urls.find(url => url.type === type && url.customType === customType);
+  }
+  return network.urls.find(url => url.type === type);
+}
+
 export function initNetworks() {
   readApiKeys();
 }

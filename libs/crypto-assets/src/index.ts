@@ -13,6 +13,7 @@ export {
   setCustomNetworks,
   readApiKeys,
   initNetworks,
+  getRpc,
 } from './lib/networks';
 export {
   tokenAssets,
