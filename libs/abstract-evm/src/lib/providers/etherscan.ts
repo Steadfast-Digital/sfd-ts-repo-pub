@@ -2,23 +2,26 @@ import axios from 'axios';
 import { ethers } from 'ethers';
 import { IEvmProvider } from '../types';
 import { Transaction, AssetBalance } from '@steadfastdigital/abstract-core';
-import { networks, nativeAssets, NativeAsset, tokenAssets } from '@steadfastdigital/crypto-assets';
+import { networks, nativeAssets, NativeAsset, tokenAssets, getRpc } from '@steadfastdigital/crypto-assets';
 import { Logger } from '@steadfastdigital/utils';
 import { EvmProviderError } from '../errors';
 
 export class EtherscanProvider implements IEvmProvider {
   private _networkId: string;
+  private _api: string;
+  private _apiKey: string;
 
   constructor(networkId: string) {
     this._networkId = networkId;
+    const rpc = getRpc(networkId, 'api');
+    this._api = rpc.url;
+    this._apiKey = rpc.apiKey ?? '';
   }
 
   async getTransactionHistory(address: string): Promise<Transaction[]> {
     const network = networks[this._networkId];
     Logger.debug(`Fetching transaction history for ${address} on ${network.name}`);
-    const etherscanApiUrlBase = network.urls.txApi.url;
-    const apikey = network.urls.txApi.apiKey;
-    const etherscanApiUrl = `${etherscanApiUrlBase}?module=account&action=txlist&address=${address}&sort=asc&apikey=${apikey}`;
+    const etherscanApiUrl = `${this._api}?module=account&action=txlist&address=${address}&sort=asc&apikey=${this._apiKey}`;
 
     try {
       const response = await axios.get(etherscanApiUrl);
@@ -63,11 +66,8 @@ export class EtherscanProvider implements IEvmProvider {
   }
 
   async getAssetBalance(address: string, assetId: string): Promise<AssetBalance> {
-    const network = networks[this._networkId];
-    const etherscanApiUrlBase = network.urls.txApi.url;
-    const apikey = network.urls.txApi.apiKey;
     const asset = tokenAssets.find(asset => asset.networkId === this._networkId && asset.id === assetId);
-    const etherscanApiUrl = `${etherscanApiUrlBase}?module=account&action=tokenbalance&contractaddress=${asset?.contractOrId}&address=${address}&tag=latest&apikey=${apikey}`;
+    const etherscanApiUrl = `${this._api}?module=account&action=tokenbalance&contractaddress=${asset?.contractOrId}&address=${address}&tag=latest&apikey=${this._apiKey}`;
 
     try {
       const response = await axios.get(etherscanApiUrl);
