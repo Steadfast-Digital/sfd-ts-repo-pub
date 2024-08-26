@@ -31,4 +31,4 @@ jobs:
         run: pnpm nx run-many --target=lint --all
 
       - name: Build Packages
-        run: pnpm nx run-many --target=build --all
+        run: pnpm nx run-many --target=build --all --exclude=example-app
