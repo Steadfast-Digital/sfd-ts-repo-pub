@@ -1,9 +1,23 @@
 import { ethers } from 'ethers';
-import { CoreNetworkAbstraction, AddressBalance, Transaction, AddressBalances, AssetBalance, UpdateFeed } from '@steadfastdigital/abstract-core';
-import { networks, nativeAssets, NativeAsset, getRpc, getRpcMaybe } from '@steadfastdigital/crypto-assets';
+import {
+  CoreNetworkAbstraction,
+  IAddressBalance,
+  ITransaction,
+  IAddressBalances,
+  IAssetBalance,
+  IUpdateFeed,
+} from '@steadfastdigital/abstract-core';
+import {
+  networks,
+  nativeAssets,
+  NativeAsset,
+  getRpc,
+  getRpcMaybe,
+} from '@steadfastdigital/crypto-assets';
 import { Logger, isValidWebSocketUrl } from '@steadfastdigital/utils';
-import { BlockbookProvider, EtherscanProvider } from './providers';
 import { Observable } from 'rxjs';
+
+import { BlockbookProvider, EtherscanProvider } from './providers';
 import { EvmAbstractionError } from './errors';
 import { fetchTokenBalance } from './rpc/asset-balance';
 
@@ -14,7 +28,7 @@ import { fetchTokenBalance } from './rpc/asset-balance';
  * @throws {Error} If the provider is not supported for the network.
  */
 function getIEvmProvider(networkId: string) {
-  const api = networks[networkId].urls.find(url => url.type === 'api');
+  const api = networks[networkId].urls.find((url) => url.type === 'api');
   if (!api) {
     throw new Error(`API URL not found for network ${networkId}`);
   }
@@ -47,10 +61,13 @@ export abstract class EvmAbstraction extends CoreNetworkAbstraction {
    */
   constructor(networkId: string) {
     super(networkId);
-    this.rpcUrl = getRpcMaybe(networkId, 'wss-node')?.url || getRpc(networkId, 'node').url;
+    this.rpcUrl =
+      getRpcMaybe(networkId, 'wss-node')?.url || getRpc(networkId, 'node').url;
     this.id = networkId;
     this.name = networks[networkId].name;
-    this._rpcProvider = isValidWebSocketUrl(this.rpcUrl) ? new ethers.WebSocketProvider(this.rpcUrl) : new ethers.JsonRpcProvider(this.rpcUrl);
+    this._rpcProvider = isValidWebSocketUrl(this.rpcUrl)
+      ? new ethers.WebSocketProvider(this.rpcUrl)
+      : new ethers.JsonRpcProvider(this.rpcUrl);
   }
 
   /**
@@ -59,7 +76,7 @@ export abstract class EvmAbstraction extends CoreNetworkAbstraction {
    * @returns {Promise<AddressBalance>} The balance of the address.
    * @throws {EvmAbstractionError} If there is an error fetching the balance.
    */
-  async getBalance(address: string): Promise<AddressBalance> {
+  async getBalance(address: string): Promise<IAddressBalance> {
     const network = networks[this._networkId];
     Logger.debug(`Fetching balance for ${address} on ${network.name}`);
 
@@ -74,15 +91,22 @@ export abstract class EvmAbstraction extends CoreNetworkAbstraction {
       return {
         address,
         native: {
-          asset: nativeAssets.find(asset => asset.networkId === network.id) as NativeAsset,
+          asset: nativeAssets.find(
+            (asset) => asset.networkId === network.id,
+          ) as NativeAsset,
           amount: amount,
         },
         fees: [],
       };
     } catch (error: unknown) {
       Logger.error('Error fetching balance', error);
-      if (!(error instanceof EvmAbstractionError)) throw new EvmAbstractionError('An unexpected error occurred while fetching the address balance.', { error });
-      const errorMessage = 'An unexpected error occurred while fetching the address balance.';
+      if (!(error instanceof EvmAbstractionError))
+        throw new EvmAbstractionError(
+          'An unexpected error occurred while fetching the address balance.',
+          { error },
+        );
+      const errorMessage =
+        'An unexpected error occurred while fetching the address balance.';
       const details = { message: error.message, stack: error.stack };
       Logger.error(errorMessage, details);
       throw new EvmAbstractionError(errorMessage, details);
@@ -95,7 +119,7 @@ export abstract class EvmAbstraction extends CoreNetworkAbstraction {
    * @returns {Promise<Transaction>} The transaction details.
    * @throws {Error} If the method is not implemented.
    */
-  async getTransaction(hash: string): Promise<Transaction> {
+  async getTransaction(hash: string): Promise<ITransaction> {
     throw new Error('Method not implemented.');
   }
 
@@ -105,7 +129,10 @@ export abstract class EvmAbstraction extends CoreNetworkAbstraction {
    * @param {number} [limit] - The maximum number of transactions to fetch (optional).
    * @returns {Promise<Transaction[]>} The list of recent transactions.
    */
-  async getRecentTransactions(address: string, limit?: number): Promise<Transaction[]> {
+  async getRecentTransactions(
+    address: string,
+    limit?: number,
+  ): Promise<ITransaction[]> {
     return getIEvmProvider(this._networkId).getTransactionHistory(address);
   }
 
@@ -115,7 +142,10 @@ export abstract class EvmAbstraction extends CoreNetworkAbstraction {
    * @param {number} [limit] - The maximum number of transactions to fetch (optional).
    * @returns {Promise<Transaction[]>} The list of transactions.
    */
-  async getTransactionHistory(address: string, limit?: number): Promise<Transaction[]> {
+  async getTransactionHistory(
+    address: string,
+    limit?: number,
+  ): Promise<ITransaction[]> {
     return getIEvmProvider(this._networkId).getTransactionHistory(address);
   }
 
@@ -124,9 +154,11 @@ export abstract class EvmAbstraction extends CoreNetworkAbstraction {
    * @param {string} address - The address to fetch all balances for.
    * @returns {Promise<AddressBalances>} The balances of the address.
    */
-  async getAllBalances(address: string): Promise<AddressBalances> {
+  async getAllBalances(address: string): Promise<IAddressBalances> {
     Logger.debug('Fetching address balances', address);
-    const tokens = await getIEvmProvider(this._networkId).getAssetsBalances(address);
+    const tokens = await getIEvmProvider(this._networkId).getAssetsBalances(
+      address,
+    );
 
     const nativeBalance = await this.getBalance(address);
 
@@ -145,12 +177,21 @@ export abstract class EvmAbstraction extends CoreNetworkAbstraction {
    * @returns {Promise<AssetBalance>} The balance of the specified asset.
    * @throws {EvmAbstractionError} If there is an error fetching the balance.
    */
-  async getAssetBalance(address: string, assetId: string): Promise<AssetBalance> {
+  async getAssetBalance(
+    address: string,
+    assetId: string,
+  ): Promise<IAssetBalance> {
     const network = networks[this._networkId];
-    Logger.debug(`Fetching balance for ${address} and asset ${assetId} on ${network.name}`);
+    Logger.debug(
+      `Fetching balance for ${address} and asset ${assetId} on ${network.name}`,
+    );
 
     try {
-      const token = await fetchTokenBalance(this._rpcProvider, address, assetId);
+      const token = await fetchTokenBalance(
+        this._rpcProvider,
+        address,
+        assetId,
+      );
 
       return {
         asset: {
@@ -165,8 +206,13 @@ export abstract class EvmAbstraction extends CoreNetworkAbstraction {
         amount: ethers.formatUnits(token.balance, token.decimals),
       };
     } catch (error: unknown) {
-      if (!(error instanceof EvmAbstractionError)) throw new EvmAbstractionError('An unexpected error occurred while fetching the address balance.', { error });
-      const errorMessage = 'An unexpected error occurred while fetching the address balance.';
+      if (!(error instanceof EvmAbstractionError))
+        throw new EvmAbstractionError(
+          'An unexpected error occurred while fetching the address balance.',
+          { error },
+        );
+      const errorMessage =
+        'An unexpected error occurred while fetching the address balance.';
       const details = { message: error.message, stack: error.stack };
 
       Logger.error(errorMessage, details);
@@ -180,8 +226,11 @@ export abstract class EvmAbstraction extends CoreNetworkAbstraction {
    * @param {string[]} assetIds - The IDs of the assets.
    * @returns {Promise<AssetBalance[]>} The balances of the specified assets.
    */
-  async getAssetsBalances(address: string, assetIds: string[]): Promise<AssetBalance[]> {
-    const balances: AssetBalance[] = [];
+  async getAssetsBalances(
+    address: string,
+    assetIds: string[],
+  ): Promise<IAssetBalance[]> {
+    const balances: IAssetBalance[] = [];
     for (const assetId of assetIds) {
       const balance = await this.getAssetBalance(address, assetId);
       balances.push(balance);
@@ -194,7 +243,7 @@ export abstract class EvmAbstraction extends CoreNetworkAbstraction {
    * @param {string} address - The address to fetch all asset balances for.
    * @returns {Promise<AssetBalance[]>} The balances of all assets.
    */
-  async getAllAssetsBalances(address: string): Promise<AssetBalance[]> {
+  async getAllAssetsBalances(address: string): Promise<IAssetBalance[]> {
     return getIEvmProvider(this._networkId).getAssetsBalances(address);
   }
 
@@ -208,25 +257,31 @@ export abstract class EvmAbstraction extends CoreNetworkAbstraction {
    *  });
    * @throws {EvmAbstractionError} If the RPC URL is not a valid WebSocket URL.
    */
-  subscribeToBalance(address: string): Observable<AddressBalance> {
+  subscribeToBalance(address: string): Observable<IAddressBalance> {
     const rpcUrl = getRpcMaybe(this._networkId, 'wss-node')?.url;
     if (!rpcUrl || !isValidWebSocketUrl(rpcUrl)) {
-      throw new EvmAbstractionError(`RPC URL for network ${this.name} is not a valid WebSocket URL`);
+      throw new EvmAbstractionError(
+        `RPC URL for network ${this.name} is not a valid WebSocket URL`,
+      );
     }
 
     const wsProvider = new ethers.WebSocketProvider(rpcUrl);
-    Logger.debug(`Subscribing to balance updates for ${address} on ${this.name} using ${rpcUrl}`);
-    return new Observable<AddressBalance>(subscriber => {
+    Logger.debug(
+      `Subscribing to balance updates for ${address} on ${this.name} using ${rpcUrl}`,
+    );
+    return new Observable<IAddressBalance>((subscriber) => {
       const fetchBalance = async () => {
         try {
           const balanceInWeiEthers = await wsProvider.getBalance(address);
           const balanceInEthEthers = ethers.formatEther(balanceInWeiEthers);
           const amount = balanceInEthEthers;
 
-          const balance: AddressBalance = {
+          const balance: IAddressBalance = {
             address,
             native: {
-              asset: nativeAssets.find(asset => asset.networkId === this.id) as NativeAsset,
+              asset: nativeAssets.find(
+                (asset) => asset.networkId === this.id,
+              ) as NativeAsset,
               amount: amount,
             },
             fees: [],
@@ -234,7 +289,9 @@ export abstract class EvmAbstraction extends CoreNetworkAbstraction {
           Logger.debug(`Balance updated: ${amount}`);
           subscriber.next(balance);
         } catch (error: unknown) {
-          subscriber.error(new EvmAbstractionError('Error fetching balance', error));
+          subscriber.error(
+            new EvmAbstractionError('Error fetching balance', error),
+          );
         }
       };
 
@@ -246,9 +303,13 @@ export abstract class EvmAbstraction extends CoreNetworkAbstraction {
         address: address,
         topics: [],
       };
-      Logger.debug('Subscribing to balance updates' + JSON.stringify(filter, null, 2));
+      Logger.debug(
+        'Subscribing to balance updates' + JSON.stringify(filter, null, 2),
+      );
       const subscription = wsProvider.on(filter, fetchBalance);
-      Logger.debug('Subscribed to balance updates' + JSON.stringify(subscription, null, 2));
+      Logger.debug(
+        'Subscribed to balance updates' + JSON.stringify(subscription, null, 2),
+      );
 
       // Unsubscribe on observable completion
       return () => {
@@ -264,7 +325,7 @@ export abstract class EvmAbstraction extends CoreNetworkAbstraction {
    * @returns {Observable<Transaction[]>} An observable for transaction updates.
    * @throws {Error} If the method is not implemented.
    */
-  subscribeToTransactions(address: string): Observable<Transaction[]> {
+  subscribeToTransactions(address: string): Observable<ITransaction[]> {
     throw new Error('Method not implemented.');
   }
 
@@ -274,7 +335,7 @@ export abstract class EvmAbstraction extends CoreNetworkAbstraction {
    * @returns {Observable<UpdateFeed>} An observable for balance and transaction updates.
    * @throws {Error} If the method is not implemented.
    */
-  subscribeToUpdates(address: string): Observable<UpdateFeed> {
+  subscribeToUpdates(address: string): Observable<IUpdateFeed> {
     throw new Error('Method not implemented.');
   }
 }

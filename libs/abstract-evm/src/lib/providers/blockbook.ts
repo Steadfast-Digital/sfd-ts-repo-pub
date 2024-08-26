@@ -1,9 +1,15 @@
 import axios from 'axios';
 import { ethers } from 'ethers';
-import { IEvmProvider } from '../types';
-import { Transaction, AssetBalance } from '@steadfastdigital/abstract-core';
-import { networks, nativeAssets, NativeAsset, getRpc } from '@steadfastdigital/crypto-assets';
+import { ITransaction, IAssetBalance } from '@steadfastdigital/abstract-core';
+import {
+  networks,
+  nativeAssets,
+  NativeAsset,
+  getRpc,
+} from '@steadfastdigital/crypto-assets';
 import { Logger } from '@steadfastdigital/utils';
+
+import { IEvmProvider } from '../types';
 import { EvmProviderError } from '../errors';
 
 export class BlockbookProvider implements IEvmProvider {
@@ -18,16 +24,22 @@ export class BlockbookProvider implements IEvmProvider {
     this._apiKey = rpc.apiKey ?? '';
   }
 
-  async getTransactionHistory(address: string): Promise<Transaction[]> {
+  async getTransactionHistory(address: string): Promise<ITransaction[]> {
     const network = networks[this._networkId];
-    Logger.debug(`Fetching transaction history for ${address} on ${network.name}`);
+    Logger.debug(
+      `Fetching transaction history for ${address} on ${network.name}`,
+    );
 
     try {
-      const response = await axios.get(`${this._api}/v2/address/${address}?details=txs`);
+      const response = await axios.get(
+        `${this._api}/v2/address/${address}?details=txs`,
+      );
       const data = await response.data;
 
       if (response.status !== 200) {
-        throw new EvmProviderError(`Failed to fetch transaction history: ${data.error}`);
+        throw new EvmProviderError(
+          `Failed to fetch transaction history: ${data.error}`,
+        );
       }
 
       return data.transactions.map((tx: any) => ({
@@ -36,17 +48,22 @@ export class BlockbookProvider implements IEvmProvider {
         to: tx.vout[0].addresses ? tx.vout[0].addresses[0] : null,
         value: tx.vout[0].value,
         fee: {
-          asset: nativeAssets.find(asset => asset.networkId === this._networkId) as NativeAsset,
+          asset: nativeAssets.find(
+            (asset) => asset.networkId === this._networkId,
+          ) as NativeAsset,
           amount: tx.fees,
         },
         blockNumber: tx.blockHeight,
         timestamp: tx.blockTime,
         status: tx.confirmations > 0 ? 'confirmed' : 'pending',
-        asset: nativeAssets.find(asset => asset.networkId === this._networkId) as NativeAsset,
+        asset: nativeAssets.find(
+          (asset) => asset.networkId === this._networkId,
+        ) as NativeAsset,
         nonce: tx.nonce,
       }));
     } catch (error: any) {
-      let errorMessage = 'An error occurred while fetching the transaction history.';
+      let errorMessage =
+        'An error occurred while fetching the transaction history.';
       let details = {};
 
       if (error instanceof EvmProviderError) {
@@ -63,18 +80,29 @@ export class BlockbookProvider implements IEvmProvider {
     }
   }
 
-  async getAssetBalance(address: string, assetId: string): Promise<AssetBalance> {
+  async getAssetBalance(
+    address: string,
+    assetId: string,
+  ): Promise<IAssetBalance> {
     try {
-      const response = await axios.get(`${this._api}/v2/address/${address}?details=tokenBalances`);
-      const data =  response.data;
+      const response = await axios.get(
+        `${this._api}/v2/address/${address}?details=tokenBalances`,
+      );
+      const data = response.data;
 
       if (response.status !== 200) {
-        throw new EvmProviderError(`Failed to fetch address asset balance: ${data.error}`);
+        throw new EvmProviderError(
+          `Failed to fetch address asset balance: ${data.error}`,
+        );
       }
 
-      const token = data.tokens.find((token: any) => token.contract === assetId);
+      const token = data.tokens.find(
+        (token: any) => token.contract === assetId,
+      );
       if (!token) {
-        throw new EvmProviderError(`Token with assetId ${assetId} not found for address ${address}`);
+        throw new EvmProviderError(
+          `Token with assetId ${assetId} not found for address ${address}`,
+        );
       }
 
       return {
@@ -107,14 +135,17 @@ export class BlockbookProvider implements IEvmProvider {
     }
   }
 
-  async getAssetsBalances(address: string): Promise<AssetBalance[]> {
-
+  async getAssetsBalances(address: string): Promise<IAssetBalance[]> {
     try {
-      const response = await axios.get(`${this._api}/v2/address/${address}?details=tokenBalances`);
+      const response = await axios.get(
+        `${this._api}/v2/address/${address}?details=tokenBalances`,
+      );
       const data = response.data;
 
       if (response.status !== 200) {
-        throw new EvmProviderError(`Failed to fetch address assets balances: ${data.error}`);
+        throw new EvmProviderError(
+          `Failed to fetch address assets balances: ${data.error}`,
+        );
       }
 
       return data.tokens.map((token: any) => ({
@@ -127,7 +158,9 @@ export class BlockbookProvider implements IEvmProvider {
           networkId: this._networkId,
           assetType: 'ERC20',
         },
-        amount: token.balance ? ethers.formatUnits(token.balance, token.decimals) : undefined,
+        amount: token.balance
+          ? ethers.formatUnits(token.balance, token.decimals)
+          : undefined,
       }));
     } catch (error: any) {
       let errorMessage = 'An error occurred while fetching the asset balances.';

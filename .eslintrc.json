@@ -43,9 +43,15 @@
             "format": ["camelCase"]
           },
           {
+            "selector": "memberLike",
+            "modifiers": ["private"],
+            "format": ["camelCase"],
+            "leadingUnderscore": "require"
+          },
+          {
             "selector": "variable",
-            "format": ["UPPER_CASE"],
-            "modifiers": ["const"]
+            "modifiers": ["const", "global"],
+            "format": ["UPPER_CASE"]
           },
           {
             "selector": "interface",

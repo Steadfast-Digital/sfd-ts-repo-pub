@@ -9,7 +9,10 @@ export class EvmAbstractionError extends Error {
    * @param {string} message - The error message.
    * @param {string|object|unknown} [details] - Additional details about the error (optional).
    */
-  constructor(public override message: string, public details?: string | object | unknown) {
+  constructor(
+    public override message: string,
+    public details?: string | object | unknown,
+  ) {
     super(message);
     this.name = 'EvmAbstractionError';
     this.details = details;
@@ -26,7 +29,10 @@ export class EvmProviderError extends Error {
    * @param {string} message - The error message.
    * @param {string|object|unknown} [details] - Additional details about the error (optional).
    */
-  constructor(public override message: string, public details?: string | object | unknown) {
+  constructor(
+    public override message: string,
+    public details?: string | object | unknown,
+  ) {
     super(message);
     this.name = 'EvmProviderError';
     this.details = details;
