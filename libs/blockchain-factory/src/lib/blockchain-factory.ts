@@ -1,11 +1,13 @@
-import { BlockchainInterface } from '@steadfastdigital/abstract-core';
-import { networks } from '@steadfastdigital/crypto-assets';
+import { IBlockchainInterface } from '@steadfastdigital/abstract-core';
+import { NETWORKS } from '@steadfastdigital/crypto-assets';
 import { isValidPackageName } from '@steadfastdigital/utils';
 export class BlockchainFactory {
-  private static _connectors: Record<string, BlockchainInterface> = {};
-  static async createBlockchain(networkId: string): Promise<BlockchainInterface> {
+  private static _connectors: Record<string, IBlockchainInterface> = {};
+  static async createBlockchain(
+    networkId: string,
+  ): Promise<IBlockchainInterface> {
     try {
-      const network = networks[networkId];
+      const network = NETWORKS[networkId];
       if (!network) {
         throw new Error(`Invalid network id: ${networkId}`);
       }
@@ -19,26 +21,31 @@ export class BlockchainFactory {
         throw new Error(`Invalid package name: ${networkId}`);
       }
       // Use dynamic import to load the connector library
-      const ConnectorModule = await import(network.connectorLib);
+      const connectorModule = await import(network.connectorLib);
       // Assume the default export is the required connector class
-      this._connectors[networkId] = new ConnectorModule.default(networkId);
+      this._connectors[networkId] = new connectorModule.default(networkId);
       return this._connectors[networkId];
     } catch (error) {
-      if (error && (error as NodeJS.ErrnoException)['code'] === 'MODULE_NOT_FOUND') {
-        throw new Error(`Package for ${networkId} not found. Please install the appropriate package.`);
+      if (
+        error &&
+        (error as NodeJS.ErrnoException)['code'] === 'MODULE_NOT_FOUND'
+      ) {
+        throw new Error(
+          `Package for ${networkId} not found. Please install the appropriate package.`,
+        );
       }
       throw error;
     }
   }
-  static registerConnector(networkId: string, connector: BlockchainInterface) {
-    const network = networks[networkId];
+  static registerConnector(networkId: string, connector: IBlockchainInterface) {
+    const network = NETWORKS[networkId];
     if (!network) {
       throw new Error(`Invalid network id: ${networkId}`);
     }
     this._connectors[networkId] = connector;
     return this._connectors[networkId];
   }
-  static getConnection(networkId: string): BlockchainInterface {
+  static getConnection(networkId: string): IBlockchainInterface {
     if (!this._connectors[networkId]) {
       throw new Error(`Connector for ${networkId} not found`);
     }
@@ -48,7 +55,11 @@ export class BlockchainFactory {
     const connector = await this.createBlockchain(networkId);
     return connector.getBalance(address);
   }
-  static async getAssetBalance(networkId: string, address: string, assetId: string) {
+  static async getAssetBalance(
+    networkId: string,
+    address: string,
+    assetId: string,
+  ) {
     const connector = await this.createBlockchain(networkId);
     return connector.getAssetBalance(address, assetId);
   }
@@ -56,7 +67,11 @@ export class BlockchainFactory {
     const connector = await this.createBlockchain(networkId);
     return connector.getAllBalances(address);
   }
-  static async getAssetsBalances(networkId: string, address: string, assetIds: string[]) {
+  static async getAssetsBalances(
+    networkId: string,
+    address: string,
+    assetIds: string[],
+  ) {
     const connector = await this.createBlockchain(networkId);
     return connector.getAssetsBalances(address, assetIds);
   }
