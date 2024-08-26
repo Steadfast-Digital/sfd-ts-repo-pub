@@ -2,9 +2,9 @@ import axios from 'axios';
 import { ethers } from 'ethers';
 import { ITransaction, IAssetBalance } from '@steadfastdigital/abstract-core';
 import {
-  networks,
-  nativeAssets,
-  NativeAsset,
+  NETWORKS,
+  NATIVE_ASSETS,
+  INativeAsset,
   getRpc,
 } from '@steadfastdigital/crypto-assets';
 import { Logger } from '@steadfastdigital/utils';
@@ -25,7 +25,7 @@ export class BlockbookProvider implements IEvmProvider {
   }
 
   async getTransactionHistory(address: string): Promise<ITransaction[]> {
-    const network = networks[this._networkId];
+    const network = NETWORKS[this._networkId];
     Logger.debug(
       `Fetching transaction history for ${address} on ${network.name}`,
     );
@@ -48,17 +48,17 @@ export class BlockbookProvider implements IEvmProvider {
         to: tx.vout[0].addresses ? tx.vout[0].addresses[0] : null,
         value: tx.vout[0].value,
         fee: {
-          asset: nativeAssets.find(
+          asset: NATIVE_ASSETS.find(
             (asset) => asset.networkId === this._networkId,
-          ) as NativeAsset,
+          ) as INativeAsset,
           amount: tx.fees,
         },
         blockNumber: tx.blockHeight,
         timestamp: tx.blockTime,
         status: tx.confirmations > 0 ? 'confirmed' : 'pending',
-        asset: nativeAssets.find(
+        asset: NATIVE_ASSETS.find(
           (asset) => asset.networkId === this._networkId,
-        ) as NativeAsset,
+        ) as INativeAsset,
         nonce: tx.nonce,
       }));
     } catch (error: any) {
