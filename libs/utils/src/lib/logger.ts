@@ -1,52 +1,52 @@
 import * as winston from 'winston';
 
-const levels = {
-    error: 0,
-    warn: 1,
-    info: 2,
-    debug: 3
+const LEVELS = {
+  error: 0,
+  warn: 1,
+  info: 2,
+  debug: 3,
 };
 
-const level = (level = undefined) => {
-    if (level && typeof level === 'string' && levels[level] !== undefined) {
-        return level;
-    }
-    const env = process.env['NODE_ENV'] || 'development';
-    const isDevelopment = env === 'development';
-    return isDevelopment ? 'debug' : 'info';
+function level(level = undefined) {
+  if (level && typeof level === 'string' && LEVELS[level] !== undefined) {
+    return level;
+  }
+  const env = process.env['NODE_ENV'] || 'development';
+  const isDevelopment = env === 'development';
+  return isDevelopment ? 'debug' : 'info';
+}
+
+const COLORS = {
+  error: 'red',
+  warn: 'yellow',
+  info: 'green',
+  debug: 'blue',
 };
 
-const colors = {
-    error: 'red',
-    warn: 'yellow',
-    info: 'green',
-    debug: 'blue'
-};
+winston.addColors(COLORS);
 
-winston.addColors(colors);
-
-const format = winston.format.combine(
-    winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
-    winston.format.colorize({ all: true }),
-    winston.format.printf(
-        (info) => `${info['timestamp']} - ${info.level}: ${info.message}`
-    )
+const FORMAT = winston.format.combine(
+  winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+  winston.format.colorize({ all: true }),
+  winston.format.printf(
+    (info) => `${info['timestamp']} - ${info.level}: ${info.message}`,
+  ),
 );
 
-const transports = [
-    new winston.transports.Console(),
-    new winston.transports.File({
-        filename: 'logs/error.log',
-        level: 'error'
-    }),
-    new winston.transports.File({ filename: 'logs/combined.log' })
+const TRANSPORTS = [
+  new winston.transports.Console(),
+  new winston.transports.File({
+    filename: 'logs/error.log',
+    level: 'error',
+  }),
+  new winston.transports.File({ filename: 'logs/combined.log' }),
 ];
 
-const Logger = winston.createLogger({
-    level: level(),
-    levels,
-    format,
-    transports
+const LOGGER = winston.createLogger({
+  level: level(),
+  levels: LEVELS,
+  format: FORMAT,
+  transports: TRANSPORTS,
 });
 
-export default Logger;
+export default LOGGER;

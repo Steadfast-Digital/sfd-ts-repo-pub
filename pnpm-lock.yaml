@@ -291,11 +291,14 @@ importers:
         version: 2.7.0
     devDependencies:
       dotenv:
-        specifier: '*'
+        specifier: ^16.4.5
         version: 16.4.5
 
   libs/connector-ethereum:
     dependencies:
+      '@steadfastdigital/abstract-evm':
+        specifier: workspace:*
+        version: link:../abstract-evm
       tslib:
         specifier: ^2.3.0
         version: 2.7.0
