@@ -1,5 +1,6 @@
 import { config } from 'dotenv';
 import { setCustomNetworks } from '@steadfastdigital/crypto-assets';
+
 import { BscConnector } from './connector-bsc';
 
 // Load environment variables from .env file
@@ -54,7 +55,10 @@ describe('EvmAbstraction Integration Tests', () => {
 
   it('should fetch BSC address asset balance', async () => {
     const assetId = 'usdc'; // Replace with a valid assetId if needed
-    const result = await bscEvmAbstraction.getAssetBalance(testAddress, assetId);
+    const result = await bscEvmAbstraction.getAssetBalance(
+      testAddress,
+      assetId,
+    );
     console.log('BSC Address Asset Balance:', result);
     expect(result.asset).toHaveProperty('id', assetId);
     expect(result).toHaveProperty('amount');
@@ -62,7 +66,10 @@ describe('EvmAbstraction Integration Tests', () => {
 
   it('should fetch BSC address assets balances', async () => {
     const assetIds = ['usdc']; // Replace with valid assetIds if needed
-    const result = await bscEvmAbstraction.getAssetsBalances(testAddress, assetIds);
+    const result = await bscEvmAbstraction.getAssetsBalances(
+      testAddress,
+      assetIds,
+    );
     console.log('BSC Address Assets Balances:', result);
     expect(result.length).toBeGreaterThan(0);
     expect(result[0].asset).toHaveProperty('id', 'usdc');

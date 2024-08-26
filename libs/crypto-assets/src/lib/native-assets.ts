@@ -1,19 +1,18 @@
+import { INativeAsset } from './types';
 
-import { NativeAsset } from "./types";
-
-export const nativeAssets: NativeAsset[] = [
+export const NATIVE_ASSETS: INativeAsset[] = [
   {
     id: 'eth',
     name: 'Ethereum',
     symbol: 'ETH',
     decimals: 18,
-    networkId: 'eth'
+    networkId: 'eth',
   },
   {
     id: 'bnb',
     name: 'Binance Coin',
     symbol: 'BNB',
     decimals: 18,
-    networkId: 'bsc'
+    networkId: 'bsc',
   },
 ];

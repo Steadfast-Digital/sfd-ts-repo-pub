@@ -1,9 +1,8 @@
-
 export type DeepPartial<T> = {
   [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
 };
 
-export type NativeAsset = {
+export interface INativeAsset {
   id: string;
   name: string;
   symbol: string;
@@ -11,7 +10,7 @@ export type NativeAsset = {
   contractOrId?: string | undefined;
   networkId: string;
 }
-export type TokenAsset = {
+export interface ITokenAsset {
   id: string;
   name: string;
   symbol: string;
@@ -21,39 +20,29 @@ export type TokenAsset = {
   assetType: 'ERC20' | 'ERC721' | 'ERC1155';
 }
 
-export type Asset = NativeAsset | TokenAsset;
+export type Asset = INativeAsset | ITokenAsset;
 
-export interface Network {
+export type NetworkRpcType =
+  | 'node'
+  | 'api'
+  | 'explorer'
+  | 'txApi'
+  | 'wss-node'
+  | 'wss-api'
+  | 'wss-explorer';
+
+export interface INetworkRpc {
+  url: string;
+  type: NetworkRpcType;
+  apiKey?: string;
+  apiKeyEnvName?: string;
+  customType?: string;
+}
+export interface INetwork {
   id: string;
   name: string;
   chainId: number;
-  urls: {
-    rpc: {
-      url: string;
-      type: string; // 'geth' | 'parity' | 'besu' | 'quorum' | 'nethermind' | 'other'
-      apiKey?: string | undefined;
-    }
-    consensus: {
-      url: string;
-      type: string; // 'geth' | 'parity' | 'besu' | 'quorum' | 'nethermind' | 'other'
-      apiKey?: string | undefined;
-    }
-    explorer: {
-      url: string;
-      type: string; // 'etherscan' | 'blockscout' | 'ethplorer' | 'other'
-      apiKey?: string | undefined;
-    }
-    txApi: {
-      url: string;
-      type: string; // 'etherscan' | 'blockscout' | 'ethplorer' | 'other'
-      apiKey?: string | undefined;
-    }
-    tokenApi: {
-      url: string;
-      type: string; // 'etherscan' | 'blockscout' | 'ethplorer' | 'other'
-      apiKey?: string | undefined;
-    }
-  }
+  urls: INetworkRpc[];
   family: string; // 'evm' | 'utxo' | 'other';
   type: string; // 'mainnet' | 'testnet' | 'other';
   bip44: {
@@ -64,15 +53,21 @@ export interface Network {
       staking?: number | undefined;
     };
     slip: number;
-    path(purpose?: number, slip?: number, account?: number, change?: number, index?: number): string;
+    path(
+      purpose?: number,
+      slip?: number,
+      account?: number,
+      change?: number,
+      index?: number,
+    ): string;
   };
 
   // internal use
   connectorLib: string;
 }
-export interface NetworkAssets {
-  network: Network;
-  nativeAsset: NativeAsset;
-  feeAssets: NativeAsset[];
+export interface INetworkAssets {
+  network: INetwork;
+  nativeAsset: INativeAsset;
+  feeAssets: INativeAsset[];
   assetsIds: string[];
 }

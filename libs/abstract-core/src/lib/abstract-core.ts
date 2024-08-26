@@ -1,28 +1,28 @@
-import { NativeAsset, TokenAsset } from '@steadfastdigital/crypto-assets';
+import { INativeAsset, ITokenAsset } from '@steadfastdigital/crypto-assets';
 import { Observable } from 'rxjs';
 
 /**
- * @typedef {Object} NativeAssetBalance
+ * @typedef {Object} INativeAssetBalance
  * @property {NativeAsset} asset - The native asset.
  * @property {string} amount - The amount of the native asset.
  * @property {string} [minBalance] - The minimum balance of the native asset (optional).
  */
-export type NativeAssetBalance = {
-  asset: NativeAsset;
+export interface INativeAssetBalance {
+  asset: INativeAsset;
   amount: string;
   minBalance?: string | undefined;
 }
 
 /**
- * @typedef {Object} AddressBalance
+ * @typedef {Object} IAddressBalance
  * @property {string} address - The address for which the balance is fetched.
- * @property {NativeAssetBalance} native - The balance of the native asset.
- * @property {NativeAssetBalance[]} fees - The balance of fees in native assets.
+ * @property {INativeAssetBalance} native - The balance of the native asset.
+ * @property {INativeAssetBalance[]} fees - The balance of fees in native assets.
  */
-export interface AddressBalance {
+export interface IAddressBalance {
   address: string;
-  native: NativeAssetBalance;
-  fees: NativeAssetBalance[];
+  native: INativeAssetBalance;
+  fees: INativeAssetBalance[];
 }
 
 /**
@@ -31,18 +31,18 @@ export interface AddressBalance {
  * @property {string} amount - The amount of the asset.
  * @property {string} [minBalance] - The minimum balance of the asset (optional).
  */
-export interface AssetBalance {
-  asset: NativeAsset | TokenAsset;
+export interface IAssetBalance {
+  asset: INativeAsset | ITokenAsset;
   amount: string;
   minBalance?: string | undefined;
 }
 
 /**
- * @typedef {AddressBalance} AddressBalances
+ * @typedef {IAddressBalance} IAddressBalances
  * @property {AssetBalance[]} tokens - The balances of various token assets.
  */
-export interface AddressBalances extends AddressBalance {
-  tokens: AssetBalance[];
+export interface IAddressBalances extends IAddressBalance {
+  tokens: IAssetBalance[];
 }
 
 /**
@@ -60,52 +60,52 @@ export interface AddressBalances extends AddressBalance {
  * @property {NativeAsset|TokenAsset} asset - The asset involved in the transaction.
  * @property {number} nonce - The nonce of the transaction.
  */
-export interface Transaction {
+export interface ITransaction {
   hash: string;
   from: string;
   to: string | null;
   value: string;
   fee: {
-    asset: NativeAsset;
+    asset: INativeAsset;
     amount: string;
-  }
+  };
   blockNumber: number;
   timestamp: number;
   status: 'confirmed' | 'pending' | 'failed';
-  asset: NativeAsset | TokenAsset;
+  asset: INativeAsset | ITokenAsset;
   nonce: number;
 }
 
 /**
- * @typedef {Object} UpdateFeed
+ * @typedef {Object} IUpdateFeed
  * @property {string} address - The address being updated.
- * @property {AddressBalance} balance - The balance information of the address.
+ * @property {IAddressBalance} balance - The balance information of the address.
  * @property {Transaction[]} transactions - The list of transactions for the address.
  */
-export interface UpdateFeed {
+export interface IUpdateFeed {
   address: string;
-  balance: AddressBalance;
-  transactions: Transaction[];
+  balance: IAddressBalance;
+  transactions: ITransaction[];
 }
 
 /**
  * Interface for blockchain interactions.
- * @interface BlockchainInterface
+ * @interface IBlockchainInterface
  */
-export interface BlockchainInterface {
+export interface IBlockchainInterface {
   /**
    * Fetch the balance for an address.
    * @param {string} address - The address to fetch the balance for.
-   * @returns {Promise<AddressBalance>} The balance of the address.
+   * @returns {Promise<IAddressBalance>} The balance of the address.
    */
-  getBalance(address: string): Promise<AddressBalance>;
+  getBalance(address: string): Promise<IAddressBalance>;
 
   /**
    * Fetch all balances for an address.
    * @param {string} address - The address to fetch all balances for.
-   * @returns {Promise<AddressBalances>} The balances of the address.
+   * @returns {Promise<IAddressBalances>} The balances of the address.
    */
-  getAllBalances(address: string): Promise<AddressBalances>;
+  getAllBalances(address: string): Promise<IAddressBalances>;
 
   /**
    * Fetch the balance for a specific asset.
@@ -113,7 +113,7 @@ export interface BlockchainInterface {
    * @param {string} assetId - The ID of the asset.
    * @returns {Promise<AssetBalance>} The balance of the specified asset.
    */
-  getAssetBalance(address: string, assetId: string): Promise<AssetBalance>;
+  getAssetBalance(address: string, assetId: string): Promise<IAssetBalance>;
 
   /**
    * Fetch balances for specific assets.
@@ -121,21 +121,24 @@ export interface BlockchainInterface {
    * @param {string[]} assetIds - The IDs of the assets.
    * @returns {Promise<AssetBalance[]>} The balances of the specified assets.
    */
-  getAssetsBalances(address: string, assetIds: string[]): Promise<AssetBalance[]>;
+  getAssetsBalances(
+    address: string,
+    assetIds: string[],
+  ): Promise<IAssetBalance[]>;
 
   /**
    * Fetch balances for all assets.
    * @param {string} address - The address to fetch all asset balances for.
    * @returns {Promise<AssetBalance[]>} The balances of all assets.
    */
-  getAllAssetsBalances(address: string): Promise<AssetBalance[]>;
+  getAllAssetsBalances(address: string): Promise<IAssetBalance[]>;
 
   /**
    * Fetch a transaction by its hash.
    * @param {string} hash - The hash of the transaction.
    * @returns {Promise<Transaction>} The transaction details.
    */
-  getTransaction(hash: string): Promise<Transaction>;
+  getTransaction(hash: string): Promise<ITransaction>;
 
   /**
    * Fetch recent transactions for an address.
@@ -143,7 +146,10 @@ export interface BlockchainInterface {
    * @param {number} [limit] - The maximum number of transactions to fetch (optional).
    * @returns {Promise<Transaction[]>} The list of recent transactions.
    */
-  getRecentTransactions(address: string, limit?: number): Promise<Transaction[]>;
+  getRecentTransactions(
+    address: string,
+    limit?: number,
+  ): Promise<ITransaction[]>;
 
   /**
    * Fetch transaction history for an address.
@@ -153,35 +159,40 @@ export interface BlockchainInterface {
    * @param {number} [eblock] - The end block number (optional).
    * @returns {Promise<Transaction[]>} The list of transactions.
    */
-  getTransactionHistory(address: string, limit?: number, sblock?: number, eblock?: number): Promise<Transaction[]>;
+  getTransactionHistory(
+    address: string,
+    limit?: number,
+    sblock?: number,
+    eblock?: number,
+  ): Promise<ITransaction[]>;
 
   /**
    * Subscribe to balance updates for an address.
    * @param {string} address - The address to subscribe to balance updates for.
-   * @returns {Observable<AddressBalance>} An observable for balance updates.
+   * @returns {Observable<IAddressBalance>} An observable for balance updates.
    */
-  subscribeToBalance(address: string): Observable<AddressBalance>;
+  subscribeToBalance(address: string): Observable<IAddressBalance>;
 
   /**
    * Subscribe to transaction updates for an address.
    * @param {string} address - The address to subscribe to transaction updates for.
    * @returns {Observable<Transaction[]>} An observable for transaction updates.
    */
-  subscribeToTransactions(address: string): Observable<Transaction[]>;
+  subscribeToTransactions(address: string): Observable<ITransaction[]>;
 
   /**
    * Subscribe to balance and transaction updates for an address.
    * @param {string} address - The address to subscribe to updates for.
-   * @returns {Observable<UpdateFeed>} An observable for balance and transaction updates.
+   * @returns {Observable<IUpdateFeed>} An observable for balance and transaction updates.
    */
-  subscribeToUpdates(address: string): Observable<UpdateFeed>;
+  subscribeToUpdates(address: string): Observable<IUpdateFeed>;
 }
 
 /**
  * Abstract class for core network interactions.
  * @class CoreNetworkAbstraction
  */
-export abstract class CoreNetworkAbstraction implements BlockchainInterface {
+export abstract class CoreNetworkAbstraction implements IBlockchainInterface {
   /** @protected */
   _networkId: string;
 
@@ -193,15 +204,29 @@ export abstract class CoreNetworkAbstraction implements BlockchainInterface {
     this._networkId = networkId;
   }
 
-  abstract getBalance(address: string): Promise<AddressBalance>;
-  abstract getAllBalances(address: string): Promise<AddressBalances>;
-  abstract getAssetBalance(address: string, assetId: string): Promise<AssetBalance>;
-  abstract getAssetsBalances(address: string, assetIds: string[]): Promise<AssetBalance[]>;
-  abstract getAllAssetsBalances(address: string): Promise<AssetBalance[]>;
-  abstract getTransaction(hash: string): Promise<Transaction>;
-  abstract getRecentTransactions(address: string, limit?: number): Promise<Transaction[]>;
-  abstract getTransactionHistory(address: string, limit?: number, sblock?: number, eblock?: number): Promise<Transaction[]>;
-  abstract subscribeToBalance(address: string): Observable<AddressBalance>;
-  abstract subscribeToTransactions(address: string): Observable<Transaction[]>;
-  abstract subscribeToUpdates(address: string): Observable<UpdateFeed>;
+  abstract getBalance(address: string): Promise<IAddressBalance>;
+  abstract getAllBalances(address: string): Promise<IAddressBalances>;
+  abstract getAssetBalance(
+    address: string,
+    assetId: string,
+  ): Promise<IAssetBalance>;
+  abstract getAssetsBalances(
+    address: string,
+    assetIds: string[],
+  ): Promise<IAssetBalance[]>;
+  abstract getAllAssetsBalances(address: string): Promise<IAssetBalance[]>;
+  abstract getTransaction(hash: string): Promise<ITransaction>;
+  abstract getRecentTransactions(
+    address: string,
+    limit?: number,
+  ): Promise<ITransaction[]>;
+  abstract getTransactionHistory(
+    address: string,
+    limit?: number,
+    sblock?: number,
+    eblock?: number,
+  ): Promise<ITransaction[]>;
+  abstract subscribeToBalance(address: string): Observable<IAddressBalance>;
+  abstract subscribeToTransactions(address: string): Observable<ITransaction[]>;
+  abstract subscribeToUpdates(address: string): Observable<IUpdateFeed>;
 }

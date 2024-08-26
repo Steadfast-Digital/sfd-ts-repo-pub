@@ -8,27 +8,14 @@ import { NestFactory } from '@nestjs/core';
 import { BlockchainFactory } from '@steadfastdigital/blockchain-factory';
 import EthConnector from '@steadfastdigital/connector-ethereum';
 import BscConnector from '@steadfastdigital/connector-bsc';
-import { setCustomNetworks } from '@steadfastdigital/crypto-assets';
+import { initNetworks } from '@steadfastdigital/crypto-assets';
 import { config } from 'dotenv';
+
+// eslint-disable-next-line import/order
 import { WsAdapter } from './ws-adapter';
 
 config();
-const bscTxApiKey = process.env['BSC_TX_API_KEY'];
-if (bscTxApiKey) {
-  const customConfig = {
-    bsc: {
-      urls: {
-        txApi: {
-          apiKey: bscTxApiKey,
-        },
-        tokenApi: {
-          apiKey: bscTxApiKey,
-        },
-      },
-    },
-  };
-  setCustomNetworks(customConfig);
-}
+initNetworks();
 
 BlockchainFactory.registerConnector('eth', new EthConnector('eth'));
 BlockchainFactory.registerConnector('bsc', new BscConnector('bsc'));
@@ -50,7 +37,9 @@ async function bootstrap() {
 
   const port = process.env.PORT || 3001;
   await app.listen(port);
-  Logger.log(`🚀 Application is running on: http://localhost:${port}/${globalPrefix}`);
+  Logger.log(
+    `🚀 Application is running on: http://localhost:${port}/${globalPrefix}`,
+  );
 }
 
 bootstrap();

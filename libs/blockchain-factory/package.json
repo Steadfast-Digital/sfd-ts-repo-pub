@@ -2,7 +2,10 @@
   "name": "@steadfastdigital/blockchain-factory",
   "version": "0.0.2",
   "dependencies": {
-    "tslib": "^2.3.0"
+    "tslib": "^2.3.0",
+    "@steadfastdigital/abstract-core": "workspace:*",
+    "@steadfastdigital/crypto-assets": "workspace:*",
+    "@steadfastdigital/utils": "workspace:*"
   },
   "type": "commonjs",
   "main": "./src/index.js",

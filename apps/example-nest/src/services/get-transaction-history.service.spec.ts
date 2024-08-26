@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { GetTransactionHistoryService } from './get-transaction-history.service';
 import { getTransactionHistory } from '@steadfastdigital/blockchain-factory';
+
+import { GetTransactionHistoryService } from './get-transaction-history.service';
 
 jest.mock('@steadfastdigital/blockchain-factory', () => ({
   getTransactionHistory: jest.fn(),
@@ -14,7 +15,9 @@ describe('GetTransactionHistoryService', () => {
       providers: [GetTransactionHistoryService],
     }).compile();
 
-    service = module.get<GetTransactionHistoryService>(GetTransactionHistoryService);
+    service = module.get<GetTransactionHistoryService>(
+      GetTransactionHistoryService,
+    );
   });
 
   it('should be defined', () => {

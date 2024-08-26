@@ -1,5 +1,7 @@
-const { NxAppWebpackPlugin } = require('@nx/webpack/app-plugin');
+/* eslint-disable @typescript-eslint/naming-convention */
 const { join } = require('path');
+
+const { NxAppWebpackPlugin } = require('@nx/webpack/app-plugin');
 
 module.exports = {
   output: {

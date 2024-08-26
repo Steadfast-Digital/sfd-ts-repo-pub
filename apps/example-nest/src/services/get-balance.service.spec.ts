@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { GetBalanceService } from './get-balance.service';
 import { getBalance } from '@steadfastdigital/blockchain-factory';
+
+import { GetBalanceService } from './get-balance.service';
 
 jest.mock('@steadfastdigital/blockchain-factory', () => ({
   getBalance: jest.fn(),
@@ -24,7 +25,7 @@ describe('GetBalanceService', () => {
   it('should return balance', async () => {
     const mockBalance = { balance: 1000 };
     (getBalance as jest.Mock).mockResolvedValue(mockBalance);
-    
+
     const result = await service.execute('eth', '0xaddress');
     expect(result).toEqual(mockBalance);
   });

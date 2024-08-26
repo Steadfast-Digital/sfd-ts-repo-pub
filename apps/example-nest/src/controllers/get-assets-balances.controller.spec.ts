@@ -1,6 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { GetAssetsBalancesController } from './get-assets-balances.controller';
+
 import { GetAssetsBalancesService } from '../services/get-assets-balances.service';
+
+import { GetAssetsBalancesController } from './get-assets-balances.controller';
 
 describe('GetAssetsBalancesController', () => {
   let controller: GetAssetsBalancesController;
@@ -13,13 +15,17 @@ describe('GetAssetsBalancesController', () => {
         {
           provide: GetAssetsBalancesService,
           useValue: {
-            execute: jest.fn().mockResolvedValue([{ asset: 'asset1' }, { asset: 'asset2' }]),
+            execute: jest
+              .fn()
+              .mockResolvedValue([{ asset: 'asset1' }, { asset: 'asset2' }]),
           },
         },
       ],
     }).compile();
 
-    controller = module.get<GetAssetsBalancesController>(GetAssetsBalancesController);
+    controller = module.get<GetAssetsBalancesController>(
+      GetAssetsBalancesController,
+    );
     service = module.get<GetAssetsBalancesService>(GetAssetsBalancesService);
   });
 
@@ -30,7 +36,9 @@ describe('GetAssetsBalancesController', () => {
   it('should return address asset balances', async () => {
     const body = { network: 'eth', address: '0xaddress' };
     const result = await controller.getAssetsBalances(body);
-    expect(result).toEqual({ balances: [{ asset: 'asset1' }, { asset: 'asset2' }] });
+    expect(result).toEqual({
+      balances: [{ asset: 'asset1' }, { asset: 'asset2' }],
+    });
     expect(service.execute).toHaveBeenCalledWith('eth', '0xaddress');
   });
 });

@@ -1,11 +1,28 @@
 import '../../app/global.css';
-import { useState, useEffect, ChangeEvent } from 'react';
-import { Button, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Input, Textarea, Label, Card, CardContent, CardHeader, CardTitle } from '../../components/ui';
+import React, { useState, useEffect, ChangeEvent } from 'react';
 import { io, Socket } from 'socket.io-client';
 
-const NetworkTester = () => {
+import {
+  Button,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  Input,
+  Textarea,
+  Label,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from '../../components/ui';
+
+const NETWORK_TESTER = () => {
   const [network, setNetwork] = useState('eth');
-  const [address, setAddress] = useState('0x513c87314578d089ce1f0d9dade81fd637adbb21');
+  const [address, setAddress] = useState(
+    '0x513c87314578d089ce1f0d9dade81fd637adbb21',
+  );
   const [result, setResult] = useState('');
   const [socket, setSocket] = useState<Socket | null>(null);
 
@@ -104,15 +121,30 @@ const NetworkTester = () => {
             />
           </div>
           <div className="flex flex-col space-y-2">
-            <Button onClick={() => handleTestFunction(getBalance')}>Test getBalance</Button>
-            <Button onClick={() => handleTestFunction('getTransactionHistory')}>Test getTransactionHistory</Button>
-            <Button onClick={() => handleTestFunction(getAssetsBalances')}>Test getAssetsBalances</Button>
-            <Button onClick={() => handleTestFunction(getBalances')}>Test getAllBalances</Button>
-            <Button onClick={handleSubscribeToBalance}>Subscribe to Balance Updates</Button>
+            <Button onClick={() => handleTestFunction('getBalance')}>
+              Test getBalance
+            </Button>
+            <Button onClick={() => handleTestFunction('getTransactionHistory')}>
+              Test getTransactionHistory
+            </Button>
+            <Button onClick={() => handleTestFunction('getAssetsBalances')}>
+              Test getAssetsBalances
+            </Button>
+            <Button onClick={() => handleTestFunction('getBalances')}>
+              Test getAllBalances
+            </Button>
+            <Button onClick={handleSubscribeToBalance}>
+              Subscribe to Balance Updates
+            </Button>
           </div>
           <div className="mt-4">
             <Label>Result:</Label>
-            <Textarea readOnly value={result} rows={10} className="w-full mt-2" />
+            <Textarea
+              readOnly
+              value={result}
+              rows={10}
+              className="w-full mt-2"
+            />
           </div>
         </CardContent>
       </Card>
@@ -120,4 +152,4 @@ const NetworkTester = () => {
   );
 };
 
-export default NetworkTester;
+export default NETWORK_TESTER;

@@ -1,34 +1,30 @@
-import { Network, DeepPartial } from './types';
+import { INetwork, DeepPartial, INetworkRpc } from './types';
 
-export const networks: Record<string, Network> = {
+export const NETWORKS: Record<string, INetwork> = {
   eth: {
     id: 'eth',
     name: 'Ethereum',
     chainId: 1,
-    urls: {
-      rpc: {
-        url: 'wss://eth-arch-01.savvyblocks.io/rpc', // https://ethereum-rpc.publicnode.com
-        type: 'geth'
+    urls: [
+      {
+        url: 'wss://eth-arch-01.savvyblocks.io/rpc',
+        type: 'wss-node',
+        customType: 'blockbook',
+        apiKey: '',
+        apiKeyEnvName: 'SFD_ETH_RPC_API_KEY',
       },
-      consensus: {
-        url: 'https://mainnet.infura.io/v3/your-api-key',
-        type: 'geth'
+      {
+        url: 'https://eth-arch-01.savvyblocks.io/api',
+        type: 'api',
+        customType: 'blockbook',
+        apiKey: '',
+        apiKeyEnvName: 'SFD_ETH_API_KEY',
       },
-      explorer: {
+      {
         url: 'https://etherscan.io',
-        type: 'etherscan'
+        type: 'explorer',
       },
-      txApi: {
-        url: 'https://eth-arch-01.savvyblocks.io/api',
-        type: 'blockbook',
-        apiKey: 'your-api-key'
-      },
-      tokenApi: {
-        url: 'https://eth-arch-01.savvyblocks.io/api',
-        type: 'blockbook',
-        apiKey: 'your-api-key'
-      }
-    },
+    ],
     family: 'evm',
     type: 'mainnet',
     bip44: {
@@ -36,7 +32,8 @@ export const networks: Record<string, Network> = {
         default: 44,
       },
       slip: 60,
-      path: (purpose = 44, slip = 60, account = 0, change = 0, index = 0) => `m/${purpose}'/${slip}'/${account}'/${change}/${index}`,
+      path: (purpose = 44, slip = 60, account = 0, change = 0, index = 0) =>
+        `m/${purpose}'/${slip}'/${account}'/${change}/${index}`,
     },
     connectorLib: '@steadfastdigital/connector-ethereum',
   },
@@ -44,30 +41,23 @@ export const networks: Record<string, Network> = {
     id: 'bsc',
     name: 'Binance Smart Chain',
     chainId: 56,
-    urls: {
-      rpc: {
+    urls: [
+      {
         url: 'https://bsc-dataseed.binance.org',
-        type: 'geth'
+        type: 'node',
       },
-      consensus: {
-        url: 'https://bsc-dataseed.binance.org',
-        type: 'geth'
+      {
+        url: 'https://api.bscscan.com/api',
+        type: 'api',
+        customType: 'etherscan',
+        apiKey: 'your-api-key',
+        apiKeyEnvName: 'SFD_BSC_API_KEY',
       },
-      explorer: {
+      {
         url: 'https://bscscan.com',
-        type: 'etherscan'
+        type: 'explorer',
       },
-      txApi: {
-        url: 'https://api.bscscan.com/api',
-        type: 'etherscan',
-        apiKey: 'your-api-key'
-      },
-      tokenApi: {
-        url: 'https://api.bscscan.com/api',
-        type: 'etherscan',
-        apiKey: 'your-api-key'
-      }
-    },
+    ],
     family: 'evm',
     type: 'mainnet',
     bip44: {
@@ -75,7 +65,8 @@ export const networks: Record<string, Network> = {
         default: 44,
       },
       slip: 60,
-      path: (purpose = 44, slip = 60, account = 0, change = 0, index = 0) => `m/${purpose}'/${slip}'/${account}'/${change}/${index}`,
+      path: (purpose = 44, slip = 60, account = 0, change = 0, index = 0) =>
+        `m/${purpose}'/${slip}'/${account}'/${change}/${index}`,
     },
     connectorLib: '@steadfastdigital/connector-bsc',
   },
@@ -83,7 +74,7 @@ export const networks: Record<string, Network> = {
 
 function mergeDeep(target: any, source: any) {
   if (source && typeof source === 'object') {
-    Object.keys(source).forEach(key => {
+    Object.keys(source).forEach((key) => {
       if (source[key] && typeof source[key] === 'object') {
         if (!target[key]) target[key] = {}; // Ensure the target key exists
         mergeDeep(target[key], source[key]); // Recurse into deeper objects
@@ -94,13 +85,63 @@ function mergeDeep(target: any, source: any) {
   }
 }
 
-
-export function setCustomNetworks(customNetworks: Record<string, DeepPartial<Network>>) {
-  Object.keys(customNetworks).forEach(networkId => {
-    if (networks[networkId]) {
-      mergeDeep(networks[networkId], customNetworks[networkId]);
+export function setCustomNetworks(
+  customNetworks: Record<string, DeepPartial<INetwork>>,
+) {
+  Object.keys(customNetworks).forEach((networkId) => {
+    if (NETWORKS[networkId]) {
+      mergeDeep(NETWORKS[networkId], customNetworks[networkId]);
     } else {
-      networks[networkId] = customNetworks[networkId] as Network; // Handle new network definitions
+      NETWORKS[networkId] = customNetworks[networkId] as INetwork; // Handle new network definitions
     }
   });
+}
+
+export function readApiKeys() {
+  Object.keys(NETWORKS).forEach((networkId) => {
+    NETWORKS[networkId].urls.forEach((url) => {
+      if (url.apiKeyEnvName) {
+        url.apiKey = process.env[url.apiKeyEnvName] || url.apiKey;
+      }
+    });
+  });
+}
+
+export function getRpc(
+  networkId: string,
+  type: string,
+  customType?: string,
+): INetworkRpc {
+  const network = NETWORKS[networkId];
+  if (!network) {
+    throw new Error(`Network ${networkId} not found`);
+  }
+  let rpc;
+  if (customType) {
+    rpc = network.urls.find(
+      (url) => url.type === type && url.customType === customType,
+    );
+  } else {
+    rpc = network.urls.find((url) => url.type === type);
+  }
+  if (!rpc) {
+    throw new Error(`RPC ${type} not found for network ${networkId}`);
+  }
+  return rpc;
+}
+
+export function getRpcMaybe(
+  networkId: string,
+  type: string,
+  customType?: string,
+): INetworkRpc | undefined {
+  try {
+    return getRpc(networkId, type, customType);
+  } catch (error) {
+    return undefined;
+  }
+}
+
+export function initNetworks() {
+  readApiKeys();
 }

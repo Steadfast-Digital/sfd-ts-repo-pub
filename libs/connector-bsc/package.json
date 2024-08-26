@@ -2,7 +2,11 @@
   "name": "@steadfastdigital/connector-bsc",
   "version": "0.0.2",
   "dependencies": {
-    "tslib": "^2.3.0"
+    "tslib": "^2.3.0",
+    "@steadfastdigital/abstract-evm": "workspace:*"
+  },
+  "devDependencies": {
+    "dotenv": "^16.4.5"
   },
   "type": "commonjs",
   "main": "./src/index.js",

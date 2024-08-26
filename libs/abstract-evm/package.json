@@ -4,7 +4,11 @@
   "dependencies": {
     "ethers": "^6.12.1",
     "tslib": "^2.3.0",
-    "web3": "^4.9.0"
+    "@steadfastdigital/abstract-core": "workspace:*",
+    "@steadfastdigital/crypto-assets": "workspace:*",
+    "@steadfastdigital/utils": "workspace:*",
+    "rxjs": "^7.8.0",
+    "axios": "^1.6.0"
   },
   "type": "commonjs",
   "publishConfig": {
