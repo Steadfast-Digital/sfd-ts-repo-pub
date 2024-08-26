@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
-import { getBalances } from '@steadfastdigital/blockchain-factory';
+import { getAllBalances } from '@steadfastdigital/blockchain-factory';
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
 export async function POST(request: Request) {
   const { network, address } = await request.json();
 

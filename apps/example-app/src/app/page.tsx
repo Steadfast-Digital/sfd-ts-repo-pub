@@ -1,7 +1,10 @@
-import styles from './page.module.css';
-import { Button } from "../components/ui/button"
+import React from 'react';
 
-export default function Index() {
+import { Button } from '../components/ui/button';
+
+import styles from './page.module.css';
+
+export default function index() {
   /*
    * Replace the elements below with your own.
    *
