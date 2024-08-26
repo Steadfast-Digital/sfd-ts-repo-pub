@@ -8,9 +8,9 @@ import {
   IUpdateFeed,
 } from '@steadfastdigital/abstract-core';
 import {
-  networks,
-  nativeAssets,
-  NativeAsset,
+  NETWORKS,
+  NATIVE_ASSETS,
+  INativeAsset,
   getRpc,
   getRpcMaybe,
 } from '@steadfastdigital/crypto-assets';
@@ -28,7 +28,7 @@ import { fetchTokenBalance } from './rpc/asset-balance';
  * @throws {Error} If the provider is not supported for the network.
  */
 function getIEvmProvider(networkId: string) {
-  const api = networks[networkId].urls.find((url) => url.type === 'api');
+  const api = NETWORKS[networkId].urls.find((url) => url.type === 'api');
   if (!api) {
     throw new Error(`API URL not found for network ${networkId}`);
   }
@@ -64,7 +64,7 @@ export abstract class EvmAbstraction extends CoreNetworkAbstraction {
     this.rpcUrl =
       getRpcMaybe(networkId, 'wss-node')?.url || getRpc(networkId, 'node').url;
     this.id = networkId;
-    this.name = networks[networkId].name;
+    this.name = NETWORKS[networkId].name;
     this._rpcProvider = isValidWebSocketUrl(this.rpcUrl)
       ? new ethers.WebSocketProvider(this.rpcUrl)
       : new ethers.JsonRpcProvider(this.rpcUrl);
@@ -77,7 +77,7 @@ export abstract class EvmAbstraction extends CoreNetworkAbstraction {
    * @throws {EvmAbstractionError} If there is an error fetching the balance.
    */
   async getBalance(address: string): Promise<IAddressBalance> {
-    const network = networks[this._networkId];
+    const network = NETWORKS[this._networkId];
     Logger.debug(`Fetching balance for ${address} on ${network.name}`);
 
     try {
@@ -91,9 +91,9 @@ export abstract class EvmAbstraction extends CoreNetworkAbstraction {
       return {
         address,
         native: {
-          asset: nativeAssets.find(
+          asset: NATIVE_ASSETS.find(
             (asset) => asset.networkId === network.id,
-          ) as NativeAsset,
+          ) as INativeAsset,
           amount: amount,
         },
         fees: [],
@@ -181,7 +181,7 @@ export abstract class EvmAbstraction extends CoreNetworkAbstraction {
     address: string,
     assetId: string,
   ): Promise<IAssetBalance> {
-    const network = networks[this._networkId];
+    const network = NETWORKS[this._networkId];
     Logger.debug(
       `Fetching balance for ${address} and asset ${assetId} on ${network.name}`,
     );
@@ -279,9 +279,9 @@ export abstract class EvmAbstraction extends CoreNetworkAbstraction {
           const balance: IAddressBalance = {
             address,
             native: {
-              asset: nativeAssets.find(
+              asset: NATIVE_ASSETS.find(
                 (asset) => asset.networkId === this.id,
-              ) as NativeAsset,
+              ) as INativeAsset,
               amount: amount,
             },
             fees: [],

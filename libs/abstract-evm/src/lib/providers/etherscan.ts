@@ -2,10 +2,10 @@ import axios from 'axios';
 import { ethers } from 'ethers';
 import { ITransaction, IAssetBalance } from '@steadfastdigital/abstract-core';
 import {
-  networks,
-  nativeAssets,
-  NativeAsset,
-  tokenAssets,
+  NETWORKS,
+  NATIVE_ASSETS,
+  INativeAsset,
+  TOKEN_ASSETS,
   getRpc,
 } from '@steadfastdigital/crypto-assets';
 import { Logger } from '@steadfastdigital/utils';
@@ -26,7 +26,7 @@ export class EtherscanProvider implements IEvmProvider {
   }
 
   async getTransactionHistory(address: string): Promise<ITransaction[]> {
-    const network = networks[this._networkId];
+    const network = NETWORKS[this._networkId];
     Logger.debug(
       `Fetching transaction history for ${address} on ${network.name}`,
     );
@@ -48,17 +48,17 @@ export class EtherscanProvider implements IEvmProvider {
         to: tx.to,
         value: ethers.formatEther(tx.value),
         fee: {
-          asset: nativeAssets.find(
+          asset: NATIVE_ASSETS.find(
             (asset) => asset.networkId === this._networkId,
-          ) as NativeAsset,
+          ) as INativeAsset,
           amount: ethers.formatEther(tx.gasUsed * tx.gasPrice),
         },
         blockNumber: tx.blockNumber,
         timestamp: tx.timeStamp,
         status: tx.isError === '0' ? 'confirmed' : 'failed',
-        asset: nativeAssets.find(
+        asset: NATIVE_ASSETS.find(
           (asset) => asset.networkId === this._networkId,
-        ) as NativeAsset,
+        ) as INativeAsset,
         nonce: tx.nonce,
       }));
     } catch (error: unknown) {
@@ -89,7 +89,7 @@ export class EtherscanProvider implements IEvmProvider {
     address: string,
     assetId: string,
   ): Promise<IAssetBalance> {
-    const asset = tokenAssets.find(
+    const asset = TOKEN_ASSETS.find(
       (asset) => asset.networkId === this._networkId && asset.id === assetId,
     );
     const etherscanApiUrl = `${this._api}?module=account&action=tokenbalance&contractaddress=${asset?.contractOrId}&address=${address}&tag=latest&apikey=${this._apiKey}`;
@@ -145,9 +145,9 @@ export class EtherscanProvider implements IEvmProvider {
 
   async getAssetsBalances(address: string): Promise<IAssetBalance[]> {
     try {
-      const assetIds = tokenAssets
-        .filter((asset) => asset.networkId === this._networkId)
-        .map((asset) => asset.id);
+      const assetIds = TOKEN_ASSETS.filter(
+        (asset) => asset.networkId === this._networkId,
+      ).map((asset) => asset.id);
       const balances = await Promise.all(
         assetIds.map((assetId) => this.getAssetBalance(address, assetId)),
       );

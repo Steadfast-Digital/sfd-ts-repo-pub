@@ -1,4 +1,4 @@
-import { NativeAsset, TokenAsset } from '@steadfastdigital/crypto-assets';
+import { INativeAsset, ITokenAsset } from '@steadfastdigital/crypto-assets';
 import { Observable } from 'rxjs';
 
 /**
@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
  * @property {string} [minBalance] - The minimum balance of the native asset (optional).
  */
 export interface INativeAssetBalance {
-  asset: NativeAsset;
+  asset: INativeAsset;
   amount: string;
   minBalance?: string | undefined;
 }
@@ -32,7 +32,7 @@ export interface IAddressBalance {
  * @property {string} [minBalance] - The minimum balance of the asset (optional).
  */
 export interface IAssetBalance {
-  asset: NativeAsset | TokenAsset;
+  asset: INativeAsset | ITokenAsset;
   amount: string;
   minBalance?: string | undefined;
 }
@@ -66,13 +66,13 @@ export interface ITransaction {
   to: string | null;
   value: string;
   fee: {
-    asset: NativeAsset;
+    asset: INativeAsset;
     amount: string;
   };
   blockNumber: number;
   timestamp: number;
   status: 'confirmed' | 'pending' | 'failed';
-  asset: NativeAsset | TokenAsset;
+  asset: INativeAsset | ITokenAsset;
   nonce: number;
 }
 

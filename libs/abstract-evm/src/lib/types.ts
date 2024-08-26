@@ -1,9 +1,9 @@
-import { Transaction, AssetBalance } from '@steadfastdigital/abstract-core';
+import { ITransaction, IAssetBalance } from '@steadfastdigital/abstract-core';
 export interface IEvmProvider {
-  getTransactionHistory(address: string): Promise<Transaction[]>;
-  getAssetBalance(address: string, assetId: string): Promise<AssetBalance>;
+  getTransactionHistory(address: string): Promise<ITransaction[]>;
+  getAssetBalance(address: string, assetId: string): Promise<IAssetBalance>;
   getAssetsBalances(
     address: string,
     assetIds: string[],
-  ): Promise<AssetBalance[]>;
+  ): Promise<IAssetBalance[]>;
 }
