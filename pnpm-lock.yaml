@@ -271,6 +271,15 @@ importers:
 
   libs/blockchain-factory:
     dependencies:
+      '@steadfastdigital/abstract-core':
+        specifier: workspace:*
+        version: link:../abstract-core
+      '@steadfastdigital/crypto-assets':
+        specifier: workspace:*
+        version: link:../crypto-assets
+      '@steadfastdigital/utils':
+        specifier: workspace:*
+        version: link:../utils
       tslib:
         specifier: ^2.3.0
         version: 2.7.0
