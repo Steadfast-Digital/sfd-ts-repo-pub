@@ -1,6 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { GetTransactionHistoryController } from './get-transaction-history.controller';
+
 import { GetTransactionHistoryService } from '../services/get-transaction-history.service';
+
+import { GetTransactionHistoryController } from './get-transaction-history.controller';
 
 describe('GetTransactionHistoryController', () => {
   let controller: GetTransactionHistoryController;
@@ -13,14 +15,20 @@ describe('GetTransactionHistoryController', () => {
         {
           provide: GetTransactionHistoryService,
           useValue: {
-            execute: jest.fn().mockResolvedValue([{ tx: 'tx1' }, { tx: 'tx2' }]),
+            execute: jest
+              .fn()
+              .mockResolvedValue([{ tx: 'tx1' }, { tx: 'tx2' }]),
           },
         },
       ],
     }).compile();
 
-    controller = module.get<GetTransactionHistoryController>(GetTransactionHistoryController);
-    service = module.get<GetTransactionHistoryService>(GetTransactionHistoryService);
+    controller = module.get<GetTransactionHistoryController>(
+      GetTransactionHistoryController,
+    );
+    service = module.get<GetTransactionHistoryService>(
+      GetTransactionHistoryService,
+    );
   });
 
   it('should be defined', () => {

@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { GetAssetsBalancesService } from './get-assets-balances.service';
 import { getAssetsBalances } from '@steadfastdigital/blockchain-factory';
+
+import { GetAssetsBalancesService } from './get-assets-balances.service';
 
 jest.mock('@steadfastdigital/blockchain-factory', () => ({
   getAssetsBalances: jest.fn(),

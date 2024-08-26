@@ -10,6 +10,8 @@ import EthConnector from '@steadfastdigital/connector-ethereum';
 import BscConnector from '@steadfastdigital/connector-bsc';
 import { initNetworks } from '@steadfastdigital/crypto-assets';
 import { config } from 'dotenv';
+
+// eslint-disable-next-line import/order
 import { WsAdapter } from './ws-adapter';
 
 config();
@@ -35,7 +37,9 @@ async function bootstrap() {
 
   const port = process.env.PORT || 3001;
   await app.listen(port);
-  Logger.log(`🚀 Application is running on: http://localhost:${port}/${globalPrefix}`);
+  Logger.log(
+    `🚀 Application is running on: http://localhost:${port}/${globalPrefix}`,
+  );
 }
 
 bootstrap();

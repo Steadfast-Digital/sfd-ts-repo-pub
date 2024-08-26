@@ -7,16 +7,21 @@ import {
   OnGatewayDisconnect,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
-import { SubscribeToBalanceService } from '../services/subscribe-to-balance.service';
 import { Observable } from 'rxjs';
-import { AddressBalance } from '@steadfastdigital/abstract-core';
+import { IAddressBalance } from '@steadfastdigital/abstract-core';
 import { Logger } from '@steadfastdigital/utils';
 
+import { SubscribeToBalanceService } from '../services/subscribe-to-balance.service';
+
 @WebSocketGateway()
-export class SubscribeToBalanceGateway implements OnGatewayConnection, OnGatewayDisconnect {
+export class SubscribeToBalanceGateway
+  implements OnGatewayConnection, OnGatewayDisconnect
+{
   @WebSocketServer() server: Server;
 
-  constructor(private readonly subscribeToBalanceService: SubscribeToBalanceService) {}
+  constructor(
+    private readonly _subscribeToBalanceService: SubscribeToBalanceService,
+  ) {}
 
   handleConnection(client: Socket) {
     Logger.debug(`Client connected: ${client.id}`);
@@ -27,18 +32,21 @@ export class SubscribeToBalanceGateway implements OnGatewayConnection, OnGateway
   }
 
   @SubscribeMessage('subscribeToBalance')
-  handleSubscribeToBalance(client: Socket, data: { network: string; address: string }): void {
+  handleSubscribeToBalance(
+    client: Socket,
+    data: { network: string; address: string },
+  ): void {
     if (!client) {
       Logger.error(`Client object is undefined`);
       return;
     }
 
     try {
-      Logger.debug(`Subscribing to balance updates for ${data.address} on ${data.network} for client ${client.id}`);
-      const balanceObservable: Observable<AddressBalance> = this.subscribeToBalanceService.execute(
-        data.network,
-        data.address
+      Logger.debug(
+        `Subscribing to balance updates for ${data.address} on ${data.network} for client ${client.id}`,
       );
+      const balanceObservable: Observable<IAddressBalance> =
+        this._subscribeToBalanceService.execute(data.network, data.address);
 
       const subscription = balanceObservable.subscribe({
         next: (balance) => {
@@ -46,15 +54,21 @@ export class SubscribeToBalanceGateway implements OnGatewayConnection, OnGateway
           if (client && client.emit) {
             client.emit('balanceUpdate', balance);
           } else {
-            Logger.error(`Client object is undefined when trying to emit balanceUpdate`);
+            Logger.error(
+              `Client object is undefined when trying to emit balanceUpdate`,
+            );
           }
         },
         error: (err) => {
-          Logger.error(`Error while subscribing to balance updates: ${err.message}`);
+          Logger.error(
+            `Error while subscribing to balance updates: ${err.message}`,
+          );
           if (client && client.emit) {
             client.emit('error', err.message);
           } else {
-            Logger.error(`Client object is undefined when trying to emit error`);
+            Logger.error(
+              `Client object is undefined when trying to emit error`,
+            );
           }
         },
       });
