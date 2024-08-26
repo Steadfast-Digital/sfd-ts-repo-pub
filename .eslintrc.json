@@ -1,7 +1,15 @@
 {
   "root": true,
-  "ignorePatterns": ["**/*"],
-  "plugins": ["@nx"],
+  "ignorePatterns": ["!**/*", "node_modules/", "dist/", "build/", "coverage/"],
+  "plugins": ["@nx", "@typescript-eslint", "react", "react-hooks", "jest", "import", "prettier"],
+  "extends": [
+    "plugin:@nx/typescript",
+    "plugin:@nx/javascript",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:jest/recommended",
+    "plugin:prettier/recommended"
+  ],
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
@@ -18,7 +26,66 @@
               }
             ]
           }
-        ]
+        ],
+        // TypeScript-specific rules
+        "@typescript-eslint/explicit-function-return-type": "warn",
+        "@typescript-eslint/no-explicit-any": "warn",
+        "@typescript-eslint/consistent-type-definitions": ["error", "interface"],
+        "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
+        "@typescript-eslint/naming-convention": [
+          "error",
+          {
+            "selector": "variableLike",
+            "format": ["camelCase"]
+          },
+          {
+            "selector": "function",
+            "format": ["camelCase"]
+          },
+          {
+            "selector": "variable",
+            "format": ["UPPER_CASE"],
+            "modifiers": ["const"]
+          },
+          {
+            "selector": "interface",
+            "format": ["PascalCase"],
+            "prefix": ["I"]
+          },
+          {
+            "selector": "class",
+            "format": ["PascalCase"]
+          },
+          {
+            "selector": "enum",
+            "format": ["PascalCase"]
+          }
+        ],
+        // React-specific rules
+        "react/prop-types": "off",
+        "react/jsx-filename-extension": ["error", { "extensions": [".jsx", ".tsx"] }],
+        "react/jsx-uses-react": "error",
+        "react/jsx-uses-vars": "error",
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn",
+        // Import rules
+        "import/no-extraneous-dependencies": [
+          "error",
+          {
+            "devDependencies": ["**/*.test.js", "**/*.spec.js", "**/*.test.ts", "**/*.spec.ts"]
+          }
+        ],
+        "import/order": [
+          "error",
+          {
+            "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
+            "newlines-between": "always"
+          }
+        ],
+        // General rules
+        "prettier/prettier": "error",
+        "no-console": "warn",
+        "no-debugger": "error"
       }
     },
     {
@@ -42,7 +109,19 @@
       "env": {
         "jest": true
       },
-      "rules": {}
+      "rules": {
+        // Jest-specific rules for testing files
+        "jest/no-disabled-tests": "warn",
+        "jest/no-focused-tests": "error",
+        "jest/no-identical-title": "error",
+        "jest/prefer-to-have-length": "warn",
+        "jest/valid-expect": "error"
+      }
     }
-  ]
+  ],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  }
 }
