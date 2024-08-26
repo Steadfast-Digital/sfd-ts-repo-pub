@@ -4,9 +4,9 @@
   "dependencies": {
     "ethers": "^6.12.1",
     "tslib": "^2.3.0",
-    "@steadfastdigital/abstract-core": "0.0.2",
-    "@steadfastdigital/crypto-assets": "0.0.2",
-    "@steadfastdigital/utils": "0.0.2",
+    "@steadfastdigital/abstract-core": "workspace:*",
+    "@steadfastdigital/crypto-assets": "workspace:*",
+    "@steadfastdigital/utils": "workspace:*",
     "rxjs": "^7.8.0",
     "axios": "^1.6.0"
   },
