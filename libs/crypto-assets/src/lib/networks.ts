@@ -1,6 +1,6 @@
-import { Network, DeepPartial, NetworkRpc } from './types';
+import { INetwork, DeepPartial, INetworkRpc } from './types';
 
-export const networks: Record<string, Network> = {
+export const NETWORKS: Record<string, INetwork> = {
   eth: {
     id: 'eth',
     name: 'Ethereum',
@@ -32,7 +32,8 @@ export const networks: Record<string, Network> = {
         default: 44,
       },
       slip: 60,
-      path: (purpose = 44, slip = 60, account = 0, change = 0, index = 0) => `m/${purpose}'/${slip}'/${account}'/${change}/${index}`,
+      path: (purpose = 44, slip = 60, account = 0, change = 0, index = 0) =>
+        `m/${purpose}'/${slip}'/${account}'/${change}/${index}`,
     },
     connectorLib: '@steadfastdigital/connector-ethereum',
   },
@@ -64,7 +65,8 @@ export const networks: Record<string, Network> = {
         default: 44,
       },
       slip: 60,
-      path: (purpose = 44, slip = 60, account = 0, change = 0, index = 0) => `m/${purpose}'/${slip}'/${account}'/${change}/${index}`,
+      path: (purpose = 44, slip = 60, account = 0, change = 0, index = 0) =>
+        `m/${purpose}'/${slip}'/${account}'/${change}/${index}`,
     },
     connectorLib: '@steadfastdigital/connector-bsc',
   },
@@ -72,7 +74,7 @@ export const networks: Record<string, Network> = {
 
 function mergeDeep(target: any, source: any) {
   if (source && typeof source === 'object') {
-    Object.keys(source).forEach(key => {
+    Object.keys(source).forEach((key) => {
       if (source[key] && typeof source[key] === 'object') {
         if (!target[key]) target[key] = {}; // Ensure the target key exists
         mergeDeep(target[key], source[key]); // Recurse into deeper objects
@@ -83,20 +85,21 @@ function mergeDeep(target: any, source: any) {
   }
 }
 
-
-export function setCustomNetworks(customNetworks: Record<string, DeepPartial<Network>>) {
-  Object.keys(customNetworks).forEach(networkId => {
-    if (networks[networkId]) {
-      mergeDeep(networks[networkId], customNetworks[networkId]);
+export function setCustomNetworks(
+  customNetworks: Record<string, DeepPartial<INetwork>>,
+) {
+  Object.keys(customNetworks).forEach((networkId) => {
+    if (NETWORKS[networkId]) {
+      mergeDeep(NETWORKS[networkId], customNetworks[networkId]);
     } else {
-      networks[networkId] = customNetworks[networkId] as Network; // Handle new network definitions
+      NETWORKS[networkId] = customNetworks[networkId] as INetwork; // Handle new network definitions
     }
   });
 }
 
 export function readApiKeys() {
-  Object.keys(networks).forEach(networkId => {
-    networks[networkId].urls.forEach(url => {
+  Object.keys(NETWORKS).forEach((networkId) => {
+    NETWORKS[networkId].urls.forEach((url) => {
       if (url.apiKeyEnvName) {
         url.apiKey = process.env[url.apiKeyEnvName] || url.apiKey;
       }
@@ -104,16 +107,22 @@ export function readApiKeys() {
   });
 }
 
-export function getRpc(networkId: string, type: string, customType?: string): NetworkRpc {
-  const network = networks[networkId];
+export function getRpc(
+  networkId: string,
+  type: string,
+  customType?: string,
+): INetworkRpc {
+  const network = NETWORKS[networkId];
   if (!network) {
     throw new Error(`Network ${networkId} not found`);
   }
   let rpc;
   if (customType) {
-    rpc = network.urls.find(url => url.type === type && url.customType === customType);
+    rpc = network.urls.find(
+      (url) => url.type === type && url.customType === customType,
+    );
   } else {
-    rpc = network.urls.find(url => url.type === type);
+    rpc = network.urls.find((url) => url.type === type);
   }
   if (!rpc) {
     throw new Error(`RPC ${type} not found for network ${networkId}`);
@@ -121,7 +130,11 @@ export function getRpc(networkId: string, type: string, customType?: string): Ne
   return rpc;
 }
 
-export function getRpcMaybe(networkId: string, type: string, customType?: string): NetworkRpc | undefined {
+export function getRpcMaybe(
+  networkId: string,
+  type: string,
+  customType?: string,
+): INetworkRpc | undefined {
   try {
     return getRpc(networkId, type, customType);
   } catch (error) {

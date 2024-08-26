@@ -1,24 +1,20 @@
 export {
   DeepPartial,
-  NativeAsset,
-  TokenAsset,
+  INativeAsset,
+  ITokenAsset,
   Asset,
   NetworkRpcType,
-  NetworkRpc,
-  Network,
-  NetworkAssets,
+  INetworkRpc,
+  INetwork,
+  INetworkAssets,
 } from './lib/types';
 export {
-  networks,
+  NETWORKS,
   setCustomNetworks,
   readApiKeys,
   initNetworks,
   getRpc,
   getRpcMaybe,
 } from './lib/networks';
-export {
-  tokenAssets,
-} from './lib/crypto-assets';
-export {
-  nativeAssets,
-} from './lib/native-assets';
+export { TOKEN_ASSETS } from './lib/crypto-assets';
+export { NATIVE_ASSETS } from './lib/native-assets';
