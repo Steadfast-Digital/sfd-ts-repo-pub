@@ -1,4 +1,4 @@
-export {
+export type {
   DeepPartial,
   INativeAsset,
   ITokenAsset,
