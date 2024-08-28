@@ -28,9 +28,8 @@ jobs:
     - name: Get Coverage Report
       id: get-coverage-report
       run: |
-        COVERAGE_REPORT=$(cat coverage/coverage-summary.txt)
-        echo "$COVERAGE_REPORT"
-        echo "COVERAGE_REPORT='$COVERAGE_REPORT'" >> "$GITHUB_OUTPUT"
+        COVERAGE_REPORT=$(cat coverage/coverage-summary.txt | base64)
+        echo "COVERAGE_REPORT=$COVERAGE_REPORT" >> $GITHUB_OUTPUT
 
     - name: Add Coverage PR Comment
       uses: actions/github-script@v6
@@ -38,11 +37,12 @@ jobs:
       with:
         github-token: ${{ secrets.GHA_TOKEN_COMMENT }}
         script: |
+          const coverageReport = Buffer.from('${{ steps.get-coverage-report.outputs.COVERAGE_REPORT }}', 'base64').toString('utf8');
           github.rest.issues.createComment({
             issue_number: context.issue.number,
             owner: context.repo.owner,
             repo: context.repo.repo,
-            body: `## Code Coverage Report\n\n\`\`\`\n${{ steps.get-coverage-report.outputs.COVERAGE_REPORT }}\n\`\`\`\n\nFor a detailed HTML report, check the artifacts of this workflow run.`
+            body: `## Code Coverage Report\n\n\`\`\`\n${coverageReport}\n\`\`\`\n\nFor a detailed HTML report, check the artifacts of this workflow run.`
           })
 
     - name: Upload HTML Coverage Report
