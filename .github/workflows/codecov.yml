@@ -29,7 +29,8 @@ jobs:
       id: get-coverage-report
       run: |
         COVERAGE_REPORT=$(cat coverage/coverage-summary.txt)
-        echo "COVERAGE_REPORT=$COVERAGE_REPORT" >> $GITHUB_OUTPUT
+        echo "$COVERAGE_REPORT"
+        echo "COVERAGE_REPORT='$COVERAGE_REPORT'" >> "$GITHUB_OUTPUT"
 
     - name: Add Coverage PR Comment
       uses: actions/github-script@v6
