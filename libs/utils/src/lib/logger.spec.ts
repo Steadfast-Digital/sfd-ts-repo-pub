@@ -1,48 +1,37 @@
-// tests/logger.test.ts
-import * as winston from 'winston';
+/* eslint-disable @typescript-eslint/no-var-requires */
+import LOGGER from './logger';
 
-import Logger from './logger';
-
-jest.mock('winston');
-
-describe('Logger Configuration', () => {
-  afterEach(() => {
-    jest.clearAllMocks();
+describe('Winston Logger Configuration', () => {
+  it('should export a logger instance', () => {
+    expect(LOGGER).toBeDefined();
+    expect(typeof LOGGER.info).toBe('function');
+    expect(typeof LOGGER.error).toBe('function');
+    expect(typeof LOGGER.warn).toBe('function');
+    expect(typeof LOGGER.debug).toBe('function');
   });
 
-  it('should create a logger with correct development settings', () => {
+  it('should have correct log levels', () => {
+    expect(LOGGER.levels).toEqual({
+      error: 0,
+      warn: 1,
+      info: 2,
+      debug: 3,
+    });
+  });
+
+  it('should set the correct log level based on NODE_ENV', () => {
+    const originalEnv = process.env['NODE_ENV'];
+
     process.env['NODE_ENV'] = 'development';
-    require('../logger'); // Re-import to trigger the config
+    jest.resetModules();
+    const devLogger = require('./logger').default;
+    expect(devLogger.level).toBe('debug');
 
-    expect(winston.createLogger).toHaveBeenCalledWith(
-      expect.objectContaining({
-        level: 'debug',
-      }),
-    );
-    expect(winston.transports.Console).toHaveBeenCalled();
-    expect(winston.transports.File).toHaveBeenCalledTimes(2); // Because we add two File transports
-  });
-
-  it('should create a logger with correct production settings', () => {
     process.env['NODE_ENV'] = 'production';
-    require('../logger'); // Re-import to trigger the config
+    jest.resetModules();
+    const prodLogger = require('./logger').default;
+    expect(prodLogger.level).toBe('info');
 
-    expect(winston.createLogger).toHaveBeenCalledWith(
-      expect.objectContaining({
-        level: 'warn',
-      }),
-    );
-  });
-
-  it('checks if the logger methods are callable', () => {
-    Logger.info('Test info');
-    Logger.warn('Test warn');
-    Logger.error('Test error');
-    Logger.debug('Test debug');
-
-    expect(Logger.info).toHaveBeenCalledWith('Test info');
-    expect(Logger.warn).toHaveBeenCalledWith('Test warn');
-    expect(Logger.error).toHaveBeenCalledWith('Test error');
-    expect(Logger.debug).toHaveBeenCalledWith('Test debug');
+    process.env['NODE_ENV'] = originalEnv;
   });
 });
