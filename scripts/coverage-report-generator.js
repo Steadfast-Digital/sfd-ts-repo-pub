@@ -108,9 +108,9 @@ const generateReports = async (lcovPath, outputDir) => {
   }
 };
 
-async function combineResults(path) {
+async function combineResults(_path) {
   try {
-    const files = globSync(path);
+    const files = globSync(_path);
     const mergedReport = files.reduce(
       (mergedReport, currFile) => (mergedReport += fs.readFileSync(currFile)),
       '',
