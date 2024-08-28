@@ -1,3 +1,10 @@
-const nxPreset = require('@nx/jest/preset').default;
+// eslint-disable-next-line import/no-extraneous-dependencies
+const PRESET = require('@nx/jest/preset').default;
 
-module.exports = { ...nxPreset, setupFiles: ['dotenv/config'], };
+module.exports = {
+  ...PRESET,
+  collectCoverage: true,
+  coverageReporters: ['json', 'lcov', 'text', 'clover'],
+  coverageDirectory: './coverage',
+  setupFiles: ['dotenv/config'],
+};
