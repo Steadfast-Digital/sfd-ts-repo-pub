@@ -1,8 +1,8 @@
-[**@sfd-ts-repo-pub/source v0.0.0**](../../../README.md) • **Docs**
+[**@sfd-ts-repo-pub/source v0.0.1**](../../../README.md) • **Docs**
 
 ***
 
-[@sfd-ts-repo-pub/source v0.0.0](../../../modules.md) / [connector-ethereum/src](../README.md) / EthereumConnector
+[@sfd-ts-repo-pub/source v0.0.1](../../../modules.md) / [connector-ethereum/src](../README.md) / EthereumConnector
 
 # Class: EthereumConnector
 
@@ -34,7 +34,7 @@ Abstract class for EVM abstraction.
 
 #### Defined in
 
-[libs/connector-ethereum/src/lib/connector-ethereum.ts:4](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/connector-ethereum/src/lib/connector-ethereum.ts#L4)
+[libs/connector-ethereum/src/lib/connector-ethereum.ts:4](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/fc79dbd051d9d700fc06cf580f06693f6be34283/libs/connector-ethereum/src/lib/connector-ethereum.ts#L4)
 
 ## Properties
 
@@ -48,13 +48,55 @@ Abstract class for EVM abstraction.
 
 #### Defined in
 
-[libs/abstract-evm/src/lib/abstract-evm.ts:35](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-evm/src/lib/abstract-evm.ts#L35)
+[libs/abstract-evm/src/lib/abstract-evm.ts:52](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/fc79dbd051d9d700fc06cf580f06693f6be34283/libs/abstract-evm/src/lib/abstract-evm.ts#L52)
+
+***
+
+### id
+
+> **id**: `string`
+
+#### Inherited from
+
+[`EvmAbstraction`](../../../abstract-evm/src/classes/EvmAbstraction.md).[`id`](../../../abstract-evm/src/classes/EvmAbstraction.md#id)
+
+#### Defined in
+
+[libs/abstract-evm/src/lib/abstract-evm.ts:54](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/fc79dbd051d9d700fc06cf580f06693f6be34283/libs/abstract-evm/src/lib/abstract-evm.ts#L54)
+
+***
+
+### name
+
+> **name**: `string`
+
+#### Inherited from
+
+[`EvmAbstraction`](../../../abstract-evm/src/classes/EvmAbstraction.md).[`name`](../../../abstract-evm/src/classes/EvmAbstraction.md#name)
+
+#### Defined in
+
+[libs/abstract-evm/src/lib/abstract-evm.ts:55](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/fc79dbd051d9d700fc06cf580f06693f6be34283/libs/abstract-evm/src/lib/abstract-evm.ts#L55)
+
+***
+
+### rpcUrl
+
+> **rpcUrl**: `string`
+
+#### Inherited from
+
+[`EvmAbstraction`](../../../abstract-evm/src/classes/EvmAbstraction.md).[`rpcUrl`](../../../abstract-evm/src/classes/EvmAbstraction.md#rpcurl)
+
+#### Defined in
+
+[libs/abstract-evm/src/lib/abstract-evm.ts:56](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/fc79dbd051d9d700fc06cf580f06693f6be34283/libs/abstract-evm/src/lib/abstract-evm.ts#L56)
 
 ## Methods
 
 ### getAllAssetsBalances()
 
-> **getAllAssetsBalances**(`address`): `Promise`\<[`AssetBalance`](../../../abstract-core/src/interfaces/AssetBalance.md)[]\>
+> **getAllAssetsBalances**(`address`): `Promise`\<[`IAssetBalance`](../../../abstract-core/src/interfaces/IAssetBalance.md)[]\>
 
 Fetches balances for all assets.
 
@@ -66,7 +108,7 @@ The address to fetch all asset balances for.
 
 #### Returns
 
-`Promise`\<[`AssetBalance`](../../../abstract-core/src/interfaces/AssetBalance.md)[]\>
+`Promise`\<[`IAssetBalance`](../../../abstract-core/src/interfaces/IAssetBalance.md)[]\>
 
 The balances of all assets.
 
@@ -76,13 +118,13 @@ The balances of all assets.
 
 #### Defined in
 
-[libs/abstract-evm/src/lib/abstract-evm.ts:202](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-evm/src/lib/abstract-evm.ts#L202)
+[libs/abstract-evm/src/lib/abstract-evm.ts:246](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/fc79dbd051d9d700fc06cf580f06693f6be34283/libs/abstract-evm/src/lib/abstract-evm.ts#L246)
 
 ***
 
 ### getAllBalances()
 
-> **getAllBalances**(`address`): `Promise`\<[`AddressBalances`](../../../abstract-core/src/interfaces/AddressBalances.md)\>
+> **getAllBalances**(`address`): `Promise`\<[`IAddressBalances`](../../../abstract-core/src/interfaces/IAddressBalances.md)\>
 
 Fetches all balances for an address.
 
@@ -94,7 +136,7 @@ The address to fetch all balances for.
 
 #### Returns
 
-`Promise`\<[`AddressBalances`](../../../abstract-core/src/interfaces/AddressBalances.md)\>
+`Promise`\<[`IAddressBalances`](../../../abstract-core/src/interfaces/IAddressBalances.md)\>
 
 The balances of the address.
 
@@ -104,13 +146,13 @@ The balances of the address.
 
 #### Defined in
 
-[libs/abstract-evm/src/lib/abstract-evm.ts:126](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-evm/src/lib/abstract-evm.ts#L126)
+[libs/abstract-evm/src/lib/abstract-evm.ts:157](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/fc79dbd051d9d700fc06cf580f06693f6be34283/libs/abstract-evm/src/lib/abstract-evm.ts#L157)
 
 ***
 
 ### getAssetBalance()
 
-> **getAssetBalance**(`address`, `assetId`): `Promise`\<[`AssetBalance`](../../../abstract-core/src/interfaces/AssetBalance.md)\>
+> **getAssetBalance**(`address`, `assetId`): `Promise`\<[`IAssetBalance`](../../../abstract-core/src/interfaces/IAssetBalance.md)\>
 
 Fetches the balance for a specific asset.
 
@@ -126,7 +168,7 @@ The ID of the asset.
 
 #### Returns
 
-`Promise`\<[`AssetBalance`](../../../abstract-core/src/interfaces/AssetBalance.md)\>
+`Promise`\<[`IAssetBalance`](../../../abstract-core/src/interfaces/IAssetBalance.md)\>
 
 The balance of the specified asset.
 
@@ -140,13 +182,13 @@ If there is an error fetching the balance.
 
 #### Defined in
 
-[libs/abstract-evm/src/lib/abstract-evm.ts:147](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-evm/src/lib/abstract-evm.ts#L147)
+[libs/abstract-evm/src/lib/abstract-evm.ts:180](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/fc79dbd051d9d700fc06cf580f06693f6be34283/libs/abstract-evm/src/lib/abstract-evm.ts#L180)
 
 ***
 
 ### getAssetsBalances()
 
-> **getAssetsBalances**(`address`, `assetIds`): `Promise`\<[`AssetBalance`](../../../abstract-core/src/interfaces/AssetBalance.md)[]\>
+> **getAssetsBalances**(`address`, `assetIds`): `Promise`\<[`IAssetBalance`](../../../abstract-core/src/interfaces/IAssetBalance.md)[]\>
 
 Fetches balances for specific assets.
 
@@ -162,7 +204,7 @@ The IDs of the assets.
 
 #### Returns
 
-`Promise`\<[`AssetBalance`](../../../abstract-core/src/interfaces/AssetBalance.md)[]\>
+`Promise`\<[`IAssetBalance`](../../../abstract-core/src/interfaces/IAssetBalance.md)[]\>
 
 The balances of the specified assets.
 
@@ -172,13 +214,13 @@ The balances of the specified assets.
 
 #### Defined in
 
-[libs/abstract-evm/src/lib/abstract-evm.ts:188](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-evm/src/lib/abstract-evm.ts#L188)
+[libs/abstract-evm/src/lib/abstract-evm.ts:229](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/fc79dbd051d9d700fc06cf580f06693f6be34283/libs/abstract-evm/src/lib/abstract-evm.ts#L229)
 
 ***
 
 ### getBalance()
 
-> **getBalance**(`address`): `Promise`\<[`AddressBalance`](../../../abstract-core/src/interfaces/AddressBalance.md)\>
+> **getBalance**(`address`): `Promise`\<[`IAddressBalance`](../../../abstract-core/src/interfaces/IAddressBalance.md)\>
 
 Fetches the balance for an address.
 
@@ -190,7 +232,7 @@ The address to fetch the balance for.
 
 #### Returns
 
-`Promise`\<[`AddressBalance`](../../../abstract-core/src/interfaces/AddressBalance.md)\>
+`Promise`\<[`IAddressBalance`](../../../abstract-core/src/interfaces/IAddressBalance.md)\>
 
 The balance of the address.
 
@@ -204,13 +246,13 @@ If there is an error fetching the balance.
 
 #### Defined in
 
-[libs/abstract-evm/src/lib/abstract-evm.ts:53](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-evm/src/lib/abstract-evm.ts#L53)
+[libs/abstract-evm/src/lib/abstract-evm.ts:79](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/fc79dbd051d9d700fc06cf580f06693f6be34283/libs/abstract-evm/src/lib/abstract-evm.ts#L79)
 
 ***
 
 ### getRecentTransactions()
 
-> **getRecentTransactions**(`address`, `limit`?): `Promise`\<[`Transaction`](../../../abstract-core/src/interfaces/Transaction.md)[]\>
+> **getRecentTransactions**(`address`, `limit`?): `Promise`\<[`ITransaction`](../../../abstract-core/src/interfaces/ITransaction.md)[]\>
 
 Fetches recent transactions for an address.
 
@@ -226,7 +268,7 @@ The maximum number of transactions to fetch (optional).
 
 #### Returns
 
-`Promise`\<[`Transaction`](../../../abstract-core/src/interfaces/Transaction.md)[]\>
+`Promise`\<[`ITransaction`](../../../abstract-core/src/interfaces/ITransaction.md)[]\>
 
 The list of recent transactions.
 
@@ -236,13 +278,13 @@ The list of recent transactions.
 
 #### Defined in
 
-[libs/abstract-evm/src/lib/abstract-evm.ts:107](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-evm/src/lib/abstract-evm.ts#L107)
+[libs/abstract-evm/src/lib/abstract-evm.ts:132](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/fc79dbd051d9d700fc06cf580f06693f6be34283/libs/abstract-evm/src/lib/abstract-evm.ts#L132)
 
 ***
 
 ### getTransaction()
 
-> **getTransaction**(`hash`): `Promise`\<[`Transaction`](../../../abstract-core/src/interfaces/Transaction.md)\>
+> **getTransaction**(`hash`): `Promise`\<[`ITransaction`](../../../abstract-core/src/interfaces/ITransaction.md)\>
 
 Fetches a transaction by its hash.
 
@@ -254,7 +296,7 @@ The hash of the transaction.
 
 #### Returns
 
-`Promise`\<[`Transaction`](../../../abstract-core/src/interfaces/Transaction.md)\>
+`Promise`\<[`ITransaction`](../../../abstract-core/src/interfaces/ITransaction.md)\>
 
 The transaction details.
 
@@ -268,13 +310,13 @@ If the method is not implemented.
 
 #### Defined in
 
-[libs/abstract-evm/src/lib/abstract-evm.ts:97](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-evm/src/lib/abstract-evm.ts#L97)
+[libs/abstract-evm/src/lib/abstract-evm.ts:122](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/fc79dbd051d9d700fc06cf580f06693f6be34283/libs/abstract-evm/src/lib/abstract-evm.ts#L122)
 
 ***
 
 ### getTransactionHistory()
 
-> **getTransactionHistory**(`address`, `limit`?): `Promise`\<[`Transaction`](../../../abstract-core/src/interfaces/Transaction.md)[]\>
+> **getTransactionHistory**(`address`, `limit`?): `Promise`\<[`ITransaction`](../../../abstract-core/src/interfaces/ITransaction.md)[]\>
 
 Fetches the transaction history for an address.
 
@@ -290,7 +332,7 @@ The maximum number of transactions to fetch (optional).
 
 #### Returns
 
-`Promise`\<[`Transaction`](../../../abstract-core/src/interfaces/Transaction.md)[]\>
+`Promise`\<[`ITransaction`](../../../abstract-core/src/interfaces/ITransaction.md)[]\>
 
 The list of transactions.
 
@@ -300,13 +342,13 @@ The list of transactions.
 
 #### Defined in
 
-[libs/abstract-evm/src/lib/abstract-evm.ts:117](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-evm/src/lib/abstract-evm.ts#L117)
+[libs/abstract-evm/src/lib/abstract-evm.ts:145](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/fc79dbd051d9d700fc06cf580f06693f6be34283/libs/abstract-evm/src/lib/abstract-evm.ts#L145)
 
 ***
 
 ### subscribeToBalance()
 
-> **subscribeToBalance**(`address`): `Observable`\<[`AddressBalance`](../../../abstract-core/src/interfaces/AddressBalance.md)\>
+> **subscribeToBalance**(`address`): `Observable`\<[`IAddressBalance`](../../../abstract-core/src/interfaces/IAddressBalance.md)\>
 
 Subscribes to balance updates for an address.
 
@@ -318,7 +360,7 @@ The address to subscribe to balance updates for.
 
 #### Returns
 
-`Observable`\<[`AddressBalance`](../../../abstract-core/src/interfaces/AddressBalance.md)\>
+`Observable`\<[`IAddressBalance`](../../../abstract-core/src/interfaces/IAddressBalance.md)\>
 
 An observable for balance updates.
 
@@ -341,13 +383,13 @@ If the RPC URL is not a valid WebSocket URL.
 
 #### Defined in
 
-[libs/abstract-evm/src/lib/abstract-evm.ts:216](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-evm/src/lib/abstract-evm.ts#L216)
+[libs/abstract-evm/src/lib/abstract-evm.ts:260](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/fc79dbd051d9d700fc06cf580f06693f6be34283/libs/abstract-evm/src/lib/abstract-evm.ts#L260)
 
 ***
 
 ### subscribeToTransactions()
 
-> **subscribeToTransactions**(`address`): `Observable`\<[`Transaction`](../../../abstract-core/src/interfaces/Transaction.md)[]\>
+> **subscribeToTransactions**(`address`): `Observable`\<[`ITransaction`](../../../abstract-core/src/interfaces/ITransaction.md)[]\>
 
 Subscribes to transaction updates for an address.
 
@@ -359,7 +401,7 @@ The address to subscribe to transaction updates for.
 
 #### Returns
 
-`Observable`\<[`Transaction`](../../../abstract-core/src/interfaces/Transaction.md)[]\>
+`Observable`\<[`ITransaction`](../../../abstract-core/src/interfaces/ITransaction.md)[]\>
 
 An observable for transaction updates.
 
@@ -373,13 +415,13 @@ If the method is not implemented.
 
 #### Defined in
 
-[libs/abstract-evm/src/lib/abstract-evm.ts:274](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-evm/src/lib/abstract-evm.ts#L274)
+[libs/abstract-evm/src/lib/abstract-evm.ts:328](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/fc79dbd051d9d700fc06cf580f06693f6be34283/libs/abstract-evm/src/lib/abstract-evm.ts#L328)
 
 ***
 
 ### subscribeToUpdates()
 
-> **subscribeToUpdates**(`address`): `Observable`\<[`UpdateFeed`](../../../abstract-core/src/interfaces/UpdateFeed.md)\>
+> **subscribeToUpdates**(`address`): `Observable`\<[`IUpdateFeed`](../../../abstract-core/src/interfaces/IUpdateFeed.md)\>
 
 Subscribes to balance and transaction updates for an address.
 
@@ -391,7 +433,7 @@ The address to subscribe to updates for.
 
 #### Returns
 
-`Observable`\<[`UpdateFeed`](../../../abstract-core/src/interfaces/UpdateFeed.md)\>
+`Observable`\<[`IUpdateFeed`](../../../abstract-core/src/interfaces/IUpdateFeed.md)\>
 
 An observable for balance and transaction updates.
 
@@ -405,4 +447,4 @@ If the method is not implemented.
 
 #### Defined in
 
-[libs/abstract-evm/src/lib/abstract-evm.ts:284](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-evm/src/lib/abstract-evm.ts#L284)
+[libs/abstract-evm/src/lib/abstract-evm.ts:338](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/fc79dbd051d9d700fc06cf580f06693f6be34283/libs/abstract-evm/src/lib/abstract-evm.ts#L338)

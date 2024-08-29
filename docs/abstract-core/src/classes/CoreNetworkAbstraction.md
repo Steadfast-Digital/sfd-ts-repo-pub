@@ -1,8 +1,8 @@
-[**@sfd-ts-repo-pub/source v0.0.0**](../../../README.md) • **Docs**
+[**@sfd-ts-repo-pub/source v0.0.1**](../../../README.md) • **Docs**
 
 ***
 
-[@sfd-ts-repo-pub/source v0.0.0](../../../modules.md) / [abstract-core/src](../README.md) / CoreNetworkAbstraction
+[@sfd-ts-repo-pub/source v0.0.1](../../../modules.md) / [abstract-core/src](../README.md) / CoreNetworkAbstraction
 
 # Class: `abstract` CoreNetworkAbstraction
 
@@ -15,7 +15,7 @@ Abstract class for core network interactions.
 
 ## Implements
 
-- [`BlockchainInterface`](../interfaces/BlockchainInterface.md)
+- [`IBlockchainInterface`](../interfaces/IBlockchainInterface.md)
 
 ## Constructors
 
@@ -37,13 +37,13 @@ The network ID.
 
 #### Defined in
 
-[libs/abstract-core/src/lib/abstract-core.ts:192](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-core/src/lib/abstract-core.ts#L192)
+[libs/abstract-core/src/lib/abstract-core.ts:203](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/fc79dbd051d9d700fc06cf580f06693f6be34283/libs/abstract-core/src/lib/abstract-core.ts#L203)
 
 ## Methods
 
 ### getAllAssetsBalances()
 
-> `abstract` **getAllAssetsBalances**(`address`): `Promise`\<[`AssetBalance`](../interfaces/AssetBalance.md)[]\>
+> `abstract` **getAllAssetsBalances**(`address`): `Promise`\<[`IAssetBalance`](../interfaces/IAssetBalance.md)[]\>
 
 Fetch balances for all assets.
 
@@ -55,23 +55,23 @@ The address to fetch all asset balances for.
 
 #### Returns
 
-`Promise`\<[`AssetBalance`](../interfaces/AssetBalance.md)[]\>
+`Promise`\<[`IAssetBalance`](../interfaces/IAssetBalance.md)[]\>
 
 The balances of all assets.
 
 #### Implementation of
 
-[`BlockchainInterface`](../interfaces/BlockchainInterface.md).[`getAllAssetsBalances`](../interfaces/BlockchainInterface.md#getallassetsbalances)
+[`IBlockchainInterface`](../interfaces/IBlockchainInterface.md).[`getAllAssetsBalances`](../interfaces/IBlockchainInterface.md#getallassetsbalances)
 
 #### Defined in
 
-[libs/abstract-core/src/lib/abstract-core.ts:200](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-core/src/lib/abstract-core.ts#L200)
+[libs/abstract-core/src/lib/abstract-core.ts:217](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/fc79dbd051d9d700fc06cf580f06693f6be34283/libs/abstract-core/src/lib/abstract-core.ts#L217)
 
 ***
 
 ### getAllBalances()
 
-> `abstract` **getAllBalances**(`address`): `Promise`\<[`AddressBalances`](../interfaces/AddressBalances.md)\>
+> `abstract` **getAllBalances**(`address`): `Promise`\<[`IAddressBalances`](../interfaces/IAddressBalances.md)\>
 
 Fetch all balances for an address.
 
@@ -83,23 +83,23 @@ The address to fetch all balances for.
 
 #### Returns
 
-`Promise`\<[`AddressBalances`](../interfaces/AddressBalances.md)\>
+`Promise`\<[`IAddressBalances`](../interfaces/IAddressBalances.md)\>
 
 The balances of the address.
 
 #### Implementation of
 
-[`BlockchainInterface`](../interfaces/BlockchainInterface.md).[`getAllBalances`](../interfaces/BlockchainInterface.md#getallbalances)
+[`IBlockchainInterface`](../interfaces/IBlockchainInterface.md).[`getAllBalances`](../interfaces/IBlockchainInterface.md#getallbalances)
 
 #### Defined in
 
-[libs/abstract-core/src/lib/abstract-core.ts:197](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-core/src/lib/abstract-core.ts#L197)
+[libs/abstract-core/src/lib/abstract-core.ts:208](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/fc79dbd051d9d700fc06cf580f06693f6be34283/libs/abstract-core/src/lib/abstract-core.ts#L208)
 
 ***
 
 ### getAssetBalance()
 
-> `abstract` **getAssetBalance**(`address`, `assetId`): `Promise`\<[`AssetBalance`](../interfaces/AssetBalance.md)\>
+> `abstract` **getAssetBalance**(`address`, `assetId`): `Promise`\<[`IAssetBalance`](../interfaces/IAssetBalance.md)\>
 
 Fetch the balance for a specific asset.
 
@@ -115,23 +115,23 @@ The ID of the asset.
 
 #### Returns
 
-`Promise`\<[`AssetBalance`](../interfaces/AssetBalance.md)\>
+`Promise`\<[`IAssetBalance`](../interfaces/IAssetBalance.md)\>
 
 The balance of the specified asset.
 
 #### Implementation of
 
-[`BlockchainInterface`](../interfaces/BlockchainInterface.md).[`getAssetBalance`](../interfaces/BlockchainInterface.md#getassetbalance)
+[`IBlockchainInterface`](../interfaces/IBlockchainInterface.md).[`getAssetBalance`](../interfaces/IBlockchainInterface.md#getassetbalance)
 
 #### Defined in
 
-[libs/abstract-core/src/lib/abstract-core.ts:198](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-core/src/lib/abstract-core.ts#L198)
+[libs/abstract-core/src/lib/abstract-core.ts:209](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/fc79dbd051d9d700fc06cf580f06693f6be34283/libs/abstract-core/src/lib/abstract-core.ts#L209)
 
 ***
 
 ### getAssetsBalances()
 
-> `abstract` **getAssetsBalances**(`address`, `assetIds`): `Promise`\<[`AssetBalance`](../interfaces/AssetBalance.md)[]\>
+> `abstract` **getAssetsBalances**(`address`, `assetIds`): `Promise`\<[`IAssetBalance`](../interfaces/IAssetBalance.md)[]\>
 
 Fetch balances for specific assets.
 
@@ -147,23 +147,23 @@ The IDs of the assets.
 
 #### Returns
 
-`Promise`\<[`AssetBalance`](../interfaces/AssetBalance.md)[]\>
+`Promise`\<[`IAssetBalance`](../interfaces/IAssetBalance.md)[]\>
 
 The balances of the specified assets.
 
 #### Implementation of
 
-[`BlockchainInterface`](../interfaces/BlockchainInterface.md).[`getAssetsBalances`](../interfaces/BlockchainInterface.md#getassetsbalances)
+[`IBlockchainInterface`](../interfaces/IBlockchainInterface.md).[`getAssetsBalances`](../interfaces/IBlockchainInterface.md#getassetsbalances)
 
 #### Defined in
 
-[libs/abstract-core/src/lib/abstract-core.ts:199](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-core/src/lib/abstract-core.ts#L199)
+[libs/abstract-core/src/lib/abstract-core.ts:213](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/fc79dbd051d9d700fc06cf580f06693f6be34283/libs/abstract-core/src/lib/abstract-core.ts#L213)
 
 ***
 
 ### getBalance()
 
-> `abstract` **getBalance**(`address`): `Promise`\<[`AddressBalance`](../interfaces/AddressBalance.md)\>
+> `abstract` **getBalance**(`address`): `Promise`\<[`IAddressBalance`](../interfaces/IAddressBalance.md)\>
 
 Fetch the balance for an address.
 
@@ -175,23 +175,23 @@ The address to fetch the balance for.
 
 #### Returns
 
-`Promise`\<[`AddressBalance`](../interfaces/AddressBalance.md)\>
+`Promise`\<[`IAddressBalance`](../interfaces/IAddressBalance.md)\>
 
 The balance of the address.
 
 #### Implementation of
 
-[`BlockchainInterface`](../interfaces/BlockchainInterface.md).[`getBalance`](../interfaces/BlockchainInterface.md#getbalance)
+[`IBlockchainInterface`](../interfaces/IBlockchainInterface.md).[`getBalance`](../interfaces/IBlockchainInterface.md#getbalance)
 
 #### Defined in
 
-[libs/abstract-core/src/lib/abstract-core.ts:196](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-core/src/lib/abstract-core.ts#L196)
+[libs/abstract-core/src/lib/abstract-core.ts:207](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/fc79dbd051d9d700fc06cf580f06693f6be34283/libs/abstract-core/src/lib/abstract-core.ts#L207)
 
 ***
 
 ### getRecentTransactions()
 
-> `abstract` **getRecentTransactions**(`address`, `limit`?): `Promise`\<[`Transaction`](../interfaces/Transaction.md)[]\>
+> `abstract` **getRecentTransactions**(`address`, `limit`?): `Promise`\<[`ITransaction`](../interfaces/ITransaction.md)[]\>
 
 Fetch recent transactions for an address.
 
@@ -207,23 +207,23 @@ The maximum number of transactions to fetch (optional).
 
 #### Returns
 
-`Promise`\<[`Transaction`](../interfaces/Transaction.md)[]\>
+`Promise`\<[`ITransaction`](../interfaces/ITransaction.md)[]\>
 
 The list of recent transactions.
 
 #### Implementation of
 
-[`BlockchainInterface`](../interfaces/BlockchainInterface.md).[`getRecentTransactions`](../interfaces/BlockchainInterface.md#getrecenttransactions)
+[`IBlockchainInterface`](../interfaces/IBlockchainInterface.md).[`getRecentTransactions`](../interfaces/IBlockchainInterface.md#getrecenttransactions)
 
 #### Defined in
 
-[libs/abstract-core/src/lib/abstract-core.ts:202](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-core/src/lib/abstract-core.ts#L202)
+[libs/abstract-core/src/lib/abstract-core.ts:219](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/fc79dbd051d9d700fc06cf580f06693f6be34283/libs/abstract-core/src/lib/abstract-core.ts#L219)
 
 ***
 
 ### getTransaction()
 
-> `abstract` **getTransaction**(`hash`): `Promise`\<[`Transaction`](../interfaces/Transaction.md)\>
+> `abstract` **getTransaction**(`hash`): `Promise`\<[`ITransaction`](../interfaces/ITransaction.md)\>
 
 Fetch a transaction by its hash.
 
@@ -235,23 +235,23 @@ The hash of the transaction.
 
 #### Returns
 
-`Promise`\<[`Transaction`](../interfaces/Transaction.md)\>
+`Promise`\<[`ITransaction`](../interfaces/ITransaction.md)\>
 
 The transaction details.
 
 #### Implementation of
 
-[`BlockchainInterface`](../interfaces/BlockchainInterface.md).[`getTransaction`](../interfaces/BlockchainInterface.md#gettransaction)
+[`IBlockchainInterface`](../interfaces/IBlockchainInterface.md).[`getTransaction`](../interfaces/IBlockchainInterface.md#gettransaction)
 
 #### Defined in
 
-[libs/abstract-core/src/lib/abstract-core.ts:201](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-core/src/lib/abstract-core.ts#L201)
+[libs/abstract-core/src/lib/abstract-core.ts:218](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/fc79dbd051d9d700fc06cf580f06693f6be34283/libs/abstract-core/src/lib/abstract-core.ts#L218)
 
 ***
 
 ### getTransactionHistory()
 
-> `abstract` **getTransactionHistory**(`address`, `limit`?, `sblock`?, `eblock`?): `Promise`\<[`Transaction`](../interfaces/Transaction.md)[]\>
+> `abstract` **getTransactionHistory**(`address`, `limit`?, `sblock`?, `eblock`?): `Promise`\<[`ITransaction`](../interfaces/ITransaction.md)[]\>
 
 Fetch transaction history for an address.
 
@@ -275,23 +275,23 @@ The end block number (optional).
 
 #### Returns
 
-`Promise`\<[`Transaction`](../interfaces/Transaction.md)[]\>
+`Promise`\<[`ITransaction`](../interfaces/ITransaction.md)[]\>
 
 The list of transactions.
 
 #### Implementation of
 
-[`BlockchainInterface`](../interfaces/BlockchainInterface.md).[`getTransactionHistory`](../interfaces/BlockchainInterface.md#gettransactionhistory)
+[`IBlockchainInterface`](../interfaces/IBlockchainInterface.md).[`getTransactionHistory`](../interfaces/IBlockchainInterface.md#gettransactionhistory)
 
 #### Defined in
 
-[libs/abstract-core/src/lib/abstract-core.ts:203](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-core/src/lib/abstract-core.ts#L203)
+[libs/abstract-core/src/lib/abstract-core.ts:223](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/fc79dbd051d9d700fc06cf580f06693f6be34283/libs/abstract-core/src/lib/abstract-core.ts#L223)
 
 ***
 
 ### subscribeToBalance()
 
-> `abstract` **subscribeToBalance**(`address`): `Observable`\<[`AddressBalance`](../interfaces/AddressBalance.md)\>
+> `abstract` **subscribeToBalance**(`address`): `Observable`\<[`IAddressBalance`](../interfaces/IAddressBalance.md)\>
 
 Subscribe to balance updates for an address.
 
@@ -303,23 +303,23 @@ The address to subscribe to balance updates for.
 
 #### Returns
 
-`Observable`\<[`AddressBalance`](../interfaces/AddressBalance.md)\>
+`Observable`\<[`IAddressBalance`](../interfaces/IAddressBalance.md)\>
 
 An observable for balance updates.
 
 #### Implementation of
 
-[`BlockchainInterface`](../interfaces/BlockchainInterface.md).[`subscribeToBalance`](../interfaces/BlockchainInterface.md#subscribetobalance)
+[`IBlockchainInterface`](../interfaces/IBlockchainInterface.md).[`subscribeToBalance`](../interfaces/IBlockchainInterface.md#subscribetobalance)
 
 #### Defined in
 
-[libs/abstract-core/src/lib/abstract-core.ts:204](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-core/src/lib/abstract-core.ts#L204)
+[libs/abstract-core/src/lib/abstract-core.ts:229](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/fc79dbd051d9d700fc06cf580f06693f6be34283/libs/abstract-core/src/lib/abstract-core.ts#L229)
 
 ***
 
 ### subscribeToTransactions()
 
-> `abstract` **subscribeToTransactions**(`address`): `Observable`\<[`Transaction`](../interfaces/Transaction.md)[]\>
+> `abstract` **subscribeToTransactions**(`address`): `Observable`\<[`ITransaction`](../interfaces/ITransaction.md)[]\>
 
 Subscribe to transaction updates for an address.
 
@@ -331,23 +331,23 @@ The address to subscribe to transaction updates for.
 
 #### Returns
 
-`Observable`\<[`Transaction`](../interfaces/Transaction.md)[]\>
+`Observable`\<[`ITransaction`](../interfaces/ITransaction.md)[]\>
 
 An observable for transaction updates.
 
 #### Implementation of
 
-[`BlockchainInterface`](../interfaces/BlockchainInterface.md).[`subscribeToTransactions`](../interfaces/BlockchainInterface.md#subscribetotransactions)
+[`IBlockchainInterface`](../interfaces/IBlockchainInterface.md).[`subscribeToTransactions`](../interfaces/IBlockchainInterface.md#subscribetotransactions)
 
 #### Defined in
 
-[libs/abstract-core/src/lib/abstract-core.ts:205](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-core/src/lib/abstract-core.ts#L205)
+[libs/abstract-core/src/lib/abstract-core.ts:230](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/fc79dbd051d9d700fc06cf580f06693f6be34283/libs/abstract-core/src/lib/abstract-core.ts#L230)
 
 ***
 
 ### subscribeToUpdates()
 
-> `abstract` **subscribeToUpdates**(`address`): `Observable`\<[`UpdateFeed`](../interfaces/UpdateFeed.md)\>
+> `abstract` **subscribeToUpdates**(`address`): `Observable`\<[`IUpdateFeed`](../interfaces/IUpdateFeed.md)\>
 
 Subscribe to balance and transaction updates for an address.
 
@@ -359,14 +359,14 @@ The address to subscribe to updates for.
 
 #### Returns
 
-`Observable`\<[`UpdateFeed`](../interfaces/UpdateFeed.md)\>
+`Observable`\<[`IUpdateFeed`](../interfaces/IUpdateFeed.md)\>
 
 An observable for balance and transaction updates.
 
 #### Implementation of
 
-[`BlockchainInterface`](../interfaces/BlockchainInterface.md).[`subscribeToUpdates`](../interfaces/BlockchainInterface.md#subscribetoupdates)
+[`IBlockchainInterface`](../interfaces/IBlockchainInterface.md).[`subscribeToUpdates`](../interfaces/IBlockchainInterface.md#subscribetoupdates)
 
 #### Defined in
 
-[libs/abstract-core/src/lib/abstract-core.ts:206](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/abstract-core/src/lib/abstract-core.ts#L206)
+[libs/abstract-core/src/lib/abstract-core.ts:231](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/fc79dbd051d9d700fc06cf580f06693f6be34283/libs/abstract-core/src/lib/abstract-core.ts#L231)

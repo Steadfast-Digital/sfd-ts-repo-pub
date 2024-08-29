@@ -1,8 +1,8 @@
-[**@sfd-ts-repo-pub/source v0.0.0**](../../../README.md) • **Docs**
+[**@sfd-ts-repo-pub/source v0.0.1**](../../../README.md) • **Docs**
 
 ***
 
-[@sfd-ts-repo-pub/source v0.0.0](../../../modules.md) / [blockchain-factory/src](../README.md) / BlockchainFactory
+[@sfd-ts-repo-pub/source v0.0.1](../../../modules.md) / [blockchain-factory/src](../README.md) / BlockchainFactory
 
 # Class: BlockchainFactory
 
@@ -20,7 +20,7 @@
 
 ### createBlockchain()
 
-> `static` **createBlockchain**(`networkId`): `Promise`\<[`BlockchainInterface`](../../../abstract-core/src/interfaces/BlockchainInterface.md)\>
+> `static` **createBlockchain**(`networkId`): `Promise`\<[`IBlockchainInterface`](../../../abstract-core/src/interfaces/IBlockchainInterface.md)\>
 
 #### Parameters
 
@@ -28,17 +28,17 @@
 
 #### Returns
 
-`Promise`\<[`BlockchainInterface`](../../../abstract-core/src/interfaces/BlockchainInterface.md)\>
+`Promise`\<[`IBlockchainInterface`](../../../abstract-core/src/interfaces/IBlockchainInterface.md)\>
 
 #### Defined in
 
-[libs/blockchain-factory/src/lib/blockchain-factory.ts:6](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/blockchain-factory/src/lib/blockchain-factory.ts#L6)
+[libs/blockchain-factory/src/lib/blockchain-factory.ts:6](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/fc79dbd051d9d700fc06cf580f06693f6be34283/libs/blockchain-factory/src/lib/blockchain-factory.ts#L6)
 
 ***
 
 ### getAllBalances()
 
-> `static` **getAllBalances**(`networkId`, `address`): `Promise`\<[`AddressBalances`](../../../abstract-core/src/interfaces/AddressBalances.md)\>
+> `static` **getAllBalances**(`networkId`, `address`): `Promise`\<[`IAddressBalances`](../../../abstract-core/src/interfaces/IAddressBalances.md)\>
 
 #### Parameters
 
@@ -48,17 +48,17 @@
 
 #### Returns
 
-`Promise`\<[`AddressBalances`](../../../abstract-core/src/interfaces/AddressBalances.md)\>
+`Promise`\<[`IAddressBalances`](../../../abstract-core/src/interfaces/IAddressBalances.md)\>
 
 #### Defined in
 
-[libs/blockchain-factory/src/lib/blockchain-factory.ts:55](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/blockchain-factory/src/lib/blockchain-factory.ts#L55)
+[libs/blockchain-factory/src/lib/blockchain-factory.ts:66](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/fc79dbd051d9d700fc06cf580f06693f6be34283/libs/blockchain-factory/src/lib/blockchain-factory.ts#L66)
 
 ***
 
 ### getAssetBalance()
 
-> `static` **getAssetBalance**(`networkId`, `address`, `assetId`): `Promise`\<[`AssetBalance`](../../../abstract-core/src/interfaces/AssetBalance.md)\>
+> `static` **getAssetBalance**(`networkId`, `address`, `assetId`): `Promise`\<[`IAssetBalance`](../../../abstract-core/src/interfaces/IAssetBalance.md)\>
 
 #### Parameters
 
@@ -70,17 +70,17 @@
 
 #### Returns
 
-`Promise`\<[`AssetBalance`](../../../abstract-core/src/interfaces/AssetBalance.md)\>
+`Promise`\<[`IAssetBalance`](../../../abstract-core/src/interfaces/IAssetBalance.md)\>
 
 #### Defined in
 
-[libs/blockchain-factory/src/lib/blockchain-factory.ts:51](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/blockchain-factory/src/lib/blockchain-factory.ts#L51)
+[libs/blockchain-factory/src/lib/blockchain-factory.ts:58](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/fc79dbd051d9d700fc06cf580f06693f6be34283/libs/blockchain-factory/src/lib/blockchain-factory.ts#L58)
 
 ***
 
 ### getAssetsBalances()
 
-> `static` **getAssetsBalances**(`networkId`, `address`, `assetIds`): `Promise`\<[`AssetBalance`](../../../abstract-core/src/interfaces/AssetBalance.md)[]\>
+> `static` **getAssetsBalances**(`networkId`, `address`, `assetIds`): `Promise`\<[`IAssetBalance`](../../../abstract-core/src/interfaces/IAssetBalance.md)[]\>
 
 #### Parameters
 
@@ -92,17 +92,17 @@
 
 #### Returns
 
-`Promise`\<[`AssetBalance`](../../../abstract-core/src/interfaces/AssetBalance.md)[]\>
+`Promise`\<[`IAssetBalance`](../../../abstract-core/src/interfaces/IAssetBalance.md)[]\>
 
 #### Defined in
 
-[libs/blockchain-factory/src/lib/blockchain-factory.ts:59](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/blockchain-factory/src/lib/blockchain-factory.ts#L59)
+[libs/blockchain-factory/src/lib/blockchain-factory.ts:70](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/fc79dbd051d9d700fc06cf580f06693f6be34283/libs/blockchain-factory/src/lib/blockchain-factory.ts#L70)
 
 ***
 
 ### getBalance()
 
-> `static` **getBalance**(`networkId`, `address`): `Promise`\<[`AddressBalance`](../../../abstract-core/src/interfaces/AddressBalance.md)\>
+> `static` **getBalance**(`networkId`, `address`): `Promise`\<[`IAddressBalance`](../../../abstract-core/src/interfaces/IAddressBalance.md)\>
 
 #### Parameters
 
@@ -112,17 +112,17 @@
 
 #### Returns
 
-`Promise`\<[`AddressBalance`](../../../abstract-core/src/interfaces/AddressBalance.md)\>
+`Promise`\<[`IAddressBalance`](../../../abstract-core/src/interfaces/IAddressBalance.md)\>
 
 #### Defined in
 
-[libs/blockchain-factory/src/lib/blockchain-factory.ts:47](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/blockchain-factory/src/lib/blockchain-factory.ts#L47)
+[libs/blockchain-factory/src/lib/blockchain-factory.ts:54](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/fc79dbd051d9d700fc06cf580f06693f6be34283/libs/blockchain-factory/src/lib/blockchain-factory.ts#L54)
 
 ***
 
 ### getConnection()
 
-> `static` **getConnection**(`networkId`): [`BlockchainInterface`](../../../abstract-core/src/interfaces/BlockchainInterface.md)
+> `static` **getConnection**(`networkId`): [`IBlockchainInterface`](../../../abstract-core/src/interfaces/IBlockchainInterface.md)
 
 #### Parameters
 
@@ -130,17 +130,17 @@
 
 #### Returns
 
-[`BlockchainInterface`](../../../abstract-core/src/interfaces/BlockchainInterface.md)
+[`IBlockchainInterface`](../../../abstract-core/src/interfaces/IBlockchainInterface.md)
 
 #### Defined in
 
-[libs/blockchain-factory/src/lib/blockchain-factory.ts:41](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/blockchain-factory/src/lib/blockchain-factory.ts#L41)
+[libs/blockchain-factory/src/lib/blockchain-factory.ts:48](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/fc79dbd051d9d700fc06cf580f06693f6be34283/libs/blockchain-factory/src/lib/blockchain-factory.ts#L48)
 
 ***
 
 ### getTransactionHistory()
 
-> `static` **getTransactionHistory**(`networkId`, `address`): `Promise`\<[`Transaction`](../../../abstract-core/src/interfaces/Transaction.md)[]\>
+> `static` **getTransactionHistory**(`networkId`, `address`): `Promise`\<[`ITransaction`](../../../abstract-core/src/interfaces/ITransaction.md)[]\>
 
 #### Parameters
 
@@ -150,37 +150,37 @@
 
 #### Returns
 
-`Promise`\<[`Transaction`](../../../abstract-core/src/interfaces/Transaction.md)[]\>
+`Promise`\<[`ITransaction`](../../../abstract-core/src/interfaces/ITransaction.md)[]\>
 
 #### Defined in
 
-[libs/blockchain-factory/src/lib/blockchain-factory.ts:63](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/blockchain-factory/src/lib/blockchain-factory.ts#L63)
+[libs/blockchain-factory/src/lib/blockchain-factory.ts:78](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/fc79dbd051d9d700fc06cf580f06693f6be34283/libs/blockchain-factory/src/lib/blockchain-factory.ts#L78)
 
 ***
 
 ### registerConnector()
 
-> `static` **registerConnector**(`networkId`, `connector`): [`BlockchainInterface`](../../../abstract-core/src/interfaces/BlockchainInterface.md)
+> `static` **registerConnector**(`networkId`, `connector`): [`IBlockchainInterface`](../../../abstract-core/src/interfaces/IBlockchainInterface.md)
 
 #### Parameters
 
 • **networkId**: `string`
 
-• **connector**: [`BlockchainInterface`](../../../abstract-core/src/interfaces/BlockchainInterface.md)
+• **connector**: [`IBlockchainInterface`](../../../abstract-core/src/interfaces/IBlockchainInterface.md)
 
 #### Returns
 
-[`BlockchainInterface`](../../../abstract-core/src/interfaces/BlockchainInterface.md)
+[`IBlockchainInterface`](../../../abstract-core/src/interfaces/IBlockchainInterface.md)
 
 #### Defined in
 
-[libs/blockchain-factory/src/lib/blockchain-factory.ts:33](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/blockchain-factory/src/lib/blockchain-factory.ts#L33)
+[libs/blockchain-factory/src/lib/blockchain-factory.ts:40](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/fc79dbd051d9d700fc06cf580f06693f6be34283/libs/blockchain-factory/src/lib/blockchain-factory.ts#L40)
 
 ***
 
 ### subscribeToBalance()
 
-> `static` **subscribeToBalance**(`networkId`, `address`): `Observable`\<[`AddressBalance`](../../../abstract-core/src/interfaces/AddressBalance.md)\>
+> `static` **subscribeToBalance**(`networkId`, `address`): `Observable`\<[`IAddressBalance`](../../../abstract-core/src/interfaces/IAddressBalance.md)\>
 
 #### Parameters
 
@@ -190,8 +190,8 @@
 
 #### Returns
 
-`Observable`\<[`AddressBalance`](../../../abstract-core/src/interfaces/AddressBalance.md)\>
+`Observable`\<[`IAddressBalance`](../../../abstract-core/src/interfaces/IAddressBalance.md)\>
 
 #### Defined in
 
-[libs/blockchain-factory/src/lib/blockchain-factory.ts:67](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/blockchain-factory/src/lib/blockchain-factory.ts#L67)
+[libs/blockchain-factory/src/lib/blockchain-factory.ts:82](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/fc79dbd051d9d700fc06cf580f06693f6be34283/libs/blockchain-factory/src/lib/blockchain-factory.ts#L82)

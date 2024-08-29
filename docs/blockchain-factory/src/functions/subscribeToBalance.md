@@ -1,12 +1,12 @@
-[**@sfd-ts-repo-pub/source v0.0.0**](../../../README.md) • **Docs**
+[**@sfd-ts-repo-pub/source v0.0.1**](../../../README.md) • **Docs**
 
 ***
 
-[@sfd-ts-repo-pub/source v0.0.0](../../../modules.md) / [blockchain-factory/src](../README.md) / subscribeToBalance
+[@sfd-ts-repo-pub/source v0.0.1](../../../modules.md) / [blockchain-factory/src](../README.md) / subscribeToBalance
 
 # Function: subscribeToBalance()
 
-> **subscribeToBalance**(`networkId`, `address`): `Observable`\<[`AddressBalance`](../../../abstract-core/src/interfaces/AddressBalance.md)\>
+> **subscribeToBalance**(`networkId`, `address`): `Observable`\<[`IAddressBalance`](../../../abstract-core/src/interfaces/IAddressBalance.md)\>
 
 ## Parameters
 
@@ -16,8 +16,8 @@
 
 ## Returns
 
-`Observable`\<[`AddressBalance`](../../../abstract-core/src/interfaces/AddressBalance.md)\>
+`Observable`\<[`IAddressBalance`](../../../abstract-core/src/interfaces/IAddressBalance.md)\>
 
 ## Defined in
 
-[libs/blockchain-factory/src/lib/factory-wraper.ts:28](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/0d845dfd87d2789cbb80b278a373d711dc881248/libs/blockchain-factory/src/lib/factory-wraper.ts#L28)
+[libs/blockchain-factory/src/lib/factory-wraper.ts:39](https://github.com/Steadfast-Digital/sfd-ts-repo-pub/blob/fc79dbd051d9d700fc06cf580f06693f6be34283/libs/blockchain-factory/src/lib/factory-wraper.ts#L39)
