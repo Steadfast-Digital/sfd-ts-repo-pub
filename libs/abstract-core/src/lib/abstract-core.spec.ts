@@ -1,7 +1,7 @@
-import { abstractCore } from './abstract-core';
+import { CoreNetworkAbstraction } from './abstract-core';
 
 describe('abstractCore', () => {
   it('should work', () => {
-    expect(abstractCore()).toEqual('abstract-core');
+    expect(CoreNetworkAbstraction).toBeTruthy();
   });
 });

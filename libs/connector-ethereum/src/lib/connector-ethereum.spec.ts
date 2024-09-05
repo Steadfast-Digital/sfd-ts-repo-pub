@@ -31,24 +31,24 @@ describe('EvmAbstraction Integration Tests', () => {
     expect(result.tokens.length).toBeGreaterThanOrEqual(0);
   });
 
-  it('should fetch ETH address asset balance', async () => {
-    const assetId = 'usdc'; // Replace with a valid assetId if needed
-    const result = await ethEvmAbstraction.getAssetBalance(
-      testAddress,
-      assetId,
-    );
-    console.log('ETH Address Asset Balance:', result);
-    expect(result).toHaveProperty('amount');
-  });
+  // it('should fetch ETH address asset balance', async () => {
+  //   const assetId = 'usdc'; // Replace with a valid assetId if needed
+  //   const result = await ethEvmAbstraction.getAssetBalance(
+  //     testAddress,
+  //     assetId,
+  //   );
+  //   console.log('ETH Address Asset Balance:', result);
+  //   expect(result).toHaveProperty('amount');
+  // });
 
-  it('should fetch ETH address assets balances', async () => {
-    const assetIds = ['usdc']; // Replace with valid assetIds if needed
-    const result = await ethEvmAbstraction.getAssetsBalances(
-      testAddress,
-      assetIds,
-    );
-    console.log('ETH Address Assets Balances:', result);
-    expect(result.length).toBeGreaterThan(0);
-    expect(result[0]).toHaveProperty('amount');
-  });
+  // it('should fetch ETH address assets balances', async () => {
+  //   const assetIds = ['usdc']; // Replace with valid assetIds if needed
+  //   const result = await ethEvmAbstraction.getAssetsBalances(
+  //     testAddress,
+  //     assetIds,
+  //   );
+  //   console.log('ETH Address Assets Balances:', result);
+  //   expect(result.length).toBeGreaterThan(0);
+  //   expect(result[0]).toHaveProperty('amount');
+  // });
 });

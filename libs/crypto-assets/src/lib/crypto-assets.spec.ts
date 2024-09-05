@@ -1,7 +1,7 @@
-import { cryptoAssets } from './crypto-assets';
+import { TOKEN_ASSETS } from './crypto-assets';
 
 describe('cryptoAssets', () => {
   it('should work', () => {
-    expect(cryptoAssets()).toEqual('crypto-assets');
+    expect(TOKEN_ASSETS.length).toBeGreaterThan(5);
   });
 });

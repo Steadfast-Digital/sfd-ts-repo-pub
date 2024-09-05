@@ -2,7 +2,9 @@
   "name": "@sfd-ts-repo-pub/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "test": "nx run-many --target=test --all && node ./scripts/coverage-report-generator.js"
+  },
   "private": true,
   "dependencies": {
     "@nestjs/common": "^10.0.2",
@@ -13,6 +15,7 @@
     "axios": "^1.6.0",
     "bufferutil": "^4.0.8",
     "dotenv": "^16.4.5",
+    "glob": "^11.0.0",
     "reflect-metadata": "^0.1.13",
     "tslib": "^2.3.0",
     "utf-8-validate": "^6.0.4"
