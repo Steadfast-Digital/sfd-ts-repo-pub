@@ -34,6 +34,7 @@ Build documentation:
 ```bash
 npx nx typedoc
 ```
+Latest attempt neede typescript "5.4.2" to work.
 
 ## Additional Information
 

@@ -1,4 +1,4 @@
-**@sfd-ts-repo-pub/source v0.0.0** • [**Docs**](modules.md)
+**@sfd-ts-repo-pub/source v0.0.1** • [**Docs**](modules.md)
 
 ***
 
