@@ -16,6 +16,7 @@
           "buildTarget": "example-nest:build:development"
         },
         "production": {
+          "inspect": false,
           "buildTarget": "example-nest:build:production"
         }
       }
